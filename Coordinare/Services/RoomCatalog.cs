@@ -10,12 +10,11 @@ namespace Coordinare.Services
 {
     public class RoomCatalog : Connection, IRoomCatalog
     {
-        private string queryString = "";
-        private string queryNameString = "";
-        private string queryStringFromID = "";
-        private string insertSql = "";
-        private string deleteSql = "";
-        private string updateSql = "";
+        private string queryString = "Select * from Rooms";
+        private string queryStringFromID = "select * from Rooms where Room_ID =@ID";
+        private string insertSql = "insert into Rooms Values(@ID, @Capacity)";
+        private string deleteSql = "delete from Rooms where Room_ID = @ID";
+        private string updateSql = "update Rooms set Room_ID=@ID, Capacity=@Capacity";
 
 
         public RoomCatalog(IConfiguration configuration) : base(configuration) { }
