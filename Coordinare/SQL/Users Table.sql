@@ -6,7 +6,7 @@
     [Phone]       VARCHAR (50) NULL,
     [Email]       VARCHAR (50) NOT NULL,
     [Speaker]     TINYINT      NOT NULL,
-    [Speacialaid] TINYINT      NOT NULL,
+    [Specialaid] TINYINT      NOT NULL,
     PRIMARY KEY CLUSTERED ([User_ID] ASC)
 );
 
