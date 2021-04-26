@@ -9,8 +9,8 @@ namespace Coordinare.Interfaces
     public interface IUserCatalog
     {
         List<User> Users { get; set; }
-        List<User> GetAllUsersAsync();
-        User GetUserFromIdAsync(int id);
+        Task<List<User>> GetAllUsersAsync();
+        Task<User> GetUserFromIdAsync(int id);
         void CreateUserAsync(User user);
         void DeleteUserAsync(int id);
         void UpdateUserAsync(User user, int id);
