@@ -14,10 +14,10 @@ namespace Coordinare.Interfaces
 
         Task<Room> GetRoomsFromIdAsync(string id);
 
-        void CreateRoomAsync(Room room);
+        Task<bool> CreateRoomAsync(Room room);
 
         void DeleteRoomAsync(string id);
 
-        void UpdateRoomAsync(Room room, string id);
+        Task<bool> UpdateRoomAsync(Room room, string id);
     }
 }
