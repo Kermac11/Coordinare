@@ -15,6 +15,6 @@ namespace Coordinare.Interfaces
         void CreateEvent(Event _event);
         void DeleteEvent(int id);
         void UpdateEvent(Event _event, int id);
-        Task<T> GetWaitingList<T>();
+        Task<List<object>> GetWaitingList<T>();
     }
 }
