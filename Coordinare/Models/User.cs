@@ -19,5 +19,21 @@ namespace Coordinare.Models
 
         public bool Specialaid { get; set; }
 
+        public User()
+        {
+            
+        }
+        public User(int userId, string name, string username, string password, string phone, string email, bool speaker, bool specialaid)
+        {
+            User_ID = userId;
+            Name = name;
+            Username = username;
+            Password = password;
+            Phone = phone;
+            Email = email;
+            Speaker = speaker;
+            Specialaid = specialaid;
+        }
+
     }
 }
