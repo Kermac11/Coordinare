@@ -18,7 +18,7 @@ namespace Coordinare.Pages.Users
         
         public async Task OnGetAsync()
         {
-            Users = await userCatalog.GetAllUsersAsync();
+            Users = userCatalog.GetAllUsersAsync().Result;
         }
     }
 }

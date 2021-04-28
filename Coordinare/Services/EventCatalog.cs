@@ -36,38 +36,42 @@ namespace Coordinare.Services
             List<Event> el = new List<Event>();
             await using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                try
+
+                await using (SqlCommand command = new SqlCommand(GetAllSql, connection))
                 {
-
-
-                    SqlCommand command = new SqlCommand(GetAllSql, connection);
-                    await command.Connection.OpenAsync();
-                    SqlDataReader reader = await command.ExecuteReaderAsync();
-                    while (await reader.ReadAsync())
+                    try
                     {
-                        int eventId = reader.GetInt32(i: 0);
-                        string duration = reader.GetString(i: 1);
-                        string roomId = reader.GetString(i: 2);
-                        string eventname = reader.GetString(i: 3);
-                        DateTime datetime = reader.GetDateTime(i: 4);
-                        string info = reader.GetString(i: 5);
-                        int ss = reader.GetInt32(i: 6);
-                        Event _event = new Event(eventId, duration, roomId, eventname, datetime, info, ss);
-                        el.Add(_event);
+                        await command.Connection.OpenAsync();
+                        SqlDataReader reader = await command.ExecuteReaderAsync();
+                        while (await reader.ReadAsync())
+                        {
+                            int eventId = reader.GetInt32(i: 0);
+                            string duration = reader.GetString(i: 1);
+                            string roomId = null;
+                            if (!reader.IsDBNull(i: 2))
+                            {
+                                roomId = reader.GetString(i: 2);
+                            }
+                            string eventname = reader.GetString(i: 3);
+                            DateTime datetime = reader.GetDateTime(i: 4);
+                            string info = reader.GetString(i: 5);
+                            int ss = reader.GetInt32(i: 6);
+                            Event _event = new Event(eventId, duration, roomId, eventname, datetime, info, ss);
+                            el.Add(_event);
+                        }
+                    }
+                    catch (SqlException sx)
+                    {
+                        Console.WriteLine("Database Fejl");
+                        return null;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Generel Fejl");
+                        return null;
                     }
                 }
-                catch (SqlException)
-                {
-                    Console.WriteLine("Database Fejl");
-                    return null;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Generel Fejl");
-                    return null;
-                }
             }
-
             return el;
         }
 
@@ -224,7 +228,7 @@ namespace Coordinare.Services
                         bool Sseat = reader.GetBoolean(3);
                         bool inWaiting = reader.GetBoolean(i: 4);
                         DateTime date = reader.GetDateTime(i: 5);
-                        var booking = new {};
+                        var booking = new { };
                         bl.Add(booking);
                     }
                 }

@@ -2,3 +2,58 @@
 @model Coordinare.Pages.Events.GetAllEventsModel
 @{
 }
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Event ID
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                Room Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Event info
+            </th>
+            <th>
+                Speaciel seats
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>
+                    @item.Event_ID
+                </td>
+                <td>
+                    @item.Duration
+                </td>
+                <td>
+                    @item.Room_ID
+                </td>
+                <td>
+                    @item.EventName
+                </td>
+                <td>
+                    @item.DateTime
+                </td>
+                <td>
+                    @item.Eventinfo
+                </td>
+                <td>
+                    @item.SS_amount
+                </td>
+                <td><a></a></td>
+            </tr>
+        }
+</table>
