@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Coordinare.Interfaces;
+using Coordinare.Services;
 
 namespace Coordinare
 {
@@ -24,6 +26,9 @@ namespace Coordinare
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddTransient<IEventCatalog, EventCatalog>();
+            services.AddTransient<IUserCatalog, UserCatalog>();
+            services.AddTransient<IRoomCatalog, RoomCatalog>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
