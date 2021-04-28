@@ -15,10 +15,14 @@ namespace Coordinare.Pages.Users
 
         private IUserCatalog userCatalog;
 
-        
+        public GetAllUsersModel(IUserCatalog userCatalog)
+        {
+            this.userCatalog = userCatalog;
+        }
+
         public async Task OnGetAsync()
         {
-            Users = await userCatalog.GetAllUsersAsync();
+            Users = userCatalog.GetAllUsersAsync().Result;
         }
     }
 }

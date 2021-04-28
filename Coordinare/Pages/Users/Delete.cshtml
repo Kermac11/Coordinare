@@ -1,4 +1,51 @@
 ﻿@page
 @model Coordinare.Pages.Users.DeleteModel
 @{
+    ViewData["Title"] = "Delete user";
 }
+<h3>Delete hotel</h3>
+
+@* Kan ikke slette et hotel hvor der eksisterer værelser. Ikke helt sikker på hvorfor.
+    Tror det er noget i database delen. Måske at den har 'on update cascade' og ikke noget for delete?*@
+
+<form method="post">
+    <dl class="row">
+        <div class="form-group">
+            <label asp-for="@Model.User.User_ID" class="control-label">Hotel num.</label>
+            <input asp-for="@Model.User.User_ID" readonly="readonly" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Name" class="control-label"></label>
+            <input asp-for="User.Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Username" class="control-label"></label>
+            <input asp-for="User.Username" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Password" class="control-label"></label>
+            <input asp-for="User.Password" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Phone" class="control-label"></label>
+            <input asp-for="User.Phone" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Email" class="control-label"></label>
+            <input asp-for="User.Email" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Speaker" class="control-label"></label>
+            <input type="radio" asp-for="User.Speaker" value="" />Yes
+            <input type="radio" asp-for="User.Speaker" value="" />No
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Specialaid" class="control-label"></label>
+            <input type="radio" asp-for="User.Specialaid" value="" />Yes
+            <input type="radio" asp-for="User.Specialaid" value="" />No
+        </div>
+    </dl>
+
+    <input type="submit" value="Delete" class="btn btn-danger" />&nbsp; | &nbsp;
+    <a asp-page="./GetAllUsers">Back to the overview</a>
+</form>

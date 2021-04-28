@@ -1,4 +1,79 @@
 ﻿@page
 @model Coordinare.Pages.Users.DetailsModel
 @{
+    ViewData["Title"] = "Profile";
 }
+<table class="table" >
+    <thead>
+    <tr>
+        <th>
+            
+        </th>
+        <th>
+            
+        </th>
+        <th>
+            
+        </th>
+        <th>
+            
+        </th>
+        <th>
+            
+        </th>
+        <th>
+            
+        </th>
+        <th>
+            
+        </th>
+        <th>
+            
+        </th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+                <th>
+                    @Model.User.User_ID
+                </th>
+                <th>
+                    @Model.User.Name
+                </th>
+                <th>
+                    @Model.User.Username
+                </th>
+                <th>
+                    @Model.User.Password
+                </th>
+                <th>
+                    @Model.User.Phone
+                </th>
+                <th>
+                    @Model.User.Email
+                </th>
+                <th>
+                    @Model.User.Speaker
+                </th>
+                <th>
+                    @Model.User.Specialaid
+                </th>
+                <td>
+                    <p>
+                        <a asp-page="/Users/Update" asp-route-id="@Model.User.User_ID">Update</a>
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <a asp-page="/Users/Delete" asp-route-hNr="@Model.User.User_ID">Delete</a>
+                    </p>
+                </td>
+            </tr>
+    </tbody>
+</table>

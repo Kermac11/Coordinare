@@ -5,8 +5,8 @@
     [Password]    VARCHAR (50) NOT NULL,
     [Phone]       VARCHAR (50) NULL,
     [Email]       VARCHAR (50) NOT NULL,
-    [Speaker]     TINYINT      NOT NULL,
-    [Specialaid] TINYINT      NOT NULL,
+    [Speaker]     BIT      NOT NULL,
+    [Specialaid] BIT      NOT NULL,
     PRIMARY KEY CLUSTERED ([User_ID] ASC)
 );
 

@@ -30,10 +30,10 @@ namespace Coordinare.Pages.Users
 
         public async Task<IActionResult> OnPostAsync(User user)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
             try
             {
@@ -45,7 +45,7 @@ namespace Coordinare.Pages.Users
                 InfoText = $"Something went wrong! {e.Message}";
                 return Page();
             }
-            return RedirectToPage("GetAllHotels");
+            return RedirectToPage("GetAllUsers");
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Coordinare.Services
                             users.Add(user);
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         return null;
                     }
