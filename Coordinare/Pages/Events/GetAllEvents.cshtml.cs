@@ -11,12 +11,17 @@ namespace Coordinare.Pages.Events
 {
     public class GetAllEventsModel : PageModel
     {
-        public GetAllEventsModel()
+        private IEventCatalog _service;
+        public List<Event> Events { get; set; }
+        public GetAllEventsModel(IEventCatalog service)
         {
-            
+            _service = service;
         }
-        public void OnGet()
+        public async void OnGetAsync()
         {
+            Events = _service.GetAllEvents().Result;
         }
+
+        
     }
 }
