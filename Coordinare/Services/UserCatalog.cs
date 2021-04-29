@@ -14,7 +14,7 @@ namespace Coordinare.Services
     {
         private string queryString = "Select * from Users";
         private string queryStringFromID = "select * from Users where User_ID = @ID";
-        private string insertSql = "insert into Users Values(@ID, @Name, @Username, " +
+        private string insertSql = "insert into Users Values(@Name, @Username, " +
                                    "@Password, @Phone, @Email, @Speaker, @Specialaid)";
         private string deleteSql = "delete from Users where User_ID = @ID";
         private string updateSql = "update Users set User_ID=@ID, Name=@Name, " +
@@ -49,11 +49,12 @@ namespace Coordinare.Services
                             string password = reader.GetString(3);
                             string phone = reader.GetString(4);
                             string email = reader.GetString(5);
-                            byte speaker = reader.GetByte(6);
-                            byte special = reader.GetByte(7);
+                            bool speaker = reader.GetBoolean(6);
+                            bool special = reader.GetBoolean(7);
 
-                            //User user = new User(userID, name, username, password, phone, email, speaker, special);
-                            //users.Add(user);
+                            User user = new User(userID, name, username, password, 
+                                phone, email, /*ByteToBool(speaker)*/speaker, /*ByteToBool(special)*/special);
+                            users.Add(user);
                         }
                     }
                     catch (Exception ex)
@@ -64,6 +65,16 @@ namespace Coordinare.Services
                 }
             }
             return users;
+        }
+
+        public bool ByteToBool(byte bit)
+        {
+            if (bit == 1)
+            {
+                return true;
+            }
+            
+            return false;
         }
 
         public async Task<User> GetUserFromIdAsync(int id)
@@ -86,9 +97,10 @@ namespace Coordinare.Services
                             string password = reader.GetString(3);
                             string phone = reader.GetString(4);
                             string email = reader.GetString(5);
-                            bool speaker = reader.GetBoolean(6);
-                            bool special = reader.GetBoolean(7);
-                            user = new User(userID, name, username, password, phone, email, speaker, special);
+                            byte speaker = reader.GetByte(6);
+                            byte special = reader.GetByte(7);
+                            user = new User(userID, name, username, password, 
+                                phone, email, ByteToBool(speaker), ByteToBool(special));
                         }
                         else
                         {
@@ -111,11 +123,7 @@ namespace Coordinare.Services
             {
                 await using SqlCommand command = new SqlCommand(insertSql, connection);
                 {
-                    if (IdExist(user.User_ID))
-                    {
-                        throw new ExistsException("Hotel number already exists, please choose another.");
-                    }
-                    command.Parameters.AddWithValue("@ID", user.User_ID);
+                    //command.Parameters.AddWithValue("@ID", user.User_ID);
                     command.Parameters.AddWithValue("@Name", user.Name);
                     command.Parameters.AddWithValue("@Username", user.Username);
                     command.Parameters.AddWithValue("@Password", user.Password);
@@ -123,7 +131,10 @@ namespace Coordinare.Services
                     command.Parameters.AddWithValue("@Email", user.Email);
                     command.Parameters.AddWithValue("@Speaker", user.Speaker);
                     command.Parameters.AddWithValue("@Specialaid", user.Specialaid);
-                    
+                    if (UsernameExist(user.Username))
+                    {
+                        throw new ExistsException("Username already exists");
+                    }
                     await command.Connection.OpenAsync();
                     int noOfRows = await command.ExecuteNonQueryAsync();
                     if (noOfRows == 1)
@@ -137,11 +148,11 @@ namespace Coordinare.Services
             }
         }
 
-        private bool IdExist(int id)
+        private bool UsernameExist(string name)
         {
             foreach (User u in GetAllUsersAsync().Result)
             {
-                if (u.User_ID == id)
+                if (u.Username == name)
                     return true;
             }
             return false;

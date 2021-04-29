@@ -22,7 +22,7 @@ namespace Coordinare.Pages.Users
 
         public async Task OnGetAsync()
         {
-            Users = userCatalog.GetAllUsersAsync().Result;
+            Users = await userCatalog.GetAllUsersAsync();
         }
     }
 }

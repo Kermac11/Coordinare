@@ -30,11 +30,10 @@ namespace Coordinare.Pages.Users
 
         public async Task<IActionResult> OnPostAsync(User user)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
-
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
             try
             {
                 await UserCatalog.CreateUserAsync(user);

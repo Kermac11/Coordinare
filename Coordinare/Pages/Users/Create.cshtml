@@ -7,6 +7,9 @@
 
 <h3>Create user</h3>
 <hr />
+<div class="alert alert-warning" role="alert">
+    @Model.InfoText
+</div>
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -38,14 +41,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="User.Speaker" class="control-label"></label>
-                <input type="radio" asp-for="User.Speaker" value="1" />Yes
-                <input type="radio" asp-for="User.Speaker" value="0" />No
+                <input type="radio" asp-for="User.Speaker" value="true" />Yes
+                <input type="radio" asp-for="User.Speaker" value="false" />No
                 @*<span asp-validation-for="User.Speaker" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="User.Specialaid" class="control-label"></label>
-                <input type="radio" asp-for="User.Specialaid" value="1" />Yes
-                <input type="radio" asp-for="User.Specialaid" value="0" />No
+                <input type="radio" asp-for="User.Specialaid" value="true" />Yes
+                <input type="radio" asp-for="User.Specialaid" value="false" />No
                 @*<span asp-validation-for="User.Specialaid" class="text-danger"></span>*@
             </div>
             <div class="form-group">
