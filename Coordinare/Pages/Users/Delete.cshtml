@@ -3,11 +3,11 @@
 @{
     ViewData["Title"] = "Delete user";
 }
-<h3>Delete hotel</h3>
+<h3>Delete User</h3>
 
-@* Kan ikke slette et hotel hvor der eksisterer værelser. Ikke helt sikker på hvorfor.
-    Tror det er noget i database delen. Måske at den har 'on update cascade' og ikke noget for delete?*@
-
+<div class="alert alert-warning" role="alert">
+    @Model.InfoText
+</div>
 <form method="post">
     <dl class="row">
         <div class="form-group">
@@ -16,33 +16,56 @@
         </div>
         <div class="form-group">
             <label asp-for="User.Name" class="control-label"></label>
-            <input asp-for="User.Name" class="form-control" />
+            <input asp-for="User.Name" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="User.Username" class="control-label"></label>
-            <input asp-for="User.Username" class="form-control" />
+            <input asp-for="User.Username" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="User.Password" class="control-label"></label>
-            <input asp-for="User.Password" class="form-control" />
+            <input asp-for="User.Password" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="User.Phone" class="control-label"></label>
-            <input asp-for="User.Phone" class="form-control" />
+            <input asp-for="User.Phone" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="User.Email" class="control-label"></label>
-            <input asp-for="User.Email" class="form-control" />
+            <input asp-for="User.Email" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
             <label asp-for="User.Speaker" class="control-label"></label>
-            <input type="radio" asp-for="User.Speaker" value="" />Yes
-            <input type="radio" asp-for="User.Speaker" value="" />No
+            @if (Model.User.Speaker)
+            {
+                <p>Yes</p>
+            }
+            else
+            {
+                <p>No</p>
+            }
         </div>
         <div class="form-group">
             <label asp-for="User.Specialaid" class="control-label"></label>
-            <input type="radio" asp-for="User.Specialaid" value="" />Yes
-            <input type="radio" asp-for="User.Specialaid" value="" />No
+            @if (Model.User.Specialaid)
+            {
+                <p>Yes</p>
+            }
+            else
+            {
+                <p>No</p>
+            }
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Admin" class="control-label"></label>
+            @if (Model.User.Admin)
+            {
+                <p>Yes</p>
+            }
+            else
+            {
+                <p>No</p>
+            }
         </div>
     </dl>
 

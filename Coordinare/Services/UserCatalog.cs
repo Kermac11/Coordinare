@@ -15,11 +15,11 @@ namespace Coordinare.Services
         private string queryString = "Select * from Users";
         private string queryStringFromID = "select * from Users where User_ID = @ID";
         private string insertSql = "insert into Users Values(@Name, @Username, " +
-                                   "@Password, @Phone, @Email, @Speaker, @Specialaid)";
+                                   "@Password, @Phone, @Email, @Speaker, @Specialaid, Admin=@Admin)";
         private string deleteSql = "delete from Users where User_ID = @ID";
         private string updateSql = "update Users set User_ID=@ID, Name=@Name, " +
                                    "Username=@Username, Password=@Password, Phone=@Phone, " +
-                                   "Email=@Email, Speaker=@Speaker, Specialaid=@Specialaid)";
+                                   "Email=@Email, Speaker=@Speaker, Specialaid=@Specialaid, Admin=@Admin)";
 
         public UserCatalog(IConfiguration configuration) : base(configuration)
         {
@@ -51,9 +51,10 @@ namespace Coordinare.Services
                             string email = reader.GetString(5);
                             bool speaker = reader.GetBoolean(6);
                             bool special = reader.GetBoolean(7);
+                            bool admin = reader.GetBoolean(8);
 
                             User user = new User(userID, name, username, password, 
-                                phone, email, /*ByteToBool(speaker)*/speaker, /*ByteToBool(special)*/special);
+                                phone, email, /*ByteToBool(speaker)*/speaker, /*ByteToBool(special)*/special, /*ByteToBool(admin)*/ admin);
                             users.Add(user);
                         }
                     }
@@ -97,10 +98,12 @@ namespace Coordinare.Services
                             string password = reader.GetString(3);
                             string phone = reader.GetString(4);
                             string email = reader.GetString(5);
-                            byte speaker = reader.GetByte(6);
-                            byte special = reader.GetByte(7);
+                            bool speaker = reader.GetBoolean(6);
+                            bool special = reader.GetBoolean(7);
+                            bool admin = reader.GetBoolean(8);
+
                             user = new User(userID, name, username, password, 
-                                phone, email, ByteToBool(speaker), ByteToBool(special));
+                                phone, email, /*ByteToBool(speaker)*/ speaker, /*ByteToBool(special)*/ special, /*ByteToBool(admin)*/ admin);
                         }
                         else
                         {
@@ -131,6 +134,7 @@ namespace Coordinare.Services
                     command.Parameters.AddWithValue("@Email", user.Email);
                     command.Parameters.AddWithValue("@Speaker", user.Speaker);
                     command.Parameters.AddWithValue("@Specialaid", user.Specialaid);
+                    command.Parameters.AddWithValue("@Admin", user.Admin);
                     if (UsernameExist(user.Username))
                     {
                         throw new ExistsException("Username already exists");
@@ -198,6 +202,7 @@ namespace Coordinare.Services
                     command.Parameters.AddWithValue("@Email", user.Email);
                     command.Parameters.AddWithValue("@Speaker", user.Speaker);
                     command.Parameters.AddWithValue("@Specialaid", user.Specialaid);
+                    command.Parameters.AddWithValue("@Admin", user.Admin);
                     int noOfRows = await command.ExecuteNonQueryAsync();
                     if (noOfRows == 1)
                     {

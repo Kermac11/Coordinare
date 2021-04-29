@@ -23,7 +23,7 @@ namespace Coordinare.Pages.Users
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            InfoText = "Enter new user";
+            InfoText = "You are deleting a user! Be sure.";
             User = await UserCatalog.GetUserFromIdAsync(id);
             return Page();
         }
@@ -40,12 +40,12 @@ namespace Coordinare.Pages.Users
                 await UserCatalog.DeleteUserAsync(User.User_ID);
                 
             }
-            catch (ExistsException e)
+            catch (Exception e)
             {
                 InfoText = $"Something went wrong! {e.Message}";
                 return Page();
             }
-            return RedirectToPage("GetAllHotels");
+            return RedirectToPage("GetAllUsers");
         }
     }
 }

@@ -18,12 +18,13 @@ namespace Coordinare.Models
         public bool Speaker { get; set; }
 
         public bool Specialaid { get; set; }
+        public bool Admin { get; set; }
 
         public User()
         {
             
         }
-        public User(int userId, string name, string username, string password, string phone, string email, bool speaker, bool specialaid)
+        public User(int userId, string name, string username, string password, string phone, string email, bool speaker, bool specialaid, bool admin)
         {
             User_ID = userId;
             Name = name;
@@ -33,6 +34,7 @@ namespace Coordinare.Models
             Email = email;
             Speaker = speaker;
             Specialaid = specialaid;
+            Admin = admin;
         }
 
     }
