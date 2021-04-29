@@ -11,6 +11,8 @@ using Coordinare.Exceptions;
 
 namespace Coordinare.Services
 {
+    #region MySql
+
     public class RoomCatalog : Connection, IRoomCatalog
     {
         private string queryString = "Select * from Rooms";
@@ -18,6 +20,8 @@ namespace Coordinare.Services
         private string insertSql = "insert into Rooms Values(@ID, @Capacity)";
         private string deleteSql = "delete from Rooms where Room_ID = @ID";
         private string updateSql = "update Rooms set Room_ID=@ID, Capacity=@Capacity";
+
+        #endregion
 
         #region Sql Connection
 
@@ -30,6 +34,7 @@ namespace Coordinare.Services
         public List<Room> Rooms { get; set; }
 
         #endregion
+
 
         #region CreateRoom
 

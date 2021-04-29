@@ -1,0 +1,44 @@
+﻿@page
+@model Coordinare.Pages.Rooms.GetAllRoomsModel
+@{
+    ViewData["Title"] = "All rooms";
+}
+<p>
+    <a asp-page="/Rooms/Create">Create New Room</a>
+</p>
+
+<h3>All Rooms</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Room No
+            </th>
+            <th>
+                Capacity
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model.Rooms.Count() != 0)
+        {
+            @foreach (var item in Model.Rooms)
+            {
+                <tr>
+                    <td>
+                        @item.Room_ID
+                    </td>
+                    <td>
+                        @item.Capacity
+                    </td>
+                    <td>
+                        <p>
+                            <a asp-page="/Rooms/Delete" asp-route-id="@item.Room_ID">Delete</a>
+                        </p>
+                    </td>
+                </tr>
+            }
+        }
+</table>
