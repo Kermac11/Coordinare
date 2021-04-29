@@ -165,7 +165,7 @@ namespace Coordinare.Services
                     {
                         command.Parameters.AddWithValue("@ID", id);
                         await command.Connection.OpenAsync();
-                        command.ExecuteNonQuery();
+                        await command.ExecuteNonQueryAsync();
                     }
                     catch (SqlException)
                     {
@@ -200,6 +200,7 @@ namespace Coordinare.Services
                             command.Parameters.AddWithValue($"@para{1}", prop[1].GetValue(prop[i]));
                         }
                         await command.Connection.OpenAsync();
+                        await command.ExecuteNonQueryAsync();
                     }
                     catch (SqlException)
                     {
