@@ -2,15 +2,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Coordinare.Interfaces;
+using Coordinare.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 
 namespace Coordinare.Pages.Events
 {
     public class DeleteModel : PageModel
     {
-        public void OnGet()
+        private IEventCatalog _service;
+        public Event Event { get; set; }
+        public DeleteModel(IEventCatalog service)
         {
+            _service = service;
+        }
+        public void OnGet(int id)
+        {
+          //  Func<int, bool> testbool = i => i == 0 ? true : false;
+          Event = _service.GetEventFromId(id).Result;
+        }
+
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            _service.DeleteEvent(id);
+            return RedirectToPage("GetAllEvents", new {id = id});
         }
     }
 }

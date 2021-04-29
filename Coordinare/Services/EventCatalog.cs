@@ -84,8 +84,6 @@ namespace Coordinare.Services
                 {
                     try
                     {
-
-
                         command.Parameters.AddWithValue("@ID", id);
                         await command.Connection.OpenAsync();
                         SqlDataReader reader = await command.ExecuteReaderAsync();
@@ -93,7 +91,11 @@ namespace Coordinare.Services
                         {
                             int eventId = reader.GetInt32(i: 0);
                             string duration = reader.GetString(i: 1);
-                            string roomId = reader.GetString(i: 2);
+                            string roomId = null;
+                            if (!reader.IsDBNull(i: 2))
+                            {
+                                roomId = reader.GetString(i: 2);
+                            }
                             string eventname = reader.GetString(i: 3);
                             DateTime datetime = reader.GetDateTime(i: 4);
                             string info = reader.GetString(i: 5);
@@ -163,6 +165,7 @@ namespace Coordinare.Services
                     {
                         command.Parameters.AddWithValue("@ID", id);
                         await command.Connection.OpenAsync();
+                        command.ExecuteNonQuery();
                     }
                     catch (SqlException)
                     {

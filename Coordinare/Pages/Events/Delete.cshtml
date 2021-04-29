@@ -2,3 +2,31 @@
 @model Coordinare.Pages.Events.DeleteModel
 @{
 }
+<form method="post">
+    <input type="hidden" asp-for="Event.Event_ID" name="id"/> 
+    <div class="form-group">
+        <label asp-for="Event.Event_ID"></label>
+        <h5>@Model.Event.Event_ID</h5>
+    </div>
+    <div class="form-group">
+        <label asp-for="Event.EventName"></label>
+        <h5>@Model.Event.EventName</h5>
+    </div>
+    <div class="form-group">
+        <label asp-for="Event.Room_ID"></label>
+        <h5>@Model.Event.Room_ID</h5>
+    </div>
+    <div class="form-group">
+        <label asp-for="Event.DateTime"></label>
+        <h5>@Model.Event.DateTime</h5>
+    </div>
+    <div class="form-group">
+        <label asp-for="Event.Duration"></label>
+        <h5>@Model.Event.Duration</h5>
+    </div>
+    <div class="form-group">
+        <label asp-for="Event.SS_amount"></label>
+        <h5>@Model.Event.SS_amount</h5>
+    </div>
+    <input type="submit" value="Delete" class="btn btn-primary"/>
+</form>

@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Bookings] (
-    [Booking_ID]    INT      NOT NULL,
+    [Booking_ID]    INT          IDENTITY (1, 1)  NOT NULL,
     [Event_ID]      INT      NOT NULL,
     [User_ID]       INT      NOT NULL,
     [Special_Seat]  BIT  NOT NULL,

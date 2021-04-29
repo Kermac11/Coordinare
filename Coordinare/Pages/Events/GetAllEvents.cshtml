@@ -53,7 +53,8 @@
                 <td>
                     @item.SS_amount
                 </td>
-                <td><a></a></td>
+                <td><p><a asp-page="/Events/Info" asp-route-id="@item.Event_ID">See Details</a></p></td>
+                <td><p><a asp-page="/Events/Delete" asp-route-id="@item.Event_ID">Delete</a></p></td>
             </tr>
         }
 </table>
