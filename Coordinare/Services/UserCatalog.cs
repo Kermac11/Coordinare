@@ -49,11 +49,11 @@ namespace Coordinare.Services
                             string password = reader.GetString(3);
                             string phone = reader.GetString(4);
                             string email = reader.GetString(5);
-                            bool speaker = reader.GetBoolean(6);
-                            bool special = reader.GetBoolean(7);
+                            byte speaker = reader.GetByte(6);
+                            byte special = reader.GetByte(7);
 
-                            User user = new User(userID, name, username, password, phone, email, speaker, special);
-                            users.Add(user);
+                            //User user = new User(userID, name, username, password, phone, email, speaker, special);
+                            //users.Add(user);
                         }
                     }
                     catch (Exception ex)
