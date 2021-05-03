@@ -26,6 +26,9 @@ namespace Coordinare
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.AddSingleton<LoginService>();
+
             services.AddTransient<IEventCatalog, EventCatalog>();
             services.AddTransient<IUserCatalog, UserCatalog>();
             services.AddTransient<IRoomCatalog, RoomCatalog>();

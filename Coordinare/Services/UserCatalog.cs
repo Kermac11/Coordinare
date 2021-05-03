@@ -47,7 +47,11 @@ namespace Coordinare.Services
                             string name = reader.GetString(1);
                             string username = reader.GetString(2);
                             string password = reader.GetString(3);
-                            string phone = reader.GetString(4);
+                            string phone = null;
+                            if (!reader.IsDBNull(i: 4))
+                            {
+                                phone = reader.GetString(i: 4);
+                            }
                             string email = reader.GetString(5);
                             bool speaker = reader.GetBoolean(6);
                             bool special = reader.GetBoolean(7);
@@ -96,7 +100,11 @@ namespace Coordinare.Services
                             string name = reader.GetString(1);
                             string username = reader.GetString(2);
                             string password = reader.GetString(3);
-                            string phone = reader.GetString(4);
+                            string phone = null;
+                            if (!reader.IsDBNull(i: 4))
+                            {
+                                phone = reader.GetString(i: 4);
+                            }
                             string email = reader.GetString(5);
                             bool speaker = reader.GetBoolean(6);
                             bool special = reader.GetBoolean(7);
@@ -132,7 +140,7 @@ namespace Coordinare.Services
                         command.Parameters.AddWithValue("@Name", user.Name);
                         command.Parameters.AddWithValue("@Username", user.Username);
                         command.Parameters.AddWithValue("@Password", user.Password);
-                        command.Parameters.AddWithValue("@Phone", user.Phone);
+                        command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(user.Phone) ? (object)DBNull.Value : user.Phone);
                         command.Parameters.AddWithValue("@Email", user.Email);
                         command.Parameters.AddWithValue("@Speaker", user.Speaker);
                         command.Parameters.AddWithValue("@Specialaid", user.Specialaid);
@@ -211,7 +219,7 @@ namespace Coordinare.Services
                     command.Parameters.AddWithValue("@Name", user.Name);
                     command.Parameters.AddWithValue("@Username", user.Username);
                     command.Parameters.AddWithValue("@Password", user.Password);
-                    command.Parameters.AddWithValue("@Phone", user.Phone);
+                    command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(user.Phone) ? (object)DBNull.Value : user.Phone);
                     command.Parameters.AddWithValue("@Email", user.Email);
                     command.Parameters.AddWithValue("@Speaker", user.Speaker);
                     command.Parameters.AddWithValue("@Specialaid", user.Specialaid);

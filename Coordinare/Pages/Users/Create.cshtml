@@ -16,12 +16,12 @@
             <div class="form-group">
                 <label asp-for="User.Name" class="control-label"></label>
                 <input asp-for="User.Name" class="form-control" />
-                @*<span asp-validation-for="User.Name" class="text-danger"></span>*@
+                <span asp-validation-for="User.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="User.Username" class="control-label"></label>
                 <input asp-for="User.Username" class="form-control" />
-                @*<span asp-validation-for="User.Username" class="text-danger"></span>*@
+                <span asp-validation-for="User.Username" class="text-danger"></span>
             </div>
             @*Måske lave password om til autogenereret*@
             <div class="form-group">
@@ -32,38 +32,39 @@
             <div class="form-group">
                 <label asp-for="User.Phone" class="control-label"></label>
                 <input asp-for="User.Phone" class="form-control" />
-                @*<span asp-validation-for="User.Phone" class="text-danger"></span>*@
+
             </div>
             <div class="form-group">
                 <label asp-for="User.Email" class="control-label"></label>
                 <input asp-for="User.Email" class="form-control" />
-                @*<span asp-validation-for="User.Email" class="text-danger"></span>*@
+                <span asp-validation-for="User.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="User.Speaker" class="control-label"></label>
                 <input type="radio" asp-for="User.Speaker" value="true" />Yes
                 <input type="radio" asp-for="User.Speaker" value="false" />No
-                @*<span asp-validation-for="User.Speaker" class="text-danger"></span>*@
+                <span asp-validation-for="User.Speaker" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="User.Specialaid" class="control-label"></label>
                 <input type="radio" asp-for="User.Specialaid" value="true" />Yes
                 <input type="radio" asp-for="User.Specialaid" value="false" />No
-                @*<span asp-validation-for="User.Specialaid" class="text-danger"></span>*@
+                <span asp-validation-for="User.Specialaid" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="User.Admin" class="control-label"></label>
                 <input type="radio" asp-for="User.Admin" value="true" />Yes
                 <input type="radio" asp-for="User.Admin" value="false" />No
-                @*<span asp-validation-for="User.Specialaid" class="text-danger"></span>*@
+                <span asp-validation-for="User.Specialaid" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-dark" />
+                <input type="submit" value="Create" class="btn btn-dark" />&nbsp; | &nbsp;
+                <a asp-page="./GetAllUsers">Back to the overview</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="GetAllUsers">Back to the overview</a>
-</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

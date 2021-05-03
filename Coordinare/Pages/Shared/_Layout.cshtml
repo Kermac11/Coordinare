@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Coordinare.Services
+@inject LoginService LoginService
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,10 +10,24 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-<div>
-    @*<a asp-page="/Users/Details" style="float: right">Brugerside</a>*@
-</div>
-<header>
+    <div class="container-fluid">
+        @{
+            if (LoginService.GetLoggedInUser() != null)
+            {
+                <a asp-page="/Users/LogOut" class="float-right" style="font-size: medium">Log ud</a>
+                <p class="float-right" style="font-size: medium">&nbsp; | &nbsp;</p>
+                <a asp-page="/Users/Details" asp-route-id="@LoginService.GetLoggedInUser().User_ID" class="float-right" style="font-size: medium">@LoginService.GetLoggedInUser()</a>
+            }
+            else
+            {
+                <a asp-page="/Users/LogIn" class="float-right" style="font-size: medium">Log-in</a>
+                <p class="float-right" style="font-size: medium">&nbsp; | &nbsp;</p>
+                //meld sig til link?
+            }
+        }
+    </div>
+    <br />
+    <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Coordinare</a>
@@ -36,11 +52,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Bookings</a>
                         </li>
+                        @if (LoginService.GetLoggedInUser() != null)
+                        {
+                        @if (LoginService.GetLoggedInUser().Admin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/AdminHub">Admin Hub</a>
+                            </li>
+                        }
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/AdminHub">Admin Hub</a>
                         </li>
                     </ul>
                 </div>
@@ -53,16 +76,16 @@
         </main>
     </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2021 - Coordinare - <a asp-area="" asp-page="/Privacy">Privacy</a>
-    </div>
-</footer>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - Coordinare - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
-@RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

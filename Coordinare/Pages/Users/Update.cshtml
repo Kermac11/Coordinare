@@ -14,12 +14,12 @@
             <div class="form-group">
                 <label asp-for="@Model.User.Name" class="control-label"></label>
                 <input asp-for="@Model.User.Name" class="form-control" />
-                @*<span asp-validation-for="User.Name" class="text-danger"></span>*@
+                <span asp-validation-for="User.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.Username" class="control-label"></label>
                 <input asp-for="@Model.User.Username" class="form-control" />
-                @*<span asp-validation-for="User.Username" class="text-danger"></span>*@
+                <span asp-validation-for="User.Username" class="text-danger"></span>
             </div>
             @*Måske lave password om til autogenereret*@
             <div class="form-group">
@@ -30,12 +30,12 @@
             <div class="form-group">
                 <label asp-for="@Model.User.Phone" class="control-label"></label>
                 <input asp-for="@Model.User.Phone" class="form-control" />
-                @*<span asp-validation-for="User.Phone" class="text-danger"></span>*@
+
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.Email" class="control-label"></label>
                 <input asp-for="@Model.User.Email" class="form-control" />
-                @*<span asp-validation-for="User.Email" class="text-danger"></span>*@
+                <span asp-validation-for="User.Email" class="text-danger"></span>
             </div>
 
             @*ses kun hvis det er admin*@
@@ -43,15 +43,15 @@
                 <label asp-for="@Model.User.Speaker" class="control-label"></label>
                 <input type="radio" asp-for="@Model.User.Speaker" value="true" />Yes
                 <input type="radio" asp-for="@Model.User.Speaker" value="false" />No
-                @*<span asp-validation-for="User.Speaker" class="text-danger"></span>*@
+                <span asp-validation-for="User.Speaker" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.Specialaid" class="control-label"></label>
                 <input type="radio" asp-for="@Model.User.Specialaid" value="true" />Yes
                 <input type="radio" asp-for="@Model.User.Specialaid" value="false" />No
-                @*<span asp-validation-for="User.Specialaid" class="text-danger"></span>*@
+                <span asp-validation-for="User.Specialaid" class="text-danger"></span>
             </div>
-            
+
             @*ses af ikke-admin*@
             <div class="form-group">
                 <label asp-for="@Model.User.Speaker" class="control-label"></label>
@@ -96,12 +96,13 @@
                 }
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-dark" />
+                <input type="submit" value="Save" class="btn btn-dark" />&nbsp; | &nbsp;
+                <a asp-page="./GetAllUsers">Back to the overview</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="GetAllUsers">Back to the overview</a>
-</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
