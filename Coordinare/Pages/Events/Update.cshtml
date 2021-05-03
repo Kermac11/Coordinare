@@ -1,17 +1,17 @@
 ﻿@page
 @using Coordinare.Models
-@using Coordinare.Services
-@model Coordinare.Pages.Events.CreateModel
+@model Coordinare.Pages.Events.UpdateModel
 @{
 }
 <form method="post">
     <div class="form-group">
+        <input type="hidden" asp-for="@Model.Event.Event_ID" />
         <label asp-for="Event.EventName" class="custom-control-label"></label>
-        <input asp-for="@Model.Event.EventName" class="form-control"/>
+        <input asp-for="@Model.Event.EventName" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="Event.DateTime" class="custom-control-label"></label>
-        <input min="@Model.Time" type="datetime-local" asp-for="Event.DateTime" class="form-control"/>
+        <input min="@Model.Time" type="datetime-local" asp-for="Event.DateTime" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="Event.Room_ID" class="custom-control-label"></label>
@@ -25,11 +25,11 @@
     </div>
     <div class="form-group">
         <label asp-for="Event.Duration"></label>
-        <input asp-for="Event.Duration"/>
+        <input asp-for="Event.Duration" />
     </div>
     <div class="form-group">
         <label asp-for="Event.SS_amount"></label>
-        <input type="number" asp-for="Event.SS_amount"/>
+        <input type="number" asp-for="Event.SS_amount" />
     </div>
-    <input type="submit" value="create" class="btn btn-primary"/>
+    <input type="submit" value="create" class="btn btn-primary" />
 </form>

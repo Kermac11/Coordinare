@@ -18,7 +18,7 @@ namespace Coordinare.Services
         private string CreateEventSql = "INSERT into Events values(@Dur, @RID,  @Name, @Time, @Info, @SS)";
         private string DeleteEventSql = "DELETE from events where Event_ID = @ID";
         private string UpdateEventSql =
-            "UPDATE Events set Duration = @Dur, Room_ID = @RID, EventName = @Name, DateTime = @Time, Eventinfo = @Info, SS_Amount = @SS";
+            "UPDATE Events set Duration = @Dur, Room_ID = @RID, EventName = @Name, DateTime = @Time, Eventinfo = @Info, SS_Amount = @SS WHERE Event_ID = @ID";
 
         private string GetBookingsSql = "SELECT * from Bookings WHERE Event_ID = @ID";
         public EventCatalog(IConfiguration configuration) : base(configuration)
@@ -54,7 +54,11 @@ namespace Coordinare.Services
                             }
                             string eventname = reader.GetString(i: 3);
                             DateTime datetime = reader.GetDateTime(i: 4);
-                            string info = reader.GetString(i: 5);
+                            string info = null;
+                            if (!reader.IsDBNull(i: 5))
+                            {
+                                info = reader.GetString(i: 5);
+                            }
                             int ss = reader.GetInt32(i: 6);
                             Event _event = new Event(eventId, duration, roomId, eventname, datetime, info, ss);
                             el.Add(_event);
@@ -98,7 +102,11 @@ namespace Coordinare.Services
                             }
                             string eventname = reader.GetString(i: 3);
                             DateTime datetime = reader.GetDateTime(i: 4);
-                            string info = reader.GetString(i: 5);
+                            string info = null;
+                            if (!reader.IsDBNull(i: 5))
+                            {
+                                info = reader.GetString(i: 5);
+                            }
                             int ss = reader.GetInt32(i: 6);
                             _event = new Event(eventId, duration, roomId, eventname, datetime, info, ss);
                         }
@@ -176,31 +184,30 @@ namespace Coordinare.Services
         public async void UpdateEvent(Event _event, int id)
         {
             // "UPDATE Events set Duration = @Dur, Room_ID = @RID, EventName = @Name, DateTime = @Time, Eventinfo = @Info, SS_Amount = @SS";
-            List<PropertyInfo> prop = _event.GetType().GetProperties().ToList();
-            string updatesql = "UpDATE Events set";
-            for (int i = 0; i < prop.Count; i++)
-            {
-                updatesql += $"{prop[i].Name} @para{1}, ";
-            }
 
             await using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                await using (SqlCommand command = new SqlCommand(updatesql, connection))
+                await using (SqlCommand command = new SqlCommand(UpdateEventSql, connection))
                 {
                     try
                     {
-                        for (int i = 0; i < prop.Count; i++)
-                        {
-                            command.Parameters.AddWithValue($"@para{1}", prop[1].GetValue(prop[i]));
-                        }
+                        command.Parameters.AddWithValue("@ID", _event.Event_ID);
+                        command.Parameters.AddWithValue("@Dur", _event.Duration);
+                        command.Parameters.AddWithValue("@RID", string.IsNullOrEmpty(_event.Room_ID) ? (object)DBNull.Value : _event.Room_ID);
+                        command.Parameters.AddWithValue("@Info", string.IsNullOrEmpty(_event.Eventinfo) ? (object)DBNull.Value : _event.Eventinfo);
+                        command.Parameters.AddWithValue("@Name", _event.EventName);
+                        command.Parameters.AddWithValue("@Time", _event.DateTime);
+                        command.Parameters.AddWithValue("@SS", _event.SS_amount);
+                        await command.Connection.OpenAsync();
+                        await command.ExecuteNonQueryAsync();
                         await command.Connection.OpenAsync();
                         await command.ExecuteNonQueryAsync();
                     }
-                    catch (SqlException)
+                    catch (SqlException sqx)
                     {
                         Console.WriteLine("Database Fejl");
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         Console.WriteLine("Generel Fejl");
                     }

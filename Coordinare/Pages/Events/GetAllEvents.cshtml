@@ -32,30 +32,31 @@
     <tbody>
         @foreach (var item in Model.Events)
         {
-            <tr>
-                <td>
-                    @item.Event_ID
-                </td>
-                <td>
-                    @item.Duration
-                </td>
-                <td>
-                    @item.Room_ID
-                </td>
-                <td>
-                    @item.EventName
-                </td>
-                <td>
-                    @item.DateTime
-                </td>
-                <td>
-                    @item.Eventinfo
-                </td>
-                <td>
-                    @item.SS_amount
-                </td>
-                <td><p><a asp-page="/Events/Info" asp-route-id="@item.Event_ID">See Details</a></p></td>
-                <td><p><a asp-page="/Events/Delete" asp-route-id="@item.Event_ID">Delete</a></p></td>
-            </tr>
+        <tr>
+            <td>
+                @item.Event_ID
+            </td>
+            <td>
+                @item.Duration
+            </td>
+            <td>
+                @item.Room_ID
+            </td>
+            <td>
+                @item.EventName
+            </td>
+            <td>
+                @item.DateTime
+            </td>
+            <td>
+                @item.Eventinfo
+            </td>
+            <td>
+                @item.SS_amount
+            </td>
+            <td><p><a asp-page="/Events/Info" asp-route-id="@item.Event_ID">See Details</a></p></td>
+            <td><p><a asp-page="/Events/Delete" asp-route-id="@item.Event_ID">Delete</a></p></td>
+            <td><p><a asp-page="/Events/Update" asp-route-id="@item.Event_ID">Update</a></p></td>
+        </tr>
         }
 </table>

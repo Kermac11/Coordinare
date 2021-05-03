@@ -17,6 +17,7 @@ namespace Coordinare.Pages.Events
         private IEventCatalog _eservice;
         private IRoomCatalog _rservice;
         [BindProperty] public Event Event { get; set; }
+        public string Time { get; set; }
 
         public List<Room> Rooms { get; set; }
         public CreateModel(IEventCatalog eservice, IRoomCatalog rservice)
@@ -28,13 +29,11 @@ namespace Coordinare.Pages.Events
         public void OnGet()
         {
             Rooms = _rservice.GetAllRoomsAsync().Result;
-          
-            
+            Time = DateTime.UtcNow.ToString("yyyy-MM-ddT00:00");
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Event.DateTime = DateTime.Now;
             _eservice.CreateEvent(Event);
             return RedirectToPage("GetAllEvents");
         }

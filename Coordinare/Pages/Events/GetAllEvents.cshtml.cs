@@ -21,7 +21,5 @@ namespace Coordinare.Pages.Events
         {
             Events = _service.GetAllEvents().Result;
         }
-
-        
     }
 }
