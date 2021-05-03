@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Coordinare.Pages;
 
 namespace Coordinare.Models
 {
@@ -34,15 +35,15 @@ namespace Coordinare.Models
         }
         
         public int Event_ID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Duration is required")]
         public string Duration  { get; set; }
         public string Room_ID { get; set; }
-        [Required]
+        [Required (ErrorMessage = "Name Needed")]
         public string EventName { get; set; }
-        [Required]
+        [Required (ErrorMessage = "Date is needed")]
         public DateTime DateTime { get; set; }
         public string Eventinfo { get; set; }
-        [Required]
+        [Required (ErrorMessage = "SS amount needed")]
         public int SS_amount { get; set; }
 
     }

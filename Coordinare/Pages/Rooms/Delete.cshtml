@@ -2,3 +2,16 @@
 @model Coordinare.Pages.Rooms.DeleteModel
 @{
 }
+<form method="post">
+    <input type="hidden" asp-for="Room.Room_ID" name="id"/> 
+<div class="form-group">
+    <label asp-for="Room.Room_ID"></label>
+    <h5>@Model.Room.Room_ID</h5>
+</div>
+<div class="form-group">
+    <label asp-for="Room.Capacity"></label>
+    <h5>@Model.Room.Capacity</h5>
+</div>
+    <input type="submit" value="Delete" class="btn btn-primary"/>
+    <a asp-page="./GetAllRooms">Back to List</a>
+</form>
