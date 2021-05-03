@@ -12,15 +12,23 @@ namespace Coordinare.Pages.Users
     public class DetailsModel : PageModel
     {
         private IUserCatalog userCatalog;
-        [BindProperty(SupportsGet = true)] public User User { get; private set; }
+        [BindProperty] public new User User { get; set; }
 
         public DetailsModel(IUserCatalog userCatalog)
         {
             this.userCatalog = userCatalog;
         }
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            User = await userCatalog.GetUserFromIdAsync(User.User_ID);
+            if (id == null)
+                return NotFound();
+
+            User = await userCatalog.GetUserFromIdAsync((int)id);
+
+            if (User == null)
+                return NotFound();
+
+            return Page();
         }
     }
 }
