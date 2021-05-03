@@ -11,31 +11,31 @@
 <form method="post">
     <dl class="row">
         <div class="form-group">
-            <label asp-for="@Model.User.User_ID" class="control-label">Hotel num.</label>
+            <label asp-for="@Model.User.User_ID" class="control-label"></label>
             <input asp-for="@Model.User.User_ID" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
-            <label asp-for="User.Name" class="control-label"></label>
-            <input asp-for="User.Name" readonly="readonly" class="form-control" />
+            <label asp-for="@Model.User.Name" class="control-label"></label>
+            <input asp-for="@Model.User.Name" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
-            <label asp-for="User.Username" class="control-label"></label>
-            <input asp-for="User.Username" readonly="readonly" class="form-control" />
+            <label asp-for="@Model.User.Username" class="control-label"></label>
+            <input asp-for="@Model.User.Username" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
-            <label asp-for="User.Password" class="control-label"></label>
-            <input asp-for="User.Password" readonly="readonly" class="form-control" />
+            <label asp-for="@Model.User.Password" class="control-label"></label>
+            <input asp-for="@Model.User.Password" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
-            <label asp-for="User.Phone" class="control-label"></label>
-            <input asp-for="User.Phone" readonly="readonly" class="form-control" />
+            <label asp-for="@Model.User.Phone" class="control-label"></label>
+            <input asp-for="@Model.User.Phone" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
-            <label asp-for="User.Email" class="control-label"></label>
-            <input asp-for="User.Email" readonly="readonly" class="form-control" />
+            <label asp-for="@Model.User.Email" class="control-label"></label>
+            <input asp-for="@Model.User.Email" readonly="readonly" class="form-control" />
         </div>
         <div class="form-group">
-            <label asp-for="User.Speaker" class="control-label"></label>
+            <label asp-for="@Model.User.Speaker" class="control-label"></label>
             @if (Model.User.Speaker)
             {
                 <p>Yes</p>
@@ -46,7 +46,7 @@
             }
         </div>
         <div class="form-group">
-            <label asp-for="User.Specialaid" class="control-label"></label>
+            <label asp-for="@Model.User.Specialaid" class="control-label"></label>
             @if (Model.User.Specialaid)
             {
                 <p>Yes</p>
@@ -57,7 +57,7 @@
             }
         </div>
         <div class="form-group">
-            <label asp-for="User.Admin" class="control-label"></label>
+            <label asp-for="@Model.User.Admin" class="control-label"></label>
             @if (Model.User.Admin)
             {
                 <p>Yes</p>

@@ -15,11 +15,11 @@ namespace Coordinare.Services
         private string queryString = "Select * from Users";
         private string queryStringFromID = "select * from Users where User_ID = @ID";
         private string insertSql = "insert into Users Values(@Name, @Username, " +
-                                   "@Password, @Phone, @Email, @Speaker, @Specialaid, Admin=@Admin)";
+                                   "@Password, @Phone, @Email, @Speaker, @Specialaid, @Admin)";
         private string deleteSql = "delete from Users where User_ID = @ID";
-        private string updateSql = "update Users set User_ID=@ID, Name=@Name, " +
+        private string updateSql = "update Users set Name=@Name, " +
                                    "Username=@Username, Password=@Password, Phone=@Phone, " +
-                                   "Email=@Email, Speaker=@Speaker, Specialaid=@Specialaid, Admin=@Admin)";
+                                   "Email=@Email, Speaker=@Speaker, Specialaid=@Specialaid, Admin=@Admin";
 
         public UserCatalog(IConfiguration configuration) : base(configuration)
         {
@@ -110,7 +110,7 @@ namespace Coordinare.Services
                             user = null;
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         return null;
                     }
@@ -126,26 +126,33 @@ namespace Coordinare.Services
             {
                 await using SqlCommand command = new SqlCommand(insertSql, connection);
                 {
-                    //command.Parameters.AddWithValue("@ID", user.User_ID);
-                    command.Parameters.AddWithValue("@Name", user.Name);
-                    command.Parameters.AddWithValue("@Username", user.Username);
-                    command.Parameters.AddWithValue("@Password", user.Password);
-                    command.Parameters.AddWithValue("@Phone", user.Phone);
-                    command.Parameters.AddWithValue("@Email", user.Email);
-                    command.Parameters.AddWithValue("@Speaker", user.Speaker);
-                    command.Parameters.AddWithValue("@Specialaid", user.Specialaid);
-                    command.Parameters.AddWithValue("@Admin", user.Admin);
-                    if (UsernameExist(user.Username))
+                    try
                     {
-                        throw new ExistsException("Username already exists");
+                        //command.Parameters.AddWithValue("@ID", user.User_ID);
+                        command.Parameters.AddWithValue("@Name", user.Name);
+                        command.Parameters.AddWithValue("@Username", user.Username);
+                        command.Parameters.AddWithValue("@Password", user.Password);
+                        command.Parameters.AddWithValue("@Phone", user.Phone);
+                        command.Parameters.AddWithValue("@Email", user.Email);
+                        command.Parameters.AddWithValue("@Speaker", user.Speaker);
+                        command.Parameters.AddWithValue("@Specialaid", user.Specialaid);
+                        command.Parameters.AddWithValue("@Admin", user.Admin);
+                        if (UsernameExist(user.Username))
+                        {
+                            throw new ExistsException("Username already exists");
+                        }
+                        await command.Connection.OpenAsync();
+                        int noOfRows = await command.ExecuteNonQueryAsync();
+                        if (noOfRows == 1)
+                        {
+                            return true;
+                        }
                     }
-                    await command.Connection.OpenAsync();
-                    int noOfRows = await command.ExecuteNonQueryAsync();
-                    if (noOfRows == 1)
+                    catch (Exception e)
                     {
-                        return true;
+                        return false;
                     }
-
+                    
                 }
 
                 return false;
@@ -169,14 +176,20 @@ namespace Coordinare.Services
             {
                 await using SqlCommand command = new SqlCommand(deleteSql, connection);
                 {
-
-                    await command.Connection.OpenAsync();
-                    command.Parameters.AddWithValue("@ID", id);
-                    int noOfRows = await command.ExecuteNonQueryAsync();
-                    if (noOfRows == 1)
+                    try
                     {
+                        await command.Connection.OpenAsync();
+                        command.Parameters.AddWithValue("@ID", id);
+                        int noOfRows = await command.ExecuteNonQueryAsync();
+                        if (noOfRows == 1)
+                        {
 
-                        return user;
+                            return user;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return null;
                     }
 
                 }

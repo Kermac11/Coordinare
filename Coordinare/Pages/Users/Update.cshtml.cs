@@ -22,9 +22,10 @@ namespace Coordinare.Pages.Users
             this.UserCatalog = userCatalog;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int id)
         {
-            InfoText = "Enter new user";
+            InfoText = "Enter new information";
+            User = await UserCatalog.GetUserFromIdAsync(id);
             Users = await UserCatalog.GetAllUsersAsync();
         }
 
