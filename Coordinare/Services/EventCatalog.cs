@@ -15,7 +15,7 @@ namespace Coordinare.Services
     {
         private string GetAllSql = "SELECT * from Events";
         private string GetEventFromIDSql = "SELECT * from Events WHERE Event_ID = @ID";
-        // private string CreateEventSql = "INSERT into Events values(@ID, @Dur, @RID, @Name, @Time, @Info, @SS)";
+        private string CreateEventSql = "INSERT into Events values(@Dur, @RID,  @Name, @Time, @Info, @SS)";
         private string DeleteEventSql = "DELETE from events where Event_ID = @ID";
         private string UpdateEventSql =
             "UPDATE Events set Duration = @Dur, Room_ID = @RID, EventName = @Name, DateTime = @Time, Eventinfo = @Info, SS_Amount = @SS";
@@ -120,32 +120,26 @@ namespace Coordinare.Services
 
         public async void CreateEvent(Event _event)
         {
-            List<PropertyInfo> prop = _event.GetType().GetProperties().ToList();
-            string createsql = "INSERT into Events values(";
-            for (int i = 0; i < prop.Count; i++)
-            {
-                createsql += $"@para{1}";
-            }
-
-            createsql += ")";
-            //private string CreateEventSql = "INSERT into Events values(@ID, @Dur, @RID, @Name, @Time, @Info, @SS)";
             await using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                await using (SqlCommand command = new SqlCommand(createsql, connection))
+                await using (SqlCommand command = new SqlCommand(CreateEventSql, connection))
                 {
                     try
                     {
-                        for (int i = 0; i < prop.Count; i++)
-                        {
-                            command.Parameters.AddWithValue($"@para{1}", prop[1].GetValue(prop[i]));
-                        }
+                        command.Parameters.AddWithValue("@Dur", _event.Duration);
+                        command.Parameters.AddWithValue("@RID", string.IsNullOrEmpty(_event.Room_ID) ? (object)DBNull.Value : _event.Room_ID);
+                        command.Parameters.AddWithValue("@Info", string.IsNullOrEmpty(_event.Eventinfo) ? (object)DBNull.Value : _event.Eventinfo);
+                        command.Parameters.AddWithValue("@Name", _event.EventName);
+                        command.Parameters.AddWithValue("@Time", _event.DateTime);
+                        command.Parameters.AddWithValue("@SS", _event.SS_amount);
                         await command.Connection.OpenAsync();
+                        await command.ExecuteNonQueryAsync();
                     }
-                    catch (SqlException)
+                    catch (SqlException sx)
                     {
                         Console.WriteLine("Database Fejl");
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         Console.WriteLine("Generel Fejl");
                     }

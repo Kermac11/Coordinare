@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Coordinare.Interfaces;
 using Coordinare.Models;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Coordinare.Pages.Events
@@ -27,10 +28,13 @@ namespace Coordinare.Pages.Events
         public void OnGet()
         {
             Rooms = _rservice.GetAllRoomsAsync().Result;
+          
+            
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Event.DateTime = DateTime.Now;
             _eservice.CreateEvent(Event);
             return RedirectToPage("GetAllEvents");
         }

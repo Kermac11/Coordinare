@@ -12,9 +12,10 @@
     <div class="form-group">
         <label asp-for="Event.Room_ID" class="custom-control-label"></label>
         <select asp-for="Event.Room_ID">
+            <option value="">Choose Room Later</option>
             @foreach (Room item in @Model.Rooms)
             {
-                <option value="@item"></option>
+                <option value="@item.Room_ID">@item.Room_ID</option>
             }
         </select>
     </div>

@@ -7,6 +7,10 @@ namespace Coordinare.Models
 {
     public class Event
     {
+        public Event()
+        {
+            
+        }
         public Event(int eventId, string duration, string roomId, string eventName, DateTime dateTime, string eventinfo, int ssAmount)
         {
             Event_ID = eventId;
