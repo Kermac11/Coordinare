@@ -1,17 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.31019.35
+VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") ="coordinare", "Coordinare\Coordinare.csproj", "{ADE7A3DF-A456-4CBF-8D8F-F809F5ED1AC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADE7A3DF-A456-4CBF-8D8F-F809F5ED1AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADE7A3DF-A456-4CBF-8D8F-F809F5ED1AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADE7A3DF-A456-4CBF-8D8F-F809F5ED1AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADE7A3DF-A456-4CBF-8D8F-F809F5ED1AC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E8115213-65B4-4DD6-89CA-C82AF0A06421}
+		SolutionGuid = {6342C144-3BE8-4E02-B226-4D0D467E378E}
 	EndGlobalSection
 EndGlobal
