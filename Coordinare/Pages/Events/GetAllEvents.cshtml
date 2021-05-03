@@ -57,6 +57,11 @@
             <td><p><a asp-page="/Events/Info" asp-route-id="@item.Event_ID">See Details</a></p></td>
             <td><p><a asp-page="/Events/Delete" asp-route-id="@item.Event_ID">Delete</a></p></td>
             <td><p><a asp-page="/Events/Update" asp-route-id="@item.Event_ID">Update</a></p></td>
+            <td>
+                <p>
+                    <a asp-page="/Bookings/EventBookings" asp-route-Event_ID="@item.Event_ID" >bookings</a>
+                </p>
+            </td>
         </tr>
         }
 </table>

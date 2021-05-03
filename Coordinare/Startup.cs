@@ -32,6 +32,7 @@ namespace Coordinare
             services.AddTransient<IEventCatalog, EventCatalog>();
             services.AddTransient<IUserCatalog, UserCatalog>();
             services.AddTransient<IRoomCatalog, RoomCatalog>();
+            services.AddTransient<IBookingCatalog, BookingCatalog>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
