@@ -21,17 +21,22 @@ namespace Coordinare.Pages.Events
         {
             _service = service;
             _rservice = rservice;
+            Rooms = _rservice.GetAllRoomsAsync().Result;
         }
         public async void OnGet(int id)
         {
           Event = await _service.GetEventFromId(id);
-          Rooms = _rservice.GetAllRoomsAsync().Result;
           Time = DateTime.UtcNow.ToString("yyyy-MM-ddT00:00");
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            _service.UpdateEvent(Event,Event.Event_ID);
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            _service.UpdateEvent(Event, Event.Event_ID);
             return RedirectToPage("GetAllEvents");
+            
         }
     }
 }

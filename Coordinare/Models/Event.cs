@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,12 +32,17 @@ namespace Coordinare.Models
             Eventinfo = eventinfo;
             SS_amount = ssAmount;
         }
+        
         public int Event_ID { get; set; }
+        [Required]
         public string Duration  { get; set; }
         public string Room_ID { get; set; }
+        [Required]
         public string EventName { get; set; }
+        [Required]
         public DateTime DateTime { get; set; }
         public string Eventinfo { get; set; }
+        [Required]
         public int SS_amount { get; set; }
 
     }

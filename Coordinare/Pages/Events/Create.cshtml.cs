@@ -20,22 +20,30 @@ namespace Coordinare.Pages.Events
         public string Time { get; set; }
 
         public List<Room> Rooms { get; set; }
+        public string Message { get; set; }
         public CreateModel(IEventCatalog eservice, IRoomCatalog rservice)
         {
             _eservice = eservice;
             _rservice = rservice;
+            Rooms = _rservice.GetAllRoomsAsync().Result;
         }
 
         public void OnGet()
         {
-            Rooms = _rservice.GetAllRoomsAsync().Result;
+
             Time = DateTime.UtcNow.ToString("yyyy-MM-ddT00:00");
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+
+            }
             _eservice.CreateEvent(Event);
             return RedirectToPage("GetAllEvents");
+
         }
     }
 }
