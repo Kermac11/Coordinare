@@ -1,0 +1,59 @@
+﻿@page
+@model Coordinare.Pages.Bookings.UserBookingsModel
+@{
+}
+
+<h4 style="color:crimson"> List of bookings</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                booking ID
+            </th>
+            <th>
+                Event ID
+            </th>
+            <th>
+                User ID
+            </th>
+            <th>
+                Special Seat
+            </th>
+            <th>
+                In waiting list
+            </th>
+            <th>
+                Booking date
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.bookings.Count() != 0)
+        {
+            @foreach (var item in Model.bookings)
+            {
+                <tr>
+                    <td>
+                        @item.Booking_ID
+                    </td>
+                    <td>
+                        @item.Event_ID
+                    </td>
+                    <td>
+                        @item.User_ID
+                    </td>
+                    <td>
+                        @item.Special_Seat
+                    </td>
+                    <td>
+                        @item.InWaitingList
+                    </td>
+                    <td>
+                        @item.BookingDate
+                    </td>
+                </tr>
+            }
+        }
+</table>

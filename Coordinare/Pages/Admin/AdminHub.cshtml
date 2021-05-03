@@ -1,0 +1,28 @@
+﻿@page
+@model Coordinare.Pages.Admin.AdminHubModel
+@{
+}
+<form method="post">
+    <div class="form-group">
+        <button asp-page-handler ="CreateEvent" class="alert-info" style="padding: 14px 28px; width: 33.3%; float: left">Create Event</button>
+    </div>
+    <div class="form-group">
+        <button asp-page-handler ="CreateUser" class="alert-info" style="padding: 14px 28px; width: 33.3%; float: left">Create User</button>
+    </div>
+    <div class="form-group">
+        <button asp-page-handler ="CreateRoom" class="alert-info" style="padding: 14px 28px; width: 33.3%; float: left">Create room</button>
+    </div>
+
+
+
+    <div class="form-group">
+        <button asp-page-handler ="AllEvents" class="alert-info" style="padding: 14px 28px; width: 33.3%; float: left">All Events</button>
+    </div>
+    <div class="form-group">
+        <button asp-page-handler ="AllUsers" class="alert-info" style="padding: 14px 28px; width: 33.3%; float: left">All Users</button>
+    </div>
+    <div class="form-group">
+        <button asp-page-handler ="AllRooms" class="alert-info" style="padding: 14px 28px; width: 33.3%; float: left">All Rooms</button>
+    </div>
+</form>
+
