@@ -14,15 +14,15 @@
         @{
             if (LoginService.GetLoggedInUser() != null)
             {
-                <a asp-page="/Users/LogOut" class="float-right" style="font-size: medium">Log ud</a>
+                <a asp-page="/Users/Log/LogOut" class="float-right" style="font-size: medium">Log out</a>
                 <p class="float-right" style="font-size: medium">&nbsp; | &nbsp;</p>
-                <a asp-page="/Users/Details" asp-route-id="@LoginService.GetLoggedInUser().User_ID" class="float-right" style="font-size: medium">@LoginService.GetLoggedInUser()</a>
+                <a asp-page="/Users/Details" asp-route-id="@LoginService.GetLoggedInUser().User_ID" class="float-right" style="font-size: medium">@LoginService.GetLoggedInUser().Username</a>
             }
             else
             {
-                <a asp-page="/Users/LogIn" class="float-right" style="font-size: medium">Log-in</a>
+                <a asp-page="/Users/Log/LogIn" class="float-right" style="font-size: medium">Log-in</a>
                 <p class="float-right" style="font-size: medium">&nbsp; | &nbsp;</p>
-                //meld sig til link?
+                //melde sig til link?
             }
         }
     </div>
@@ -54,12 +54,12 @@
                         </li>
                         @if (LoginService.GetLoggedInUser() != null)
                         {
-                        @if (LoginService.GetLoggedInUser().Admin)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/AdminHub">Admin Hub</a>
-                            </li>
-                        }
+                            @if (LoginService.GetLoggedInUser().Admin)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/AdminHub">Admin Hub</a>
+                                </li>
+                            }
                         }
 
                         <li class="nav-item">
