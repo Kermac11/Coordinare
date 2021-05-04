@@ -13,15 +13,19 @@ namespace Coordinare.Pages.Events
     public class DeleteModel : PageModel
     {
         private IEventCatalog _service;
+        private IUserCatalog _uservice;
         public Event Event { get; set; }
-        public DeleteModel(IEventCatalog service)
+        public User Speaker { get; set; }
+        public DeleteModel(IEventCatalog service, IUserCatalog uservice)
         {
             _service = service;
+            _uservice = uservice;
         }
         public void OnGet(int id)
         {
           //  Func<int, bool> testbool = i => i == 0 ? true : false;
           Event = _service.GetEventFromId(id).Result;
+          Speaker = _uservice.GetUserFromIdAsync(Event.Speaker).Result;
         }
 
         public async Task<IActionResult> OnPostAsync(int id)

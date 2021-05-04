@@ -13,10 +13,12 @@ namespace Coordinare.Models
         {
             
         }
-        public Event(int eventId, string duration, string roomId, string eventName, DateTime dateTime, string eventinfo, int ssAmount)
+
+        public Event(int eventId, TimeSpan duration, int speaker, string roomId, string eventName, DateTime dateTime, string eventinfo, int ssAmount)
         {
             Event_ID = eventId;
             Duration = duration;
+            Speaker = speaker;
             Room_ID = roomId;
             EventName = eventName;
             DateTime = dateTime;
@@ -24,19 +26,11 @@ namespace Coordinare.Models
             SS_amount = ssAmount;
         }
 
-        public Event(int eventId, string duration, string eventName, DateTime dateTime, string eventinfo, int ssAmount)
-        {
-            Event_ID = eventId;
-            Duration = duration;
-            EventName = eventName;
-            DateTime = dateTime;
-            Eventinfo = eventinfo;
-            SS_amount = ssAmount;
-        }
-        
         public int Event_ID { get; set; }
         [Required(ErrorMessage = "Duration is required")]
-        public string Duration  { get; set; }
+        public TimeSpan Duration  { get; set; }
+        [Required(ErrorMessage = "Speaker Needed")]
+        public int Speaker { get; set; }
         public string Room_ID { get; set; }
         [Required (ErrorMessage = "Name Needed")]
         public string EventName { get; set; }
