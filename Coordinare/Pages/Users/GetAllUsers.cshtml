@@ -4,9 +4,11 @@
     ViewData["Title"] = "All users";
 }
 
-<p>
-    <button asp-page="/Users/Create">Create New User</button>
-</p>
+<form method="post">
+    <p>
+        <button asp-page-handler="CreateUser" class="alert-info">Create New User</button>
+    </p>
+</form>
 
 <h3>All users</h3>
 

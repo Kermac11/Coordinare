@@ -15,17 +15,19 @@ namespace Coordinare.Services
     {
         private string GetAllSql = "SELECT * from Events";
         private string GetEventFromIDSql = "SELECT * from Events WHERE Event_ID = @ID";
-        private string CreateEventSql = "INSERT into Events values(@Dur, @RID,  @Name, @Time, @Info, @SS)";
+        private string CreateEventSql = "INSERT into Events values(@Dur, @SID, @RID,  @Name, @Time, @Info, @SS)";
         private string DeleteEventSql = "DELETE from events where Event_ID = @ID";
         private string UpdateEventSql =
-            "UPDATE Events set Duration = @Dur, Room_ID = @RID, EventName = @Name, DateTime = @Time, Eventinfo = @Info, SS_Amount = @SS WHERE Event_ID = @ID";
+            "UPDATE Events set Duration = @Dur, Speaker = @SID,  Room_ID = @RID, EventName = @Name, DateTime = @Time, Eventinfo = @Info, SS_Amount = @SS WHERE Event_ID = @ID";
 
         private string GetBookingsSql = "SELECT * from Bookings WHERE Event_ID = @ID";
-        public EventCatalog(IConfiguration configuration) : base(configuration)
+
+        private IUserCatalog _userCatalog;
+        public EventCatalog(IConfiguration configuration, IUserCatalog _userCatalog) : base(configuration)
         {
         }
 
-        public EventCatalog(string connectionString) : base(connectionString)
+        public EventCatalog(string connectionString, IUserCatalog _userCatalog) : base(connectionString)
         {
         }
 
@@ -46,21 +48,24 @@ namespace Coordinare.Services
                         while (await reader.ReadAsync())
                         {
                             int eventId = reader.GetInt32(i: 0);
-                            string duration = reader.GetString(i: 1);
+                            long dur = reader.GetInt64(i: 1);
+                            TimeSpan duration = TimeSpan.FromTicks(dur);
+                            int speaker = reader.GetInt32(i: 2);
                             string roomId = null;
-                            if (!reader.IsDBNull(i: 2))
+                            if (!reader.IsDBNull(i: 3))
                             {
-                                roomId = reader.GetString(i: 2);
+                                roomId = reader.GetString(i: 3);
                             }
-                            string eventname = reader.GetString(i: 3);
-                            DateTime datetime = reader.GetDateTime(i: 4);
+                            string eventname = reader.GetString(i: 4);
+                            DateTime datetime = reader.GetDateTime(i: 5);
                             string info = null;
-                            if (!reader.IsDBNull(i: 5))
+                            if (!reader.IsDBNull(i: 6))
                             {
-                                info = reader.GetString(i: 5);
+                                info = reader.GetString(i: 6);
                             }
-                            int ss = reader.GetInt32(i: 6);
-                            Event _event = new Event(eventId, duration, roomId, eventname, datetime, info, ss);
+                            int ss = reader.GetInt32(i: 7);
+
+                            Event _event = new Event(eventId, duration, speaker, roomId, eventname, datetime, info, ss);
                             el.Add(_event);
                         }
                     }
@@ -94,21 +99,23 @@ namespace Coordinare.Services
                         while (await reader.ReadAsync())
                         {
                             int eventId = reader.GetInt32(i: 0);
-                            string duration = reader.GetString(i: 1);
+                            int dur = reader.GetInt32(i: 1);
+                            TimeSpan duration = TimeSpan.FromTicks(dur);
+                            int speaker = reader.GetInt32(i: 2);
                             string roomId = null;
-                            if (!reader.IsDBNull(i: 2))
+                            if (!reader.IsDBNull(i: 3))
                             {
-                                roomId = reader.GetString(i: 2);
+                                roomId = reader.GetString(i: 3);
                             }
-                            string eventname = reader.GetString(i: 3);
-                            DateTime datetime = reader.GetDateTime(i: 4);
+                            string eventname = reader.GetString(i: 4);
+                            DateTime datetime = reader.GetDateTime(i: 5);
                             string info = null;
-                            if (!reader.IsDBNull(i: 5))
+                            if (!reader.IsDBNull(i: 6))
                             {
-                                info = reader.GetString(i: 5);
+                                info = reader.GetString(i: 6);
                             }
-                            int ss = reader.GetInt32(i: 6);
-                            _event = new Event(eventId, duration, roomId, eventname, datetime, info, ss);
+                            int ss = reader.GetInt32(i: 7);
+                            _event = new Event(eventId, duration,speaker, roomId, eventname, datetime, info, ss);
                         }
                     }
                     catch (SqlException)
@@ -134,7 +141,8 @@ namespace Coordinare.Services
                 {
                     try
                     {
-                        command.Parameters.AddWithValue("@Dur", _event.Duration);
+                        command.Parameters.AddWithValue("@Dur", _event.Duration.Ticks);
+                        command.Parameters.AddWithValue("@SID", _event.Speaker);
                         command.Parameters.AddWithValue("@RID", string.IsNullOrEmpty(_event.Room_ID) ? (object)DBNull.Value : _event.Room_ID);
                         command.Parameters.AddWithValue("@Info", string.IsNullOrEmpty(_event.Eventinfo) ? (object)DBNull.Value : _event.Eventinfo);
                         command.Parameters.AddWithValue("@Name", _event.EventName);
@@ -192,7 +200,8 @@ namespace Coordinare.Services
                     try
                     {
                         command.Parameters.AddWithValue("@ID", _event.Event_ID);
-                        command.Parameters.AddWithValue("@Dur", _event.Duration);
+                        command.Parameters.AddWithValue("@Dur", _event.Duration.Ticks);
+                        command.Parameters.AddWithValue("@SID", _event.Speaker);
                         command.Parameters.AddWithValue("@RID", string.IsNullOrEmpty(_event.Room_ID) ? (object)DBNull.Value : _event.Room_ID);
                         command.Parameters.AddWithValue("@Info", string.IsNullOrEmpty(_event.Eventinfo) ? (object)DBNull.Value : _event.Eventinfo);
                         command.Parameters.AddWithValue("@Name", _event.EventName);

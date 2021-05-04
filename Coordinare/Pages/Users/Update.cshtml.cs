@@ -12,21 +12,21 @@ namespace Coordinare.Pages.Users
 {
     public class UpdateModel : PageModel
     {
-        private readonly IUserCatalog UserCatalog;
+        private readonly IUserCatalog userCatalog;
         [BindProperty] public User User { get; set; }
         public string InfoText { get; set; }
         public List<User> Users { get; private set; }
 
         public UpdateModel(IUserCatalog userCatalog)
         {
-            this.UserCatalog = userCatalog;
+            this.userCatalog = userCatalog;
         }
 
         public async Task OnGetAsync(int id)
         {
             InfoText = "Enter new information";
-            User = await UserCatalog.GetUserFromIdAsync(id);
-            Users = await UserCatalog.GetAllUsersAsync();
+            User = await userCatalog.GetUserFromIdAsync(id);
+            Users = await userCatalog.GetAllUsersAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(User user)
@@ -37,8 +37,8 @@ namespace Coordinare.Pages.Users
             }
             try
             {
-                await UserCatalog.UpdateUserAsync(user, user.User_ID);
-                Users = await UserCatalog.GetAllUsersAsync();
+                await userCatalog.UpdateUserAsync(user, user.User_ID);
+                Users = await userCatalog.GetAllUsersAsync();
             }
             catch (ExistsException e)
             {

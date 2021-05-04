@@ -13,15 +13,18 @@ namespace Coordinare.Pages.Events
     {
         private IEventCatalog _service;
         private IRoomCatalog _rservice;
+        private IUserCatalog _uservice;
         [BindProperty]
         public Event Event { get; set; }
         public List<Room> Rooms { get; set; }
+        public List<User> Speakers { get; set; }
         public string Time { get; set; }
-        public UpdateModel(IEventCatalog service, IRoomCatalog rservice)
+        public UpdateModel(IEventCatalog service, IRoomCatalog rservice, IUserCatalog uservice)
         {
             _service = service;
             _rservice = rservice;
             Rooms = _rservice.GetAllRoomsAsync().Result;
+            Speakers = uservice.GetAllUsersAsync().Result.FindAll(u => u.Speaker == true);
         }
         public async void OnGet(int id)
         {

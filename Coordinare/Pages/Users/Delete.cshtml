@@ -70,5 +70,8 @@
     </dl>
 
     <input type="submit" value="Delete" class="btn btn-danger" />&nbsp; | &nbsp;
-    <a asp-page="./GetAllUsers">Back to the overview</a>
+    @if (Model.User.Admin)
+    {
+        <a asp-page="./GetAllUsers">Back to the overview</a>
+    }
 </form>

@@ -1,0 +1,33 @@
+﻿@page
+@model Coordinare.Pages.Users.Log.LogInModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h3>Log-in</h3>
+
+<p class="text-danger">@Model.AccessDenied</p>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="@Model.User.Username" class="control-label"></label>
+        <input asp-for="@Model.User.Username" class="form-control" />
+        <span asp-validation-for="@Model.User.Username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.User.PasswordCheck" class="control-label"></label>
+        <input asp-for="@Model.User.PasswordCheck" class="form-control" />
+        <span asp-validation-for="@Model.User.PasswordCheck" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Log in" class="btn button btn-dark" />
+    </div>
+</form>
+
+<br />
+@*Fører ingen steder hen. måske linke til sikon? eller bare pointere at det fører til en udefra side*@
+<p>Not signed up? <br /> <a class="nav-link">Sign up here!</a></p>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
