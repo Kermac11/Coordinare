@@ -5,17 +5,22 @@
 }
 
 <label asp-for="User.Name" class="control-label"></label>
-@Model.User.Name
+: @Model.User.Name
+<br />
 <label asp-for="User.Username" class="control-label"></label>
-@Model.User.Username
+: @Model.User.Username
+<br />
 <label asp-for="User.Password" class="control-label"></label>
-@Model.User.Password
+: @Model.User.Password
+<br />
 <label asp-for="User.Phone" class="control-label"></label>
-@Model.User.Phone
+: @Model.User.Phone
+<br />
 <label asp-for="User.Email" class="control-label"></label>
-@Model.User.Email
+: @Model.User.Email
+<br />
 
-<div class="form-group">
+<div class="form-group" style="width: 200px">
     <label asp-for="@Model.User.Speaker" class="control-label"></label>
     @if (Model.User.Speaker)
     {
@@ -36,7 +41,7 @@
         </div>
     }
 </div>
-<div class="form-group">
+<div class="form-group"  style="width: 200px">
     <label asp-for="@Model.User.Specialaid" class="control-label"></label>
     @if (Model.User.Specialaid)
     {
@@ -58,11 +63,14 @@
     }
 </div>
 
-<p>
-    <a asp-page="/Users/Update" asp-route-id="@Model.User.User_ID">Update</a>
-</p>
-
-
-<p>
-    <a asp-page="/Users/Delete" asp-route-hNr="@Model.User.User_ID">Delete</a>
-</p>
+<form method="post">
+    <p>
+        <button asp-page="/Users/Update" asp-page-handler="UpdateUser" asp-route-id="@Model.User.User_ID" class="alert-info">Update information</button>
+    </p>
+    <p>
+        <button asp-page-handler="ChangePassword" asp-route-id="@Model.User.User_ID" class="alert-info">Change password</button>
+    </p>
+    <p>
+        <button asp-page-handler="DeleteUser" asp-route-id="@Model.User.User_ID" class="alert-danger">Delete user</button>
+    </p>
+</form>

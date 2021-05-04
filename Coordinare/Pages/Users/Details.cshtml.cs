@@ -12,6 +12,7 @@ namespace Coordinare.Pages.Users
     public class DetailsModel : PageModel
     {
         private IUserCatalog userCatalog;
+        
         [BindProperty] public new User User { get; set; }
 
         public DetailsModel(IUserCatalog userCatalog)
@@ -29,6 +30,19 @@ namespace Coordinare.Pages.Users
                 return NotFound();
 
             return Page();
+        }
+
+        //public IActionResult OnPostUpdateUser(int id)
+        //{
+        //    return RedirectToPage("/Users/Update", "UpdateUser", new { id = User.User_ID });
+        //}
+        public IActionResult OnPostChangePassword(int id)
+        {
+            return RedirectToPage("/Users/ChangePassword");
+        }
+        public IActionResult OnPostDeleteUser(int id)
+        {
+            return RedirectToPage("/Users/Delete");
         }
     }
 }

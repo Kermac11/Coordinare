@@ -24,5 +24,9 @@ namespace Coordinare.Pages.Users
         {
             Users = /*await*/ userCatalog.GetAllUsersAsync().Result;
         }
+        public IActionResult OnPostCreateUser()
+        {
+            return RedirectToPage("/Users/Create");
+        }
     }
 }
