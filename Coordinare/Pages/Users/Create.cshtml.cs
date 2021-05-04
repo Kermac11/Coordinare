@@ -12,20 +12,20 @@ namespace Coordinare.Pages.Users
 {
     public class CreateModel : PageModel
     {
-        private readonly IUserCatalog UserCatalog;
+        private readonly IUserCatalog userCatalog;
         [BindProperty] public User User { get; set; }
         public string InfoText { get; set; }
         public List<User> Users { get; private set; }
 
         public CreateModel(IUserCatalog userCatalog)
         {
-            this.UserCatalog = userCatalog;
+            this.userCatalog = userCatalog;
         }
 
         public async Task OnGetAsync()
         {
             InfoText = "Enter new user";
-            Users = await UserCatalog.GetAllUsersAsync();
+            Users = await userCatalog.GetAllUsersAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(User user)
@@ -36,8 +36,8 @@ namespace Coordinare.Pages.Users
             }
             try
             {
-                await UserCatalog.CreateUserAsync(user);
-                Users = await UserCatalog.GetAllUsersAsync();
+                await userCatalog.CreateUserAsync(user);
+                Users = await userCatalog.GetAllUsersAsync();
             }
             catch (ExistsException e)
             {

@@ -12,19 +12,19 @@ namespace Coordinare.Pages.Users
 {
     public class DeleteModel : PageModel
     {
-        private readonly IUserCatalog UserCatalog;
+        private readonly IUserCatalog userCatalog;
         [BindProperty] public User User { get; set; }
         public string InfoText { get; set; }
 
         public DeleteModel(IUserCatalog userCatalog)
         {
-            this.UserCatalog = userCatalog;
+            this.userCatalog = userCatalog;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
             InfoText = "You are deleting a user! Be sure.";
-            User = await UserCatalog.GetUserFromIdAsync(id);
+            User = await userCatalog.GetUserFromIdAsync(id);
             return Page();
         }
 
@@ -37,7 +37,7 @@ namespace Coordinare.Pages.Users
 
             try
             {
-                await UserCatalog.DeleteUserAsync(User.User_ID);
+                await userCatalog.DeleteUserAsync(User.User_ID);
                 
             }
             catch (Exception e)

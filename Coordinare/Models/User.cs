@@ -16,6 +16,11 @@ namespace Coordinare.Models
         public string Username { get; set; }
 
         public string Password { get; set; }
+        [BindProperty, Required(ErrorMessage = "{0} skal udfyldes"), DataType(DataType.Password), Display(Name = "Repeat password"), Compare(nameof(Password), ErrorMessage = "Password not the same")]
+        public string Password2 { get; set; }
+        [BindProperty, DataType(DataType.Password), Display(Name = "Password")]
+        public string PasswordCheck { get; set; }
+
         public string Phone { get; set; }
         [BindProperty, Required(ErrorMessage = "{0} must be filled out")]
         public string Email { get; set; }
@@ -26,8 +31,6 @@ namespace Coordinare.Models
         [BindProperty, Required(ErrorMessage = "{0} must be filled out")]
         public bool Admin { get; set; }
 
-        [BindProperty, DataType(DataType.Password)]
-        public string PasswordCheck { get; set; }
 
         public User()
         {
