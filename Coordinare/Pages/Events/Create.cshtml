@@ -6,14 +6,25 @@
 }
 <form method="post">
     <div class="form-group">
-
         <label asp-for="Event.EventName" class="custom-control-label"></label>
-        <input asp-for="@Model.Event.EventName" class="form-control" />
+        <input asp-for="@Model.Event.EventName" class="form-control"/>
         <span class="field-validation-error text-danger" asp-validation-for="Event.EventName"></span>
     </div>
     <div class="form-group">
         <label asp-for="Event.DateTime" class="custom-control-label"></label>
         <input min="@Model.Time" type="datetime-local" asp-for="Event.DateTime" class="form-control" />
+        <span class="field-validation-error text-danger" asp-validation-for="Event.DateTime"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Event.Speaker" class="custom-control-label"></label>
+        <select asp-for="Event.Speaker">
+            <option value="">Speaker is Needed</option>
+            @foreach (User item in @Model.Speakers)
+            {
+                <option value="@item.User_ID">@item.Username</option>
+            }
+        </select>
+        <span class="field-validation-error text-danger" asp-validation-for="Event.Speaker"></span>
     </div>
     <div class="form-group">
         <label asp-for="Event.Room_ID" class="custom-control-label"></label>
@@ -27,11 +38,13 @@
     </div>
     <div class="form-group">
         <label asp-for="Event.Duration"></label>
-        <input asp-for="Event.Duration" />
+        <input value="00:00" type="time" asp-for="Event.Duration" />
+        <span class="field-validation-error text-danger" asp-validation-for="Event.Duration"></span>
     </div>
     <div class="form-group">
         <label asp-for="Event.SS_amount"></label>
         <input type="number" asp-for="Event.SS_amount" />
+        <span class="field-validation-error text-danger" asp-validation-for="Event.SS_amount"></span>
     </div>
     <input type="submit" value="create" class="btn btn-primary" />
 </form>

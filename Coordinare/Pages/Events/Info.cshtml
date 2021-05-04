@@ -5,3 +5,6 @@
 <p><a asp-page="/Events/Update" asp-route-id="@Model.Event.Event_ID">Update</a></p>
 <h1>@Model.Event.EventName</h1>
 <p>@Model.Event.Eventinfo</p>
+<form method="post">
+    <input type="submit" value="Book event" class="btn btn-primary"/>
+</form>
