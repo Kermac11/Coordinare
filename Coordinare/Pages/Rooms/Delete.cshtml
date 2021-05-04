@@ -2,6 +2,11 @@
 @model Coordinare.Pages.Rooms.DeleteModel
 @{
 }
+
+<div class="alert alert-warning" role="alert">
+    @Model.TextBox
+</div>
+<h1>Delete Room</h1>
 <form method="post">
     <input type="hidden" asp-for="Room.Room_ID" name="id"/> 
 <div class="form-group">
