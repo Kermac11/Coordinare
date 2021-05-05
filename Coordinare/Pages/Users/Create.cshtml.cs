@@ -44,6 +44,11 @@ namespace Coordinare.Pages.Users
                 InfoText = $"Something went wrong! {e.Message}";
                 return Page();
             }
+            catch (Exception e)
+            {
+                InfoText = $"Something went wrong! {e.Message}";
+                return Page();
+            }
             return RedirectToPage("GetAllUsers");
         }
     }
