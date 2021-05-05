@@ -14,6 +14,7 @@ namespace Coordinare.Pages.Events
         private IEventCatalog _service;
 
         public Event Event { get; set; }
+        public User User { get; set; }
 
         [BindProperty] public int EventID { get; set; }
 
