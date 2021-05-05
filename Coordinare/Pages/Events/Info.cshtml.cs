@@ -13,6 +13,7 @@ namespace Coordinare.Pages.Events
     {
         private IEventCatalog _service;
         public Event Event { get; set; }
+        public User User { get; set; }
         public InfoModel(IEventCatalog service)
         {
             _service = service;
