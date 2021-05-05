@@ -24,10 +24,10 @@
                 <input asp-for="@Model.User.Username" class="form-control" />
                 <span asp-validation-for="@Model.User.Username" class="text-danger"></span>
             </div>
-            @*Måske lave password om til autogenereret*@
+            @*Autogenereret password!!*@
             <div class="form-group">
                 <label asp-for="@Model.User.Password" class="control-label"></label>
-                <input asp-for="@Model.User.Password" class="form-control" />
+                <input readonly="readonly" asp-for="@Model.User.Password" class="form-control" value="@Model.RndPass.ToString()" />
                 @*<span asp-validation-for="User.Password" class="text-danger"></span>*@
             </div>
 
