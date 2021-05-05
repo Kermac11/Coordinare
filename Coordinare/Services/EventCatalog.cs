@@ -99,7 +99,7 @@ namespace Coordinare.Services
                         while (await reader.ReadAsync())
                         {
                             int eventId = reader.GetInt32(i: 0);
-                            int dur = reader.GetInt32(i: 1);
+                            long dur = reader.GetInt64(i: 1);
                             TimeSpan duration = TimeSpan.FromTicks(dur);
                             int speaker = reader.GetInt32(i: 2);
                             string roomId = null;
@@ -118,12 +118,12 @@ namespace Coordinare.Services
                             _event = new Event(eventId, duration,speaker, roomId, eventname, datetime, info, ss);
                         }
                     }
-                    catch (SqlException)
+                    catch (SqlException sx)
                     {
                         Console.WriteLine("Database Fejl");
                         return null;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         Console.WriteLine("Generel Fejl");
                         return null;
