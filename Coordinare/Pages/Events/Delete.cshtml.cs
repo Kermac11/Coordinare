@@ -31,7 +31,7 @@ namespace Coordinare.Pages.Events
         public async Task<IActionResult> OnPostAsync(int id)
         {
             _service.DeleteEvent(id);
-            return RedirectToPage("GetAllEvents", new {id = id});
+            return RedirectToPage("GetAllEvents");
         }
     }
 }

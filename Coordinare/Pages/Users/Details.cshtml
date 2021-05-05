@@ -41,7 +41,7 @@
         </div>
     }
 </div>
-<div class="form-group"  style="width: 200px">
+<div class="form-group" style="width: 200px">
     <label asp-for="@Model.User.Specialaid" class="control-label"></label>
     @if (Model.User.Specialaid)
     {
@@ -63,14 +63,22 @@
     }
 </div>
 
-<form method="post">
+<form method="post" asp-page-handler="UpdateUser">
     <p>
-        <button asp-page="/Users/Update" asp-page-handler="UpdateUser" asp-route-id="@Model.User.User_ID" class="alert-info">Update information</button>
+        <button class="alert-info">Update information</button>
     </p>
-    <p>
-        <button asp-page-handler="ChangePassword" asp-route-id="@Model.User.User_ID" class="alert-info">Change password</button>
-    </p>
-    <p>
-        <button asp-page-handler="DeleteUser" asp-route-id="@Model.User.User_ID" class="alert-danger">Delete user</button>
-    </p>
+    <input type="hidden" name="id" value="@Model.User.User_ID"/>
 </form>
+<form method="post" asp-page-handler="ChangePassword">
+    <p>
+        <button class="alert-info">Change password</button>
+    </p>
+    <input type="hidden" name="id" value="@Model.User.User_ID" />
+</form>
+<form method="post" asp-page-handler="DeleteUser">
+    <p>
+        <button class="alert-danger">Delete user</button>
+    </p>
+    <input type="hidden" name="id" value="@Model.User.User_ID" />
+</form>
+

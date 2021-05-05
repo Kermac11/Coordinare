@@ -32,7 +32,7 @@ namespace Coordinare.Pages.Users
                 User.Password = _newPassword;
 
                 userCatalog.UpdateUserAsync(User, (int)id);
-                return RedirectToPage("./Index");
+                return RedirectToPage("/Users/Details", new { id = id });
             }
 
             AccessDenied = "Wrong password";
