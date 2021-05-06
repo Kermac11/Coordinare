@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Coordinare.Services
@@ -132,6 +133,9 @@ namespace Coordinare.Services
 
         public async Task<bool> CreateBooking(Booking booking)
         {
+            GetAllBookings().Result.FirstOrDefault(b => b.Event_ID == booking.Event_ID && b.User_ID == booking.User_ID);
+
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (SqlCommand command = new SqlCommand(insertSql, connection))

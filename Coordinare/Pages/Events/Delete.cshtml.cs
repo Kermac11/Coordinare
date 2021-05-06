@@ -25,7 +25,7 @@ namespace Coordinare.Pages.Events
         {
           //  Func<int, bool> testbool = i => i == 0 ? true : false;
           Event = _service.GetEventFromId(id).Result;
-          Speaker = _uservice.GetUserFromIdAsync(Event.Speaker).Result;
+          Speaker = _uservice.GetUserFromIdAsync(Event.Speaker.User_ID).Result;
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
