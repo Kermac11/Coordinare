@@ -11,7 +11,7 @@ namespace Coordinare.Pages.Rooms
 {
     public class DeleteModel : PageModel
     {
-        private readonly IRoomCatalog _service;
+        private IRoomCatalog _service;
         [BindProperty] public Room Room { get; set; }
         public string TextBox { get; set; }
 
@@ -20,16 +20,17 @@ namespace Coordinare.Pages.Rooms
             _service = service;
         }
 
-        public void OnGet(string id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             TextBox = "Are you sure that you want to delete?";
-            Room = _service.GetRoomsFromIdAsync(id).Result;
+            Room = await _service.GetRoomsFromIdAsync(id);
+            return Page();
         }
 
-        public async Task<IActionResult> OnPosAsync()
+        public async Task<IActionResult> OnPostAsync()
         { 
-            _service.DeleteRoomAsync(Room.Room_ID);
-            return RedirectToPage("GetAllRooms", new { id = Room.Room_ID });
+            await _service.DeleteRoomAsync(Room.Room_ID);
+            return RedirectToPage("GetAllRooms");
         }
     }
 }
