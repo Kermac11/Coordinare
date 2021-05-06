@@ -32,17 +32,17 @@ namespace Coordinare.Pages.Users
             return Page();
         }
 
-        //public IActionResult OnPostUpdateUser(int id)
-        //{
-        //    return RedirectToPage("/Users/Update", "UpdateUser", new { id = User.User_ID });
-        //}
+        public IActionResult OnPostUpdateUser(int id)
+        {
+            return RedirectToPage("/Users/Update", new { id = id });
+        }
         public IActionResult OnPostChangePassword(int id)
         {
-            return RedirectToPage("/Users/ChangePassword");
+            return RedirectToPage("/Users/ChangePassword", new { id = id });
         }
         public IActionResult OnPostDeleteUser(int id)
         {
-            return RedirectToPage("/Users/Delete");
+            return RedirectToPage("/Users/Delete", new { id = id });
         }
     }
 }
