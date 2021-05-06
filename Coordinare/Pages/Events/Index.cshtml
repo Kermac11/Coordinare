@@ -2,3 +2,68 @@
 @model Coordinare.Pages.Events.IndexModel
 @{
 }
+<form method="post" asp-page-handler="search">
+    <input type="text" name="filter"  value="" placeholder="Search here..."/>
+    <input type="submit" value="Search"/>
+</form>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Event ID
+        </th>
+        <th>
+            Duration
+        </th>
+        <th>
+            Speaker
+        </th>
+        <th>
+            Room Id
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Event info
+        </th>
+        <th>
+            Speaciel seats
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Events)
+    {
+        <tr>
+            <td>
+                @item.Event_ID
+            </td>
+            <td>
+                @item.Duration
+            </td>
+            <td>
+                @item.Speaker.Name
+            </td>
+            <td>
+                @item.Room_ID
+            </td>
+            <td>
+                @item.EventName
+            </td>
+            <td>
+                @item.DateTime
+            </td>
+            <td>
+                @item.Eventinfo
+            </td>
+            <td>
+                @item.SS_amount
+            </td>
+            <td><p><a asp-page="/Events/Info" asp-route-id="@item.Event_ID">See Details</a></p></td>
+        </tr>
+    }
+</table>
