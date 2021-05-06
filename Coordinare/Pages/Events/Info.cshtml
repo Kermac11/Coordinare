@@ -8,3 +8,4 @@
 <form method="post">
     <input type="submit" value="Book event" class="btn btn-primary"/>
 </form>
+<td><p><a asp-page="/Bookings/CreateBooking" asp-route-id="@Model.EventID" asp-route-Uid="@Model.CurrentUser.User_ID">create bookings</a></p></td>
