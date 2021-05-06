@@ -16,7 +16,7 @@ namespace Coordinare.Services
         private String UserqueryString = "select * from Bookings WHERE User_ID = @userID";
         private String EventqueryString = "select * from Bookings WHERE Event_ID = @eventID";
         private string QueryIDString = "select * from Bookings where Booking_ID = @ID";
-        private String insertSql = "insert into Bookings Values (@bookingID, @eventID, @userID, @specialseat, @inwaitinglist, @bookingdate)";
+        private String insertSql = "insert into Bookings Values (@eventID, @userID, @specialseat, @inwaitinglist, @bookingdate)";
         private String deleteSql = "delete from Bookings where Booking_ID = @bookingID AND Event_ID = @eventID AND User_ID = @userID";
         private String updateSql = "update Bookings " +
                                    "set Special_Seat = @specialseat, InWaitingList = @inwaitinglist, BookingDate = @bookingdate" +
@@ -136,7 +136,7 @@ namespace Coordinare.Services
             {
                 using (SqlCommand command = new SqlCommand(insertSql, connection))
                 {
-                    command.Parameters.AddWithValue("@bookingID", booking.Booking_ID);
+                    //command.Parameters.AddWithValue("@bookingID", booking.Booking_ID);
                     command.Parameters.AddWithValue("@eventID", booking.Event_ID);
                     command.Parameters.AddWithValue("@userID", booking.User_ID);
                     command.Parameters.AddWithValue("@specialseat", booking.Special_Seat);
