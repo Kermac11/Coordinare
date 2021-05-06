@@ -26,19 +26,25 @@
         {
             @foreach (var item in Model.Rooms)
             {
-                <tr>
-                    <td>
-                        @item.Room_ID
-                    </td>
-                    <td>
-                        @item.Capacity
-                    </td>
-                    <td>
-                        <p>
-                            <a asp-page="/Rooms/Delete" asp-route-id="@item.Room_ID">Delete</a>
-                        </p>
-                    </td>
-                </tr>
+        <tr>
+            <td>
+                @item.Room_ID
+            </td>
+            <td>
+                @item.Capacity
+            </td>
+            <td>
+                <p>
+                    <a asp-page="/Rooms/Update" asp-route-id="@item.Room_ID">update</a>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <a asp-page="/Rooms/Delete" asp-route-id="@item.Room_ID">Delete</a>
+                </p>
+            </td>
+
+        </tr>
             }
         }
 </table>

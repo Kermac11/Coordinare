@@ -80,7 +80,7 @@ namespace Coordinare.Services
 
         #region DeleteRoom
 
-        public async void DeleteRoomAsync(string id)
+        public async Task<Room> DeleteRoomAsync(string id)
         {
             Room room = await GetRoomsFromIdAsync(id);
             await using (SqlConnection connection = new SqlConnection(connectionString))
@@ -89,19 +89,29 @@ namespace Coordinare.Services
                 {
                     try
                     {
-                        command.Parameters.AddWithValue("@ID", room.Room_ID);
                         await command.Connection.OpenAsync();
+                        command.Parameters.AddWithValue("@ID", id);
+                        
+                        int noOfRows = command.ExecuteNonQuery(); //bruges ved update, delete, insert
+                        if (noOfRows == 1)
+                        {
+                            return room;
+                        }
                     }
                     catch (SqlException)
                     {
                         Console.WriteLine("Database Fejl");
+                        return null;
                     }
                     catch (Exception)
                     {
                         Console.WriteLine("Generel Fejl");
+                        return null;
                     }
                 }
             }
+
+            return null;
         }
         #endregion
 
@@ -190,32 +200,31 @@ namespace Coordinare.Services
                 {
                     try
                     {
-                        await command.Connection.OpenAsync();
+                        
                         command.Parameters.AddWithValue("@ID", room.Room_ID);
-                        command.Parameters.AddWithValue("@ID", room.Capacity);
+                        command.Parameters.AddWithValue("@Capacity", room.Capacity);
 
+                        if (IdExist(room.Room_ID))
+                        {
+                            throw new ExistsException("Room ID already exists, please choose another ID.");
+                        }
+                        await command.Connection.OpenAsync();
                         // repeat for all variables....
-                        int noOfRows = command.ExecuteNonQuery(); //bruges ved update, delete, insert
+                        int noOfRows =await command.ExecuteNonQueryAsync(); //bruges ved update, delete, insert
                         if (noOfRows == 1)
                         {
-                            if (IdExist(room.Room_ID))
-                            {
-                                throw new ExistsException("Room ID already exists, please choose another ID.");
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                            
+                            return true;
                         }
                     }
                     catch (SqlException)
                     {
                         Console.WriteLine("Database Fejl");
+                        return false;
                     }
                     catch (Exception)
                     {
                         Console.WriteLine("Generel Fejl");
+                        return false;
                     }
                 }
             }
@@ -223,7 +232,7 @@ namespace Coordinare.Services
         }
         #endregion
         
-
+        
         #region IdExist
         private bool IdExist(string id)
         {
@@ -236,4 +245,5 @@ namespace Coordinare.Services
         }
         #endregion
     }
+        
 }
