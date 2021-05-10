@@ -13,7 +13,7 @@ namespace Coordinare.Pages.Users
     public class UpdateModel : PageModel
     {
         private readonly IUserCatalog userCatalog;
-        [BindProperty] public User User { get; set; }
+        [BindProperty(SupportsGet = true)] public User User { get; set; }
         public string InfoText { get; set; }
         public List<User> Users { get; private set; }
 

@@ -20,7 +20,8 @@ namespace Coordinare.Services
         private string deleteSql = "delete from Users where User_ID = @ID";
         private string updateSql = "update Users set Name=@Name, " +
                                    "Username=@Username, Password=@Password, Phone=@Phone, " +
-                                   "Email=@Email, Speaker=@Speaker, Specialaid=@Specialaid, Admin=@Admin";
+                                   "Email=@Email, Speaker=@Speaker, Specialaid=@Specialaid, Admin=@Admin " +
+                                   "where User_ID = @ID";
 
         public UserCatalog(IConfiguration configuration) : base(configuration)
         {

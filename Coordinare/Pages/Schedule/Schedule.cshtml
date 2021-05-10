@@ -41,7 +41,7 @@
     }
 </style>
 
-@if (Model.BookedEvents != null)
+@if (Model.BookedEvents != null || Model.BookedEvents.Count != 0)
 {
     <div class="tab">
         @foreach (Event e in Model.BookedEvents)
