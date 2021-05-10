@@ -7,6 +7,7 @@ using Coordinare.Models;
 using Coordinare.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 
 namespace Coordinare.Pages.Bookings
 {
@@ -38,8 +39,16 @@ namespace Coordinare.Pages.Bookings
 
         public async Task<IActionResult> OnPost()
         {
-            await _service.CreateBooking(CurrentBooking);
-            return RedirectToPage("/Events/GetAllEvents");
+            if (await _service.CreateBooking(CurrentBooking) == true)
+            {
+                return RedirectToPage("/Events/GetAllEvents");
+            }
+            else
+            {
+                return Page();
+            }
+            
+            
         }
     }
 }
