@@ -1,69 +1,81 @@
 ﻿@page
+@using Coordinare.Models
 @model Coordinare.Pages.Events.IndexModel
 @{
 }
 <form method="post" asp-page-handler="search">
-    <input type="text" name="filter"  value="" placeholder="Search here..."/>
-    <input type="submit" value="Search"/>
+    <select name="option">
+        <option value="">Select a search option...</option>
+        <option value="name">Name</option>
+    </select>
+    <input type="text" name="filter" value="" placeholder="Search here..." />
+    <input type="submit" value="Search" />
 </form>
 <table class="table">
     <thead>
-    <tr>
-        <th>
-            Event ID
-        </th>
-        <th>
-            Duration
-        </th>
-        <th>
-            Speaker
-        </th>
-        <th>
-            Room Id
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            Date
-        </th>
-        <th>
-            Event info
-        </th>
-        <th>
-            Speaciel seats
-        </th>
-    </tr>
+        <tr>
+            <th>
+                Event ID
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                Speaker
+            </th>
+            <th>
+                Room Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                <form method="post" asp-page="sortdate">
+                    <button class="btn" style="border: none; background-color: inherit; cursor: pointer;">
+                        Date
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-@Model.DateSort" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                        </svg>
+                    </button>
+                </form>
+            </th>
+            <th>
+                Event info
+            </th>
+            <th>
+                Speaciel seats
+            </th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.Events)
-    {
-        <tr>
-            <td>
-                @item.Event_ID
-            </td>
-            <td>
-                @item.Duration
-            </td>
-            <td>
-                @item.Speaker.Name
-            </td>
-            <td>
-                @item.Room_ID
-            </td>
-            <td>
-                @item.EventName
-            </td>
-            <td>
-                @item.DateTime
-            </td>
-            <td>
-                @item.Eventinfo
-            </td>
-            <td>
-                @item.SS_amount
-            </td>
-            <td><p><a asp-page="/Events/Info" asp-route-id="@item.Event_ID">See Details</a></p></td>
-        </tr>
-    }
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>
+                    @item.Event_ID
+                </td>
+                <td>
+                    @item.Duration
+                </td>
+                <td>
+                    @item.Speaker.Name
+                </td>
+                <td>
+                    @item.Room_ID
+                </td>
+                <td>
+                    @item.EventName
+                </td>
+                <td>
+                    @item.DateTime
+                </td>
+                <td>
+                    @item.Eventinfo
+                </td>
+                <td>
+                    @item.SS_amount
+                </td>
+                <td><p><a asp-page="/Events/Info" asp-route-id="@item.Event_ID">See Details</a></p></td>
+            </tr>
+        }
 </table>

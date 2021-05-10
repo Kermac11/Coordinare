@@ -19,15 +19,16 @@ namespace Coordinare.Pages.Events
         private IUserCatalog _uservice;
         [BindProperty] public Event Event { get; set; }
         public string Time { get; set; }
-
         public List<Room> Rooms { get; set; }
         public List<User> Speakers { get; set; }
+
         [BindProperty]
         public TimeSpan dura { get; set; }
         public CreateModel(IEventCatalog eservice, IRoomCatalog rservice, IUserCatalog uservice)
         {
             _eservice = eservice;
             _rservice = rservice;
+            _uservice = uservice;
             Rooms = _rservice.GetAllRoomsAsync().Result;
             Speakers = uservice.GetAllUsersAsync().Result.FindAll(u => u.Speaker == true);
         }
@@ -38,9 +39,10 @@ namespace Coordinare.Pages.Events
             Time = DateTime.UtcNow.ToString("yyyy-MM-ddT00:00");
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int sid)
         {
-            if (!ModelState.IsValid)
+            Event.Speaker = _uservice.GetUserFromIdAsync(sid).Result;
+            if (!ModelState.IsValid && Event.Speaker == null)
             {
                 return Page();
 

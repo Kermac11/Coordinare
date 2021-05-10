@@ -82,6 +82,7 @@ namespace Coordinare.Services
                     }
                 }
             }
+            el.Sort((e1,e2) => e1.DateTime.CompareTo(e2.DateTime));
             return el;
         }
 
@@ -262,10 +263,11 @@ namespace Coordinare.Services
             return bl;
         }
 
+
         public async Task<List<Event>> SearchByFilter(string filter)
         {
             List<Event> el = GetAllEvents().Result;
-           return  el.FindAll(e => e.EventName.ToLower().Contains(filter.ToLower()));
+           return  el.FindAll(e => e.EventName.ToLower().Contains(filter));
         }
     }
 }
