@@ -20,7 +20,8 @@ namespace Coordinare.Services
         private string deleteSql = "delete from Users where User_ID = @ID";
         private string updateSql = "update Users set Name=@Name, " +
                                    "Username=@Username, Password=@Password, Phone=@Phone, " +
-                                   "Email=@Email, Speaker=@Speaker, Specialaid=@Specialaid, Admin=@Admin";
+                                   "Email=@Email, Speaker=@Speaker, Specialaid=@Specialaid, Admin=@Admin " +
+                                   "where User_ID = @ID";
 
         public UserCatalog(IConfiguration configuration) : base(configuration)
         {
@@ -59,7 +60,7 @@ namespace Coordinare.Services
                             bool admin = reader.GetBoolean(8);
 
                             User user = new User(userID, name, username, password, 
-                                phone, email, /*ByteToBool(speaker)*/speaker, /*ByteToBool(special)*/special, /*ByteToBool(admin)*/ admin);
+                                phone, email, speaker, special, admin);
                             users.Add(user);
                         }
                     }
@@ -71,16 +72,6 @@ namespace Coordinare.Services
                 }
             }
             return users;
-        }
-
-        public bool ByteToBool(byte bit)
-        {
-            if (bit == 1)
-            {
-                return true;
-            }
-            
-            return false;
         }
 
         public async Task<User> GetUserFromIdAsync(int id)
