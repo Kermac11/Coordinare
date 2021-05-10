@@ -15,12 +15,20 @@
 
 <form method="post">
     <div class="form-group">
-        <input type="checkbox" asp-for="@Model.CurrentBooking.Special_Seat" /> special seat? <br />
+        @if (Model.User.Specialaid)
+        {
+            <div>
+                <label asp-for="@Model.CurrentBooking.Special_Seat"></label>
+                <input type="checkbox" asp-for="@Model.CurrentBooking.Special_Seat" />
+            </div>
+        }
+
     </div>
-    <input type="hidden" asp-for="@Model.CurrentBooking.User_ID"/>
-    <input type="hidden" asp-for="@Model.CurrentBooking.Event_ID"/>
-    <input type="hidden" asp-for="@Model.CurrentBooking.InWaitingList"/>
-    <input type="hidden" asp-for="@Model.CurrentBooking.Special_Seat"/>
-    <input type="hidden" asp-for="@Model.CurrentBooking.BookingDate"/>
-    <input type="submit" value="Confirm booking" class="btn btn-primary"/>
+    <input type="hidden" asp-for="@Model.CurrentBooking.User_ID" />
+    <input type="hidden" asp-for="@Model.CurrentBooking.Event_ID" />
+    <input type="hidden" asp-for="@Model.CurrentBooking.InWaitingList" />
+    <input type="hidden" asp-for="@Model.CurrentBooking.Special_Seat" />
+    <input type="hidden" asp-for="@Model.CurrentBooking.BookingDate" />
+    <input type="hidden" asp-for="@Model.User" />
+    <input type="submit" value="Confirm booking" class="btn btn-primary" />
 </form>
