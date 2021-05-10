@@ -20,7 +20,7 @@ namespace Coordinare.Pages.Rooms
         }
             
         
-        public async void OnGetAsync()
+        public async Task OnGetAsync()
         {
             Rooms =  _service.GetAllRoomsAsync().Result;
         }

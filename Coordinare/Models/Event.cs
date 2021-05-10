@@ -14,7 +14,7 @@ namespace Coordinare.Models
             
         }
 
-        public Event(int eventId, TimeSpan duration, int speaker, string roomId, string eventName, DateTime dateTime, string eventinfo, int ssAmount)
+        public Event(int eventId, TimeSpan duration, User speaker, string roomId, string eventName, DateTime dateTime, string eventinfo, int ssAmount)
         {
             Event_ID = eventId;
             Duration = duration;
@@ -30,7 +30,7 @@ namespace Coordinare.Models
         [Required(ErrorMessage = "Duration is required")]
         public TimeSpan Duration  { get; set; }
         [Required(ErrorMessage = "Speaker Needed")]
-        public int Speaker { get; set; }
+        public User Speaker { get; set; }
         public string Room_ID { get; set; }
         [Required (ErrorMessage = "Name Needed")]
         public string EventName { get; set; }

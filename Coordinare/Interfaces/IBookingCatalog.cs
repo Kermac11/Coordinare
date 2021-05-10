@@ -6,7 +6,6 @@ namespace Coordinare.Interfaces
 {
     public interface IBookingCatalog
     {
-        List<Booking> Bookings { get; set; }
 
         Task<List<Booking>> GetAllBookings();
 

@@ -16,7 +16,7 @@ namespace Coordinare.Interfaces
 
         Task<bool> CreateRoomAsync(Room room);
 
-        void DeleteRoomAsync(string id);
+        Task<Room> DeleteRoomAsync(string id);
 
         Task<bool> UpdateRoomAsync(Room room, string id);
     }

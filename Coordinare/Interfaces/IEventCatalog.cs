@@ -16,5 +16,6 @@ namespace Coordinare.Interfaces
         void DeleteEvent(int id);
         void UpdateEvent(Event _event, int id);
         Task<List<object>> GetWaitingList<T>();
+        Task<List<Event>> SearchByFilter(string filter);
     }
 }

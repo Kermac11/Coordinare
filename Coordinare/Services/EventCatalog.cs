@@ -25,6 +25,7 @@ namespace Coordinare.Services
         private IUserCatalog _userCatalog;
         public EventCatalog(IConfiguration configuration, IUserCatalog _userCatalog) : base(configuration)
         {
+            this._userCatalog = _userCatalog;
         }
 
         public EventCatalog(string connectionString, IUserCatalog _userCatalog) : base(connectionString)
@@ -50,7 +51,7 @@ namespace Coordinare.Services
                             int eventId = reader.GetInt32(i: 0);
                             long dur = reader.GetInt64(i: 1);
                             TimeSpan duration = TimeSpan.FromTicks(dur);
-                            int speaker = reader.GetInt32(i: 2);
+                            int speakerid = reader.GetInt32(i: 2);
                             string roomId = null;
                             if (!reader.IsDBNull(i: 3))
                             {
@@ -64,7 +65,7 @@ namespace Coordinare.Services
                                 info = reader.GetString(i: 6);
                             }
                             int ss = reader.GetInt32(i: 7);
-
+                            User speaker = await _userCatalog.GetUserFromIdAsync(speakerid);
                             Event _event = new Event(eventId, duration, speaker, roomId, eventname, datetime, info, ss);
                             el.Add(_event);
                         }
@@ -101,7 +102,7 @@ namespace Coordinare.Services
                             int eventId = reader.GetInt32(i: 0);
                             long dur = reader.GetInt64(i: 1);
                             TimeSpan duration = TimeSpan.FromTicks(dur);
-                            int speaker = reader.GetInt32(i: 2);
+                            int speakerid = reader.GetInt32(i: 2);
                             string roomId = null;
                             if (!reader.IsDBNull(i: 3))
                             {
@@ -115,6 +116,7 @@ namespace Coordinare.Services
                                 info = reader.GetString(i: 6);
                             }
                             int ss = reader.GetInt32(i: 7);
+                            User speaker = await _userCatalog.GetUserFromIdAsync(speakerid);
                             _event = new Event(eventId, duration,speaker, roomId, eventname, datetime, info, ss);
                         }
                     }
@@ -142,7 +144,7 @@ namespace Coordinare.Services
                     try
                     {
                         command.Parameters.AddWithValue("@Dur", _event.Duration.Ticks);
-                        command.Parameters.AddWithValue("@SID", _event.Speaker);
+                        command.Parameters.AddWithValue("@SID", _event.Speaker.User_ID);
                         command.Parameters.AddWithValue("@RID", string.IsNullOrEmpty(_event.Room_ID) ? (object)DBNull.Value : _event.Room_ID);
                         command.Parameters.AddWithValue("@Info", string.IsNullOrEmpty(_event.Eventinfo) ? (object)DBNull.Value : _event.Eventinfo);
                         command.Parameters.AddWithValue("@Name", _event.EventName);
@@ -201,7 +203,7 @@ namespace Coordinare.Services
                     {
                         command.Parameters.AddWithValue("@ID", _event.Event_ID);
                         command.Parameters.AddWithValue("@Dur", _event.Duration.Ticks);
-                        command.Parameters.AddWithValue("@SID", _event.Speaker);
+                        command.Parameters.AddWithValue("@SID", _event.Speaker.User_ID);
                         command.Parameters.AddWithValue("@RID", string.IsNullOrEmpty(_event.Room_ID) ? (object)DBNull.Value : _event.Room_ID);
                         command.Parameters.AddWithValue("@Info", string.IsNullOrEmpty(_event.Eventinfo) ? (object)DBNull.Value : _event.Eventinfo);
                         command.Parameters.AddWithValue("@Name", _event.EventName);
@@ -260,5 +262,10 @@ namespace Coordinare.Services
             return bl;
         }
 
+        public async Task<List<Event>> SearchByFilter(string filter)
+        {
+            List<Event> el = GetAllEvents().Result;
+           return  el.FindAll(e => e.EventName.ToLower().Contains(filter.ToLower()));
+        }
     }
 }
