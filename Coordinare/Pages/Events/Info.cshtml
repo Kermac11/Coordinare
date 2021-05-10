@@ -6,6 +6,15 @@
 <h1>@Model.Event.EventName</h1>
 <p>@Model.Event.Eventinfo</p>
 <form method="post">
-    <input type="hidden" asp-for="@Model.EventID" />
-    <input type="submit" value="Book event" class="btn btn-primary" />
+    <input type="hidden" asp-for="@Model.EventID"/>
+    @if (Model.UserBookings.Exists(x => x.User_ID == Model.CurrentUser.User_ID ) && Model.UserBookings.Exists(y=> y.Event_ID == Model.EventID))
+    {
+        
+    }
+    else
+    {
+        <input type="submit" value="Book event" class="btn btn-primary" />
+    }
+
+    
 </form>
