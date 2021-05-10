@@ -14,7 +14,7 @@ namespace Coordinare.Pages.Events
     {
         private IEventCatalog _service;
         private IBookingCatalog _Bservice;
-        private LoginService _Lservice;
+        public LoginService _Lservice;
         public List<Booking> UserBookings;
         public Event Event { get; set; }
         public User CurrentUser { get; set; }
@@ -32,7 +32,11 @@ namespace Coordinare.Pages.Events
           Event = _service.GetEventFromId(id).Result;
           EventID = id;
           CurrentUser = _Lservice.GetLoggedInUser();
-          UserBookings = _Bservice.GetBookingsFromUser(CurrentUser.User_ID).Result;
+          if (CurrentUser != null)
+          { 
+              UserBookings = _Bservice.GetBookingsFromUser(CurrentUser.User_ID).Result;
+          }
+          
         }
 
         public async Task<IActionResult> OnPost()
