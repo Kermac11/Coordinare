@@ -59,7 +59,7 @@ namespace Coordinare.Services
                             bool admin = reader.GetBoolean(8);
 
                             User user = new User(userID, name, username, password, 
-                                phone, email, /*ByteToBool(speaker)*/speaker, /*ByteToBool(special)*/special, /*ByteToBool(admin)*/ admin);
+                                phone, email, speaker, special, admin);
                             users.Add(user);
                         }
                     }
@@ -71,16 +71,6 @@ namespace Coordinare.Services
                 }
             }
             return users;
-        }
-
-        public bool ByteToBool(byte bit)
-        {
-            if (bit == 1)
-            {
-                return true;
-            }
-            
-            return false;
         }
 
         public async Task<User> GetUserFromIdAsync(int id)
