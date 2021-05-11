@@ -30,7 +30,7 @@ namespace Coordinare.Models
         [Required(ErrorMessage = "Duration is required")]
         public TimeSpan Duration  { get; set; }
         [Required(ErrorMessage = "Speaker Needed")]
-        public User Speaker { get; set; }
+        public User? Speaker { get; set; }
         public string Room_ID { get; set; }
         [Required (ErrorMessage = "Name Needed")]
         public string EventName { get; set; }

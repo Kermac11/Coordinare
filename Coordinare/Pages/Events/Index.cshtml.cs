@@ -21,18 +21,26 @@ namespace Coordinare.Pages.Events
         private IEventCatalog _service;
         private IUserCatalog _usercatalog;
         public List<Event> Events { get; set; }
-        public List<SelectListItem> Filter { get; set; }
+        [BindProperty]
+        public string Filter { get; set; }
+        [BindProperty]
         public string DateSort { get; set; }
+        [BindProperty]
+        public string NameSort { get; set; }
+        [BindProperty]
+        public string SeatSort { get; set; }
         public IndexModel(IEventCatalog service, IUserCatalog uservice)
         {
             _service = service;
             _usercatalog = uservice;
-            DateSort = "down";
         }
         public void OnGet()
         {
             Events = _service.GetAllEvents().Result;
             Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
+            DateSort ??= DateSort = "down";
+            NameSort ??= NameSort = "down";
+            SeatSort ??= SeatSort = "down";
         }
 
         public async Task<IActionResult> OnPostSearch(string filter, string option)
@@ -41,36 +49,130 @@ namespace Coordinare.Pages.Events
             {
                 if (option == "name")
                 {
-                    Events = _service.GetAllEvents().Result.FindAll(e => e.EventName.ToLower().Contains(filter.ToLower()));
+                    Filter = filter;
+                    Events = _service.GetAllEvents().Result.FindAll(e => e.DateTime > DateTime.UtcNow).FindAll(e => e.EventName.ToLower().Contains(filter.ToLower()));
                     Events.Sort((e1, e2) => e1.EventName.CompareTo(e2.EventName));
                 }
             }
             if (Events == null)
             {
-                OnGet();
+                Events = _service.GetAllEvents().Result;
+                Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
             }
-
-            //Events.Select(e => e.DateTime.Day).Distinct().Count();
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostSortdate()
+        public async Task<IActionResult> OnPostSortdate(string sort)
         {
-
-            if (DateSort == "down")
+            if (sort == "down")
             {
+                if (!string.IsNullOrEmpty(Filter))
+                {
+                    Events = _service.GetAllEvents().Result.FindAll(e => e.DateTime > DateTime.UtcNow).FindAll(e => e.EventName.ToLower().Contains(Filter.ToLower()));
+                }
+                else
+                {
+                    Events = _service.GetAllEvents().Result;
+                    Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
+                }
+                Events.Sort((e1, e2) => e2.DateTime.CompareTo(e1.DateTime));
                 DateSort = "up";
-                OnGet();
-                Events.Sort((e1, e2) => e2.EventName.CompareTo(e1.EventName));
+                NameSort = "down";
+                SeatSort = "down";
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(Filter))
+                {
+                    Events = _service.GetAllEvents().Result.FindAll(e => e.DateTime > DateTime.UtcNow).FindAll(e => e.EventName.ToLower().Contains(Filter.ToLower()));
+                }
+                else
+                {
+                    Events = _service.GetAllEvents().Result;
+                    Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
+                }
+                Events.Sort((e1, e2) => e1.DateTime.CompareTo(e2.DateTime));
+                DateSort = "down";
+                NameSort = "down";
+                SeatSort = "down";
             }
 
-            if (DateSort == "up")
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostSortname(string sort)
+        {
+            if (sort == "down")
             {
+                if (!string.IsNullOrEmpty(Filter))
+                {
+                    Events = _service.GetAllEvents().Result.FindAll(e => e.DateTime > DateTime.UtcNow).FindAll(e => e.EventName.ToLower().Contains(Filter.ToLower()));
+                }
+                else
+                {
+                    Events = _service.GetAllEvents().Result;
+                    Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
+                }
+                Events.Sort((e1, e2) => e2.EventName.CompareTo(e1.EventName));
+                NameSort = "up";
                 DateSort = "down";
-                OnGet();
-                Events.Sort((e1, e2) => e1.EventName.CompareTo(e2.EventName));
+                SeatSort = "down";
             }
+            else
+            {
+                if (!string.IsNullOrEmpty(Filter))
+                {
+                    Events = _service.GetAllEvents().Result.FindAll(e => e.DateTime > DateTime.UtcNow).FindAll(e => e.EventName.ToLower().Contains(Filter.ToLower()));
+                }
+                else
+                {
+                    Events = _service.GetAllEvents().Result;
+                    Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
+                }
+                Events.Sort((e1, e2) => e1.EventName.CompareTo(e2.EventName));
+                NameSort = "down";
+                DateSort = "down";
+                SeatSort = "down";
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostSortseat(string sort)
+        {
+            if (sort == "down")
+            {
+                if (!string.IsNullOrEmpty(Filter))
+                {
+                    Events = _service.GetAllEvents().Result.FindAll(e => e.DateTime > DateTime.UtcNow).FindAll(e => e.EventName.ToLower().Contains(Filter.ToLower()));
+                }
+                else
+                {
+                    Events = _service.GetAllEvents().Result;
+                    Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
+                }
+                Events.Sort((e1, e2) => e2.SS_amount.CompareTo(e1.SS_amount));
+                NameSort = "down";
+                DateSort = "down";
+                SeatSort = "up";
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(Filter))
+                {
+                    Events = _service.GetAllEvents().Result.FindAll(e => e.DateTime > DateTime.UtcNow).FindAll(e => e.EventName.ToLower().Contains(Filter.ToLower()));
+                }
+                else
+                {
+                    Events = _service.GetAllEvents().Result;
+                    Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
+                }
+                Events.Sort((e1, e2) => e1.SS_amount.CompareTo(e2.SS_amount));
+                NameSort = "down";
+                DateSort = "down";
+                SeatSort = "down";
+            }
+
             return Page();
         }
     }

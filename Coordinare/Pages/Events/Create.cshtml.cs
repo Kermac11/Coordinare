@@ -35,7 +35,6 @@ namespace Coordinare.Pages.Events
 
         public void OnGet()
         {
-
             Time = DateTime.UtcNow.ToString("yyyy-MM-ddT00:00");
         }
 
@@ -45,11 +44,11 @@ namespace Coordinare.Pages.Events
             if (!ModelState.IsValid && Event.Speaker == null)
             {
                 return Page();
-
             }
             _eservice.CreateEvent(Event);
             return RedirectToPage("GetAllEvents");
 
         }
+
     }
 }
