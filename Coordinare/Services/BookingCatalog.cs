@@ -127,7 +127,7 @@ namespace Coordinare.Services
                         command.Parameters.AddWithValue("@userID", userID);
                         await command.Connection.OpenAsync();
                         SqlDataReader reader = await command.ExecuteReaderAsync();
-                        if (reader.Read())
+                        while (reader.Read())
                         {
                             int bookingid = reader.GetInt32(0);
                             int eventid = reader.GetInt32(1);
