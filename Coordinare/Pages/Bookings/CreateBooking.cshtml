@@ -30,5 +30,12 @@
     <input type="hidden" asp-for="@Model.CurrentBooking.Special_Seat" />
     <input type="hidden" asp-for="@Model.CurrentBooking.BookingDate" />
     <input type="hidden" asp-for="@Model.User" />
-    <input type="submit" value="Confirm booking" class="btn btn-primary" />
+    <div class="form-group">
+        <button asp-page-handler="Booking" class="btn-primary" >Confirm Booking</button>
+    </div>
+    <div class="form-group">
+        <button asp-page-handler="Return" class="btn-secondary" style="padding-right: 30px; float: left" >back to event overview</button>
+    </div>
 </form>
+
+

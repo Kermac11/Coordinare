@@ -37,7 +37,7 @@ namespace Coordinare.Pages.Bookings
 
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult>OnPostBooking()
         {
             if (await _service.CreateBooking(CurrentBooking) == true)
             {
@@ -49,6 +49,11 @@ namespace Coordinare.Pages.Bookings
             }
             
             
+        }
+
+        public async Task<IActionResult>OnPostReturn()
+        {
+            return  RedirectToPage("/Events/GetAllEvents");
         }
     }
 }
