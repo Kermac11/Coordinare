@@ -31,9 +31,10 @@ namespace Coordinare.Pages.Events
           Event = await _service.GetEventFromId(id);
           Time = DateTime.UtcNow.ToString("yyyy-MM-ddT00:00");
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int sid)
         {
-            if (!ModelState.IsValid)
+            Event.Speaker = _uservice.GetUserFromIdAsync(sid).Result;
+            if (!ModelState.IsValid && Event.Speaker == null)
             {
                 return Page();
             }

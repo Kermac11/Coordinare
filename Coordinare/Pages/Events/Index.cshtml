@@ -4,12 +4,13 @@
 @{
 }
 <form method="post" asp-page-handler="search">
+    <input asp-for="DateSort" type="hidden"/>
     <select name="option">
         <option value="">Select a search option...</option>
         <option value="name">Name</option>
     </select>
-    <input type="text" name="filter" value="" placeholder="Search here..." />
-    <input type="submit" value="Search" />
+    <input type="text" name="filter" value="" placeholder="Search here..."/>
+    <input type="submit" value="Search"/>
 </form>
 <table class="table">
     <thead>
@@ -27,15 +28,48 @@
                 Room Id
             </th>
             <th>
-                Name
+                <form method="post" asp-page-handler="sortname">
+                    <input type="hidden" asp-for="Filter" />
+                    <input type="hidden" asp-for="DateSort" />
+                    <input asp-for="SeatSort" type="hidden" />
+                    <input asp-for="NameSort" type="hidden" name="sort" />
+                    <button class="btn" style="border: none; background-color: inherit; cursor: pointer;">
+                        Name
+                        @if (@Model.NameSort == "down")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+                            </svg>
+                        }
+                        @if (@Model.NameSort == "up")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+                            </svg>
+                        }
+                    </button>
+                </form>
             </th>
             <th>
-                <form method="post" asp-page="sortdate">
+                <form method="post" asp-page-handler="sortdate">
+                    <input type="hidden" asp-for="Filter" />
+                    <input type="hidden" asp-for="NameSort" />
+                    <input asp-for="DateSort" type="hidden" name="sort" />
+                    <input asp-for="SeatSort" type="hidden" />
                     <button class="btn" style="border: none; background-color: inherit; cursor: pointer;">
                         Date
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-@Model.DateSort" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
-                        </svg>
+                        @if (@Model.DateSort == "down")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+                            </svg>
+                        }
+                        @if (@Model.DateSort == "up")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+                            </svg>
+                        }
                     </button>
                 </form>
             </th>
@@ -43,7 +77,27 @@
                 Event info
             </th>
             <th>
-                Speaciel seats
+                <form method="post" asp-page-handler="sortseat">
+                    <input type="hidden" asp-for="Filter"/>
+                    <input type="hidden" asp-for="NameSort"/>
+                    <input type="hidden" asp-for="DateSort" />
+                    <input asp-for="SeatSort" type="hidden" name="sort"/>
+                    <button class="btn" style="border: none; background-color: inherit; cursor: pointer;">
+                        Special seats
+                        @if (@Model.SeatSort == "down")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                            </svg>
+                        }
+                        @if (@Model.SeatSort == "up")
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                            </svg>
+                        }
+                    </button>
+                </form>
             </th>
         </tr>
     </thead>
