@@ -54,6 +54,21 @@ namespace Coordinare.Pages.Schedule
             return events;
         }
 
+        public Dictionary<DateTime, string> GetDateDict()
+        {
+            Dictionary<DateTime,string> dates = new Dictionary<DateTime, string>();
+            int a = 1;
+
+            foreach (var d in BookedEvents.Select(e => e.DateTime.Date).Distinct().ToList())
+            {
+                string value = "Day " + a;
+                dates.Add(d, value);
+                a++;
+            }
+
+            return dates;
+        }
+
         //public async Task<List<int>> GetIntDates()
         //{
         //    List<int> ints = new List<int> {BookedEvents.Select(e => e.DateTime.Day).Distinct().Count()};

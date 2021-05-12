@@ -23,6 +23,7 @@ namespace Coordinare.Pages.Events
         {
             _service = service;
             _rservice = rservice;
+            _uservice = uservice;
             Rooms = _rservice.GetAllRoomsAsync().Result;
             Speakers = uservice.GetAllUsersAsync().Result.FindAll(u => u.Speaker == true);
         }

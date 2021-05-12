@@ -43,39 +43,99 @@
 
 @if (Model.BookedEvents != null || Model.BookedEvents.Count != 0)
 {
-
-    @foreach (DateTime d in Model.NumOfDates)
-    {
-        <div class="tab">
-            <button class="tablinks" onclick="openTab(event, @d.Day)">@d.ToString("dd/MM")</button>
-            <button class="tablinks" onclick="openTab(event, 'London')">London</button>
-        </div>
-        @foreach (Event e in Model.BookedEvents.FindAll(e => e.DateTime.Day == d.Day))
+    <div class="tab">
+        @foreach (var d in Model.GetDateDict())
         {
-            <div id="@d.Day" class="tabcontent">
-                <table class="table table-striped">
-                    <thead>
+            <button class="tablinks" onclick="openTab(event, '@d.Key')">@d.Value</button>
+        }
+        <button class="tablinks" onclick="openTab(event, 'London')">London</button>
+    </div>
+    @foreach (var d in Model.GetDateDict())
+    {
+        <div id="@d.Key" class="tabcontent">
+            @foreach (var e in Model.BookedEvents)
+            {
+                <table class="table table-bordered">
+                    @if (d.Key == e.DateTime.Date)
+                    {
+                        <thead class="thead-light">
+                            <tr>
+                                <th>
+                                    Time
+                                </th>
+                                @if (e.Room_ID != null)
+                                {
+                                    <th>
+                                        @e.Room_ID
+                                    </th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @if (d.Key.TimeOfDay == e.DateTime.Date.TimeOfDay)
+                                {
+
+                                    <td>
+                                        @e.DateTime.ToString("t")
+                                    </td>
+
+                                }
+
+                                <td>
+                                    Event: @e.EventName
+                                    Speaker: @e.Speaker.Name
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            }
+
+        </div>
+    }
+
+
+
+
+
+    @*@foreach (DateTime d in Model.NumOfDates)
+        {
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, @d.Day)">@d.ToString("dd/MM")</button>
+
+            </div>
+            @foreach (Event e in Model.BookedEvents.FindAll(e => e.DateTime.Day == d.Day))
+            {
+                <div id="@d.Day" class="tabcontent">
+                    <table class="table table-striped">
+                        <thead>
                         <tr>
+                            <th>
+
+                            </th>
                             <th>
                                 @e.Room_ID
                             </th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr>
                             <td>
-                                @e.EventName
+                                @e.DateTime.TimeOfDay
                             </td>
                             <td>
+                                @e.EventName
                                 @e.Room_ID
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-        }
+                        </tbody>
+                    </table>
+                </div>
+            }
 
-    }
+        }*@
     <div id="London" class="tabcontent">
         <h3>navn</h3>
         <p>text</p>
