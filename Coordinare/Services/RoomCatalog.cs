@@ -25,10 +25,14 @@ namespace Coordinare.Services
 
         #region Sql Connection
 
-        public RoomCatalog(IConfiguration configuration) : base(configuration) { }
+        public RoomCatalog(IConfiguration configuration) : base(configuration)
+        {
+        }
 
 
-        public RoomCatalog(string connectionString) : base(connectionString) { }
+        public RoomCatalog(string connectionString) : base(connectionString)
+        {
+        }
 
 
         public List<Room> Rooms { get; set; }
@@ -91,7 +95,7 @@ namespace Coordinare.Services
                     {
                         await command.Connection.OpenAsync();
                         command.Parameters.AddWithValue("@ID", id);
-                        
+
                         int noOfRows = command.ExecuteNonQuery(); //bruges ved update, delete, insert
                         if (noOfRows == 1)
                         {
@@ -113,10 +117,12 @@ namespace Coordinare.Services
 
             return null;
         }
+
         #endregion
 
 
         #region GetAllRooms
+
         public async Task<List<Room>> GetAllRoomsAsync()
         {
             List<Room> Rooms = new List<Room>();
@@ -146,6 +152,7 @@ namespace Coordinare.Services
                     }
                 }
             }
+
             return Rooms;
         }
 
@@ -185,6 +192,7 @@ namespace Coordinare.Services
                     }
                 }
             }
+
             return room;
         }
 
@@ -192,6 +200,7 @@ namespace Coordinare.Services
 
 
         #region Update
+
         public async Task<bool> UpdateRoomAsync(Room room, string id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -200,7 +209,7 @@ namespace Coordinare.Services
                 {
                     try
                     {
-                        
+
                         command.Parameters.AddWithValue("@ID", room.Room_ID);
                         command.Parameters.AddWithValue("@Capacity", room.Capacity);
 
@@ -208,9 +217,10 @@ namespace Coordinare.Services
                         {
                             throw new ExistsException("Room ID already exists, please choose another ID.");
                         }
+
                         await command.Connection.OpenAsync();
                         // repeat for all variables....
-                        int noOfRows =await command.ExecuteNonQueryAsync(); //bruges ved update, delete, insert
+                        int noOfRows = await command.ExecuteNonQueryAsync(); //bruges ved update, delete, insert
                         if (noOfRows == 1)
                         {
                             return true;
@@ -228,22 +238,26 @@ namespace Coordinare.Services
                     }
                 }
             }
+
             return false;
         }
+
         #endregion
-        
-        
+
+
         #region IdExist
+
         private bool IdExist(string id)
         {
             foreach (Room r_id in GetAllRoomsAsync().Result)
             {
-                if (r_id.Room_ID == id) 
+                if (r_id.Room_ID == id)
                     return true;
             }
+
             return false;
         }
+
         #endregion
     }
-        
 }
