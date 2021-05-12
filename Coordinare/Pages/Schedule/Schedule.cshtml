@@ -44,15 +44,21 @@
 @if (Model.BookedEvents != null || Model.BookedEvents.Count != 0)
 {
 
-    @foreach (int d in Model.NumOfDates)
+    @foreach (var d in Model.NumOfDates.Select(d => new {Day = d.Day, Month = d.Month}).Distinct())
     {
         <div class="tab">
-            <button class="tablinks"></button>
+            <form method="post" asp-page-handler="daYlist">
+                <button value="@d.Day" name="day">
+                    <input type="hidden" name="month" value="@d.Month"/>
+                    @d.Day
+                </button>
+            </form>
+            @*<button class="tablinks" onclick="openTab(event, '@d.Day')">@d.Day/@d.Month</button>*@
         </div>
-        @foreach (Event e in Model.BookedEvents.FindAll(e => e.DateTime.Day == d))
+    }
+    @foreach (Event e in @Model.EventList)
         {
-            <div id="@d" class="tabcontent">
-                <table class="table table-striped">
+            <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>
@@ -71,14 +77,8 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
         }
 
-    }
-    <div id="London" class="tabcontent">
-        <h3>navn</h3>
-        <p>text</p>
-    </div>
 
     <!-- Tab content -->
     @*@foreach (Event e in Model.BookedEvents)

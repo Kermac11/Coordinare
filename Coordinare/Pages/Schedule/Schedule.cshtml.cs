@@ -18,8 +18,9 @@ namespace Coordinare.Pages.Schedule
         public List<Booking> Bookings { get; set; }
         public Predicate<Event> test;
         public List<Event> BookedEvents { get; set; }
-        public List<> NumOfDates { get; set; }
+        public List<DateTime> NumOfDates { get; set; }
         [BindProperty] public new User User { get; set; }
+        public List<Event> EventList { get; set; }
 
         public ScheduleModel(IEventCatalog eventCatalog, IBookingCatalog bookingCatalog, IUserCatalog userCatalog)
         {
@@ -36,7 +37,7 @@ namespace Coordinare.Pages.Schedule
             User = await userCatalog.GetUserFromIdAsync((int)id);
             Bookings = await bookingCatalog.GetBookingsFromUser((int)id);
             BookedEvents = await GetBookedEvents();
-            var NumOfDates = BookedEvents.Select(e => new {Day = e.DateTime.Day, Month = e.DateTime}).Distinct();
+            NumOfDates = BookedEvents.Select(e =>e.DateTime).ToList();
             if (User == null)
                 return NotFound();
 
@@ -53,6 +54,14 @@ namespace Coordinare.Pages.Schedule
                 events.Add(ev);
             }
             return events;
+        }
+
+        public async Task<IActionResult> OnPostDaylist(int day, int month)
+        {
+
+
+
+            return Page();
         }
     }
 }
