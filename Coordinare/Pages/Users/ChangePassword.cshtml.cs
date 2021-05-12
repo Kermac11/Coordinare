@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Coordinare.Interfaces;
 using Coordinare.Models;
+using Coordinare.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,12 +13,14 @@ namespace Coordinare.Pages.Users
     public class ChangePasswordModel : PageModel
     {
         private IUserCatalog userCatalog;
+        public LoginService logService;
         private string _newPassword;
         public string AccessDenied = "";
 
-        public ChangePasswordModel(IUserCatalog userCatalog)
+        public ChangePasswordModel(IUserCatalog userCatalog, LoginService logService)
         {
             this.userCatalog = userCatalog;
+            this.logService = logService;
         }
 
         [BindProperty]
