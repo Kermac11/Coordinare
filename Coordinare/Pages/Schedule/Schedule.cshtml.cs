@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Coordinare.Interfaces;
 using Coordinare.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -15,8 +16,9 @@ namespace Coordinare.Pages.Schedule
         private IBookingCatalog bookingCatalog;
         private IUserCatalog userCatalog;
         public List<Booking> Bookings { get; set; }
+        public Predicate<Event> test;
         public List<Event> BookedEvents { get; set; }
-        public List<DateTime> NumOfDates { get; set; }
+        public List<> NumOfDates { get; set; }
         [BindProperty] public new User User { get; set; }
 
         public ScheduleModel(IEventCatalog eventCatalog, IBookingCatalog bookingCatalog, IUserCatalog userCatalog)
@@ -34,8 +36,7 @@ namespace Coordinare.Pages.Schedule
             User = await userCatalog.GetUserFromIdAsync((int)id);
             Bookings = await bookingCatalog.GetBookingsFromUser((int)id);
             BookedEvents = await GetBookedEvents();
-            NumOfDates = BookedEvents.Select(e => e.DateTime).Distinct().ToList();
-
+            var NumOfDates = BookedEvents.Select(e => new {Day = e.DateTime.Day, Month = e.DateTime}).Distinct();
             if (User == null)
                 return NotFound();
 
@@ -53,11 +54,5 @@ namespace Coordinare.Pages.Schedule
             }
             return events;
         }
-
-        //public async Task<List<int>> GetIntDates()
-        //{
-        //    List<int> ints = new List<int> {BookedEvents.Select(e => e.DateTime.Day).Distinct().Count()};
-        //    return ints;
-        //}
     }
 }

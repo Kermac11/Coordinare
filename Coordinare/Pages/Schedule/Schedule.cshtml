@@ -44,15 +44,14 @@
 @if (Model.BookedEvents != null || Model.BookedEvents.Count != 0)
 {
 
-    @foreach (DateTime d in Model.NumOfDates)
+    @foreach (int d in Model.NumOfDates)
     {
         <div class="tab">
-            <button class="tablinks" onclick="openTab(event, @d.Day)">@d.ToString("dd/MM")</button>
-            <button class="tablinks" onclick="openTab(event, 'London')">London</button>
+            <button class="tablinks"></button>
         </div>
-        @foreach (Event e in Model.BookedEvents.FindAll(e => e.DateTime.Day == d.Day))
+        @foreach (Event e in Model.BookedEvents.FindAll(e => e.DateTime.Day == d))
         {
-            <div id="@d.Day" class="tabcontent">
+            <div id="@d" class="tabcontent">
                 <table class="table table-striped">
                     <thead>
                         <tr>
