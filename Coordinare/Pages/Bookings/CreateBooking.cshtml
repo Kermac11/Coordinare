@@ -14,12 +14,12 @@
 
 
 <form method="post">
-    <div class="form-group">
+    <div class="form-group" >
         @if (Model.User.Specialaid)
         {
             <div>
-                <label asp-for="@Model.CurrentBooking.Special_Seat"></label>
-                <input type="checkbox" asp-for="@Model.CurrentBooking.Special_Seat" />
+                <label asp-for="@Model.CurrentBooking.Special_Seat">special seat?</label>
+                <input type="checkbox" asp-for="@Model.CurrentBooking.Special_Seat"/>
             </div>
         }
 
@@ -31,10 +31,8 @@
     <input type="hidden" asp-for="@Model.CurrentBooking.BookingDate" />
     <input type="hidden" asp-for="@Model.User" />
     <div class="form-group">
-        <button asp-page-handler="Booking" class="btn-primary" >Confirm Booking</button>
-    </div>
-    <div class="form-group">
-        <button asp-page-handler="Return" class="btn-secondary" style="padding-right: 30px; float: left" >back to event overview</button>
+        <button asp-page-handler="Return" class="btn-secondary" style="padding-right: 30px; float: left;background-color: red">back to event overview</button>&nbsp; | &nbsp;
+        <button asp-page-handler="Booking" class="btn-primary">Confirm Booking</button>
     </div>
 </form>
 
