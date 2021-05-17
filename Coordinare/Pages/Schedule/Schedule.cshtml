@@ -46,16 +46,23 @@
     <div class="tab">
         @foreach (var d in Model.GetDateDict())
         {
+            bool b = true;
+            @if (b)
+            {
+                <button class="tablinks" onclick="openTab(event, '@d.Key')" id="defaultOpen">@d.Value</button>
+                b = false;
+                continue;
+            }
             <button class="tablinks" onclick="openTab(event, '@d.Key')">@d.Value</button>
         }
-        <button class="tablinks" onclick="openTab(event, 'London')">London</button>
     </div>
     @foreach (var d in Model.GetDateDict())
     {
         <div id="@d.Key" class="tabcontent">
-            @foreach (var e in Model.BookedEvents)
-            {
-                <table class="table table-bordered">
+            <table class="table table-bordered">
+                @foreach (var e in Model.BookedEvents)
+                {
+
                     @if (d.Key == e.DateTime.Date)
                     {
                         <thead class="thead-light">
@@ -63,12 +70,12 @@
                                 <th>
                                     Time
                                 </th>
-                                @if (e.Room_ID != null)
-                                {
-                                    <th>
-                                        @e.Room_ID
-                                    </th>
-                                }
+                                <th>
+                                    Room
+                                </th>
+                                <th>
+
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,73 +91,65 @@
 
                                 <td>
                                     Event: @e.EventName
+                                    <br />
                                     Speaker: @e.Speaker.Name
-                                </td>
+                                    @if (e.Room_ID != null)
+                                    {
+                                    <th>
+                                        @e.Room_ID
+                                    </th>
+                                }
+                                else
+                                {
+                                    <th>
 
-                            </tr>
-                        </tbody>
-                    }
-                </table>
-            }
+                                    </th>
 
+                                }
+
+                                    <td>
+                                        <button type="button" class="btn-info" data-toggle="modal" data-target="#idModal">Identification</button>
+
+                                        <div id="idModal" class="modal fade" role="dialog">
+                                            <div class="modal-dialog modal-dialog-centered modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Door pass</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Show this at the door</p>
+                                                        <p>Pass for event no.: @e.EventName</p>
+                                                        @foreach (var b in Model.Bookings)
+                                                        {
+                                                            @if (b.Event_ID == e.Event_ID)
+                                                            {
+                                                                @if (b.Special_Seat)
+                                                                {
+                                                                    <p>This user has a special seat</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>This user has a standard seat</p>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
+
+                }
+            </table>
         </div>
     }
-
-
-
-
-
-    @*@foreach (DateTime d in Model.NumOfDates)
-        {
-            <div class="tab">
-                <button class="tablinks" onclick="openTab(event, @d.Day)">@d.ToString("dd/MM")</button>
-
-            </div>
-            @foreach (Event e in Model.BookedEvents.FindAll(e => e.DateTime.Day == d.Day))
-            {
-                <div id="@d.Day" class="tabcontent">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>
-
-                            </th>
-                            <th>
-                                @e.Room_ID
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-                                @e.DateTime.TimeOfDay
-                            </td>
-                            <td>
-                                @e.EventName
-                                @e.Room_ID
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            }
-
-        }*@
-    <div id="London" class="tabcontent">
-        <h3>navn</h3>
-        <p>text</p>
-    </div>
-
-    <!-- Tab content -->
-    @*@foreach (Event e in Model.BookedEvents)
-        {
-
-            <div id="@e.DateTime" class="tabcontent">
-                <h3>@e.EventName</h3>
-                <p>@e.Room_ID</p>
-            </div>
-
-        }*@
 
 }
 else
@@ -159,25 +158,32 @@ else
 }
 
 
-<script>
-    function openTab(evt, cityName) {
-        // Declare all variables
-        var i, tabcontent, tablinks;
 
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+
+
+@section Scripts
+{
+    <script>
+        function openTab(evt, cityName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
         }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className += " active";
-    }
-</script>
+        document.getElementById("defaultOpen").click();
+    </script>
+}

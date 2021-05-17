@@ -41,6 +41,7 @@ namespace Coordinare.Pages.Schedule
 
             return Page();
         }
+        
 
         public async Task<List<Event>> GetBookedEvents()
         {
