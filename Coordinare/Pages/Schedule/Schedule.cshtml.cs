@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Threading.Tasks;
 using Coordinare.Interfaces;
 using Coordinare.Models;
@@ -37,6 +38,7 @@ namespace Coordinare.Pages.Schedule
             Bookings = await bookingCatalog.GetBookingsFromUser(User.User_ID);
             BookedEvents = await GetBookedEvents();
             NumOfDates = BookedEvents.Select(e => e.DateTime).ToList();
+            NumOfDates.Sort((d1,d2) => d1.CompareTo(d2));
             var dates = NumOfDates.Select(d => new { Day = d.Day, Month = d.Month }).Distinct().ToList();
             EventList = BookedEvents.FindAll(e => e.DateTime.Day == dates[0].Day && e.DateTime.Month == dates[0].Month);
             EventList ??= new List<Event>();
@@ -75,7 +77,7 @@ namespace Coordinare.Pages.Schedule
             BookedEvents = await GetBookedEvents();
             EventList = BookedEvents.FindAll(e => e.DateTime.Day == day && e.DateTime.Month == month);
             NumOfDates = BookedEvents.Select(e => e.DateTime).ToList();
-
+            NumOfDates.Sort((d1, d2) => d1.CompareTo(d2));
             return Page();
         }
     }
