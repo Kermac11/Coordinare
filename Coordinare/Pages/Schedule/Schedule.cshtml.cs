@@ -31,12 +31,14 @@ namespace Coordinare.Pages.Schedule
 
         public async Task<IActionResult> OnGetAsync()
         {
-            
 
-            User = await userCatalog.GetUserFromIdAsync(int.Parse(Request.Cookies["UserId"]));
+
+            User = await userCatalog.GetUserFromIdAsync(1);
             Bookings = await bookingCatalog.GetBookingsFromUser(User.User_ID);
             BookedEvents = await GetBookedEvents();
             NumOfDates = BookedEvents.Select(e => e.DateTime).ToList();
+            var dates = NumOfDates.Select(d => new { Day = d.Day, Month = d.Month }).Distinct().ToList();
+            EventList = BookedEvents.FindAll(e => e.DateTime.Day == dates[0].Day && e.DateTime.Month == dates[0].Month);
             EventList ??= new List<Event>();
             if (User == null)
                 return NotFound();

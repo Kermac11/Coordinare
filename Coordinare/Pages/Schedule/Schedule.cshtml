@@ -43,76 +43,75 @@
 
 @if (Model.BookedEvents != null || Model.BookedEvents.Count != 0)
 {
-<div class="row">
-    @foreach (var d in Model.NumOfDates.Select(d => new { Day = d.Day, Month = d.Month }).Distinct())
-    {
-        <div class="tab">
-            <form method="post" asp-page-handler="daYlist">
-                <button value="@d.Day" name="day">
-                    <input type="hidden" name="month" value="@d.Month" />
-                    <input type="hidden" value="@Model.User.User_ID" asp-for="User.User_ID"/>
-                    @d.Day/@d.Month
-                </button>
-            </form>
-            @*<button class="tablinks" onclick="openTab(event, '@d.Day')">@d.Day/@d.Month</button>*@
-        </div>
-    }
-</div>
-    @foreach (Event e in @Model.EventList)
+    <div class="row">
+        @foreach (var d in Model.NumOfDates.Select(d => new { Day = d.Day, Month = d.Month }).Distinct())
         {
-            <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>
-                                Start time
-                            </th>
-                            <th>
-                                Eventname
-                            </th>
-                            <th>
-                                Room
-                            </th>
-                            <th>
-                                Time til start
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                @e.DateTime.ToString("t")
-                            </td>
-                            <td>
-                                @e.EventName
-                            </td>
-                            <td>
-                                @e.Room_ID
-                            </td>
-                            <td>
-                                @Model.CalculateTime(e.DateTime,DateTime.UtcNow).Result
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-        }
-
-
-    <!-- Tab content -->
-    @*@foreach (Event e in Model.BookedEvents)
-        {
-
-            <div id="@e.DateTime" class="tabcontent">
-                <h3>@e.EventName</h3>
-                <p>@e.Room_ID</p>
+            <div class="tab">
+                <form method="post" asp-page-handler="daYlist">
+                    <button value="@d.Day" name="day">
+                        <input type="hidden" name="month" value="@d.Month" />
+                        <input type="hidden" value="@Model.User.User_ID" asp-for="User.User_ID" />
+                        @d.Day/@d.Month
+                    </button>
+                </form>
+                @*<button class="tablinks" onclick="openTab(event, '@d.Day')">@d.Day/@d.Month</button>*@
             </div>
-
-        }*@
-
+        }
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Start time
+                </th>
+                <th>
+                    Eventname
+                </th>
+                <th>
+                    Room
+                </th>
+                <th>
+                    Time til start
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Event e in @Model.EventList)
+            {
+                <tr>
+                    <td>
+                        @e.DateTime.ToString("t")
+                    </td>
+                    <td>
+                        @e.EventName
+                    </td>
+                    <td>
+                        @e.Room_ID
+                    </td>
+                    <td>
+                        @Model.CalculateTime(e.DateTime, DateTime.UtcNow).Result
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {
     <p>Book a spot in an event to have your schedule appear!</p>
 }
+
+<!-- Tab content -->
+@*@foreach (Event e in Model.BookedEvents)
+    {
+
+        <div id="@e.DateTime" class="tabcontent">
+            <h3>@e.EventName</h3>
+            <p>@e.Room_ID</p>
+        </div>
+
+    }*@
+
 
 
 <script>
