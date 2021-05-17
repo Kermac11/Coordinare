@@ -20,6 +20,7 @@ namespace Coordinare.Pages.Users.Log
         public IActionResult OnGet()
         {
             logInService.UserLogout();
+            Response.Cookies.Delete("UserId");
 
             return RedirectToPage("/Index");
         }

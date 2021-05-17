@@ -7,6 +7,7 @@ using Coordinare.Exceptions;
 using Coordinare.Interfaces;
 using Coordinare.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Coordinare.Pages.Users
@@ -66,5 +67,6 @@ namespace Coordinare.Pages.Users
             }
             return RedirectToPage("GetAllUsers");
         }
+
     }
 }

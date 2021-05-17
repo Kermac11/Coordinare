@@ -1,7 +1,9 @@
 ﻿@page
 @using Coordinare.Models
+@using System.Security.Claims
+@using System.IO
 @model Coordinare.Pages.Events.IndexModel
-@{
+@{ 
 }
 <form method="post" asp-page-handler="search">
     <input asp-for="DateSort" type="hidden"/>
@@ -102,7 +104,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Events)
+        @foreach (var item in @Model.Events)
         {
             <tr>
                 <td>

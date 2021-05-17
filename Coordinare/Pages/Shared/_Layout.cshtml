@@ -1,35 +1,35 @@
 ﻿@using Coordinare.Services
+@using Coordinare.Models
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Net
+@using Microsoft.AspNetCore.Html
 @inject LoginService LoginService
+@{
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Coordinare</title>
+    <title>@ViewData["Title"] - Coordinare </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div class="container-fluid">
+<div class="container-fluid">
         @{
-            if (LoginService.GetLoggedInUser() != null)
-            {
-                <a asp-page="/Users/Log/LogOut" class="float-right" style="font-size: medium">Log out</a>
-                <p class="float-right" style="font-size: medium">&nbsp; | &nbsp;</p>
-                <div class="float-right"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <a asp-page="/Users/Log/LogOut" class="float-right" style="font-size: medium">Log out</a>
+            <p class="float-right" style="font-size: medium">&nbsp; | &nbsp;</p>
+            <div class="float-right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                    </svg><a asp-page="/Users/Details" asp-route-id="@LoginService.GetLoggedInUser().User_ID" class="float-right" style="font-size: medium">
-                        @LoginService.GetLoggedInUser().Username
-                    </a>
-                </div>
-            }
-            else
-            {
-                <a asp-page="/Users/Log/LogIn" class="float-right" style="font-size: medium">Log-in</a>
-                <p class="float-right" style="font-size: medium">&nbsp; | &nbsp;</p>
-                //melde sig til link?
-            }
+                </svg>
+                <a asp-page="/Users/Details" class="float-right" style="font-size: medium">
+                    @Context.Request.Cookies["UserId"]
+                </a>}
+            </div>
         }
     </div>
     <br />
@@ -53,20 +53,20 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Events/Index">Events</a>
                         </li>
                         @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Users/GetAllUsers">Users</a>
-                        </li>*@
-                        @if (LoginService.GetLoggedInUser() != null)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Schedule/Schedule" asp-route-id="@LoginService.GetLoggedInUser().User_ID">Schedule</a>
-                            </li>
-                            @if (LoginService.GetLoggedInUser().Admin)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Admin/AdminHub">Admin Hub</a>
-                                </li>
-                            }
-                        }
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Users/GetAllUsers">Users</a>
+                            </li>*@
+                        @*@if (LoginService.GetLoggedInUser() != null)
+                            {*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Schedule/Schedule">Schedule</a>
+                        </li>
+                        @*@if (LoginService.GetLoggedInUser().Admin)
+                            {*@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/AdminHub">Admin Hub</a>
+                        </li>
+                        @*}
+                            }*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>

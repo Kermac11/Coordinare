@@ -29,15 +29,15 @@ namespace Coordinare.Pages.Schedule
             this.userCatalog = userCatalog;
         }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (id == null)
-                return NotFound();
+            
 
-            User = await userCatalog.GetUserFromIdAsync((int)id);
-            Bookings = await bookingCatalog.GetBookingsFromUser((int)id);
+            User = await userCatalog.GetUserFromIdAsync(int.Parse(Request.Cookies["UserId"]));
+            Bookings = await bookingCatalog.GetBookingsFromUser(User.User_ID);
             BookedEvents = await GetBookedEvents();
-            NumOfDates = BookedEvents.Select(e =>e.DateTime).ToList();
+            NumOfDates = BookedEvents.Select(e => e.DateTime).ToList();
+            EventList ??= new List<Event>();
             if (User == null)
                 return NotFound();
 
@@ -56,10 +56,23 @@ namespace Coordinare.Pages.Schedule
             return events;
         }
 
+        public async Task<string> CalculateTime(DateTime from, DateTime now)
+        {
+            string timestring = null;
+            TimeSpan cal = from - now;
+            timestring += cal.Days > 0 ? $"Days:{cal.Days} " : "";
+            timestring += $"Hours:{cal.Hours} " + $"Minutes:{cal.Minutes}";
+            return timestring;
+        }
+
         public async Task<IActionResult> OnPostDaylist(int day, int month)
         {
-
-
+            EventList ??= new List<Event>();
+            User = await userCatalog.GetUserFromIdAsync(User.User_ID);
+            Bookings = bookingCatalog.GetBookingsFromUser(User.User_ID).Result;
+            BookedEvents = await GetBookedEvents();
+            EventList = BookedEvents.FindAll(e => e.DateTime.Day == day && e.DateTime.Month == month);
+            NumOfDates = BookedEvents.Select(e => e.DateTime).ToList();
 
             return Page();
         }

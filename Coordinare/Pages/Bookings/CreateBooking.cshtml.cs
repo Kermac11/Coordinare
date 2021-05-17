@@ -15,12 +15,14 @@ namespace Coordinare.Pages.Bookings
     {
         private IBookingCatalog _service;
         private IEventCatalog _eventService;
+        private IUserCatalog _userCatalog;
         private LoginService _LService;
         [BindProperty] public Booking CurrentBooking { get; set; }
         public Event Event { get; set; }
         [BindProperty] public User User { get; set; }
-        public CreateBookingModel(IBookingCatalog service, IEventCatalog eventService, LoginService lService)
+        public CreateBookingModel(IBookingCatalog service, IEventCatalog eventService, LoginService lService, IUserCatalog uservice)
         {
+            _userCatalog = uservice;
             _service = service;
             _eventService = eventService;
             _LService = lService;
@@ -28,7 +30,7 @@ namespace Coordinare.Pages.Bookings
         public void OnGet(int EventID)
         {
             Event = _eventService.GetEventFromId(EventID).Result;
-            User = _LService.GetLoggedInUser();
+            User = _userCatalog.GetUserFromIdAsync(int.Parse(Request.Cookies["UserId"])).Result;
             CurrentBooking = new Booking();
             CurrentBooking.User_ID = User.User_ID;
             CurrentBooking.Event_ID = EventID;

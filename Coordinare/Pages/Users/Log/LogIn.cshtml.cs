@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Coordinare.Interfaces;
 using Coordinare.Models;
@@ -38,6 +39,9 @@ namespace Coordinare.Pages.Users.Log
                 {
                     if (user.Password == User.PasswordCheck)
                     {
+                        TempData["Username"] = User.Username;
+
+                        Response.Cookies.Append("UserId", $"{user.User_ID}");
                         loginService.UserLogin(user);
                         return RedirectToPage("/Index");
                     }

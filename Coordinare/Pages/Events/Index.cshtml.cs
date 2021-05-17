@@ -20,6 +20,8 @@ namespace Coordinare.Pages.Events
     {
         private IEventCatalog _service;
         private IUserCatalog _usercatalog;
+        [ViewData]
+        public int spice { get; set; }
         public List<Event> Events { get; set; }
         [BindProperty]
         public string Filter { get; set; }
@@ -43,24 +45,19 @@ namespace Coordinare.Pages.Events
             SeatSort ??= SeatSort = "down";
         }
 
-        public async Task<IActionResult> OnPostSearch(string filter, string option)
+        public async void OnPostSearch(string filter, string option)
         {
-            if (!string.IsNullOrEmpty(filter) && !string.IsNullOrEmpty(option))
+            if (!string.IsNullOrEmpty(filter))
             {
-                if (option == "name")
-                {
-                    Filter = filter;
-                    Events = _service.GetAllEvents().Result.FindAll(e => e.DateTime > DateTime.UtcNow).FindAll(e => e.EventName.ToLower().Contains(filter.ToLower()));
-                    Events.Sort((e1, e2) => e1.EventName.CompareTo(e2.EventName));
-                }
+                Filter = filter;
+                Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow).FindAll(e => e.EventName.ToLower().Contains(filter.ToLower()));
+                Events.Sort((e1, e2) => e1.EventName.CompareTo(e2.EventName));
             }
-            if (Events == null)
+            else
             {
                 Events = _service.GetAllEvents().Result;
-                Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
             }
 
-            return Page();
         }
 
         public async Task<IActionResult> OnPostSortdate(string sort)
