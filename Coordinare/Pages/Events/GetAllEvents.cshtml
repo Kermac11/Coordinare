@@ -2,7 +2,9 @@
 @model Coordinare.Pages.Events.GetAllEventsModel
 @{
 }
-<a asp-page="/Events/Create">Create New Event</a>
+<a asp-page="/Events/Create">
+    <button class="alert-info">Create New Event</button>
+</a>
 <table class="table">
     <thead>
         <tr>
@@ -32,36 +34,36 @@
     <tbody>
         @foreach (var item in Model.Events)
         {
-        <tr>
-            <td>
-                @item.Event_ID
-            </td>
-            <td>
-                @item.Duration
-            </td>
-            <td>
-                @item.Room_ID
-            </td>
-            <td>
-                @item.EventName
-            </td>
-            <td>
-                @item.DateTime
-            </td>
-            <td>
-                @item.Eventinfo
-            </td>
-            <td>
-                @item.SS_amount
-            </td>
-            <td><p><a asp-page="/Events/Info" asp-route-id="@item.Event_ID">See Details</a></p></td>
-            <td><p><a asp-page="/Events/Delete" asp-route-id="@item.Event_ID">Delete</a></p></td>
-            <td><p><a asp-page="/Events/Update" asp-route-id="@item.Event_ID">Update</a></p></td>
-            <td>
-                <p>
-                    <a asp-page="/Bookings/EventBookings" asp-route-Event_ID="@item.Event_ID" >bookings</a>
-                </p>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @item.Event_ID
+                </td>
+                <td>
+                    @item.Duration
+                </td>
+                <td>
+                    @item.Room_ID
+                </td>
+                <td>
+                    @item.EventName
+                </td>
+                <td>
+                    @item.DateTime
+                </td>
+                <td>
+                    @item.Eventinfo
+                </td>
+                <td>
+                    @item.SS_amount
+                </td>
+                <td><p><a asp-page="/Events/Info" asp-route-id="@item.Event_ID">See Details</a></p></td>
+                <td><p><a asp-page="/Events/Delete" asp-route-id="@item.Event_ID">Delete</a></p></td>
+                <td><p><a asp-page="/Events/Update" asp-route-id="@item.Event_ID">Update</a></p></td>
+                <td>
+                    <p>
+                        <a asp-page="/Bookings/EventBookings" asp-route-Event_ID="@item.Event_ID">bookings</a>
+                    </p>
+                </td>
+            </tr>
         }
 </table>
