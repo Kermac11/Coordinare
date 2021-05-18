@@ -70,5 +70,8 @@ namespace Coordinare.Pages.Schedule
             
             return dates;
         }
+        //<td>
+        //@Model.CalculateTime(e.DateTime, DateTime.Now).Result
+        //    </td>
     }
 }
