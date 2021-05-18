@@ -3,9 +3,20 @@
 @{
     ViewData["Title"] = "Profile";
 }
+
 <style>
-    .th{
-        background-color: ;
+    th {
+        background-color: #e9ecef;
+    }
+    label{
+        font-weight: bold;
+    }
+    .table{
+        width: 50%;
+    }
+    .form-group{
+        border: groove;
+        padding: 10px;
     }
 </style>
 
@@ -116,4 +127,3 @@
     </p>
     <input type="hidden" name="id" value="@Model.User.User_ID" />
 </form>
-
