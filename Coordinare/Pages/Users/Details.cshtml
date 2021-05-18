@@ -3,22 +3,57 @@
 @{
     ViewData["Title"] = "Profile";
 }
+<style>
+    .th{
+        background-color: lightgray;
+    }
+</style>
 
-<label asp-for="User.Name" class="control-label"></label>
-: @Model.User.Name
-<br />
-<label asp-for="User.Username" class="control-label"></label>
-: @Model.User.Username
-<br />
-<label asp-for="User.Password" class="control-label"></label>
-: @Model.User.Password
-<br />
-<label asp-for="User.Phone" class="control-label"></label>
-: @Model.User.Phone
-<br />
-<label asp-for="User.Email" class="control-label"></label>
-: @Model.User.Email
-<br />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            <label asp-for="User.Name" class="control-label"></label>
+        </th>
+        <td>
+            @Model.User.Name
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label asp-for="User.Username" class="control-label"></label>
+        </th>
+
+        <td>
+            @Model.User.Username
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label asp-for="User.Password" class="control-label"></label>
+        </th>
+
+        <td>
+            @Model.User.Password
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label asp-for="User.Phone" class="control-label"></label>
+        </th>
+
+        <td>
+            @Model.User.Phone
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label asp-for="User.Email" class="control-label"></label>
+        </th>
+        <td>
+            @Model.User.Email
+        </td>
+    </tr>
+</table>
 
 <div class="form-group" style="width: 200px">
     <label asp-for="@Model.User.Speaker" class="control-label"></label>
@@ -67,7 +102,7 @@
     <p>
         <button class="alert-info">Update information</button>
     </p>
-    <input type="hidden" name="id" value="@Model.User.User_ID"/>
+    <input type="hidden" name="id" value="@Model.User.User_ID" />
 </form>
 <form method="post" asp-page-handler="ChangePassword">
     <p>
