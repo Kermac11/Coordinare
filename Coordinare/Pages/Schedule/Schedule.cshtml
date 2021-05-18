@@ -11,26 +11,26 @@
         background-color: #f1f1f1;
     }
 
-    /* Style the buttons that are used to open the tab content */
-    .tab button {
-        background-color: inherit;
-        float: left;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        padding: 14px 16px;
-        transition: 0.3s;
-    }
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
 
-    /* Change background color of buttons on hover */
-    .tab button:hover {
-        background-color: #ddd;
-    }
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: #ddd;
+            }
 
-    /* Create an active/current tablink class */
-    .tab button.active {
-        background-color: #ccc;
-    }
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #ccc;
+            }
 
     /* Style the tab content */
     .tabcontent {
@@ -66,10 +66,10 @@
                             Time
                         </th>
                         <th>
-                            Room
+                            
                         </th>
                         <th>
-
+                            Room
                         </th>
                         <th>
 
@@ -95,8 +95,11 @@
                                     Event: @e.EventName
                                     <br />
                                     Speaker: @e.Speaker.Name
-                                    @if (e.Room_ID != null)
-                                    {
+                                    <br />
+                                Time till event start: @Model.CalculateTime(e.DateTime, DateTime.Now).Result
+
+                                @if (e.Room_ID != null)
+                                {
                                     <th>
                                         @e.Room_ID
                                     </th>
@@ -143,9 +146,9 @@
                                         </div>
                                     </div>
                                 </td>
-                                </tr>
-                            </tbody>
-                        }
+                            </tr>
+                        </tbody>
+                    }
 
                 }
             </table>
