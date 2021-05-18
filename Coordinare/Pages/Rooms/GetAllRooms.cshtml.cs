@@ -14,7 +14,6 @@ namespace Coordinare.Pages.Rooms
     {
         private IRoomCatalog _service;
         public List<Room> Rooms { get; set; }
-        public string Filtercriteria { get; set; }
         [BindProperty]
         public string SearchString { get; set; }
 
