@@ -60,93 +60,95 @@
     {
         <div id="@d.Key" class="tabcontent">
             <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>
+                            Time
+                        </th>
+                        <th>
+                            Room
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
                 @foreach (var e in Model.BookedEvents)
                 {
 
                     @if (d.Key == e.DateTime.Date)
                     {
-                        <thead class="thead-light">
-                            <tr>
-                                <th>
-                                    Time
-                                </th>
-                                <th>
-                                    Room
-                                </th>
-                                @*<th>
-                                        Time til start
-                                    </th>*@
-                            </tr>
-                        </thead>
+
                         <tbody>
-                            <tr>
-                                @if (d.Key.TimeOfDay == e.DateTime.Date.TimeOfDay)
-                                {
-
-                                    <td>
-                                        @e.DateTime.ToString("t")
-                                    </td>
-
-                                }
+                        <tr>
+                            @if (d.Key.TimeOfDay == e.DateTime.Date.TimeOfDay)
+                            {
 
                                 <td>
-                                    Event: @e.EventName
-                                    <br />
-                                    Speaker: @e.Speaker.Name
-                                    @if (e.Room_ID != null)
-                                    {
-                                    <th>
-                                        @e.Room_ID
-                                    </th>
-                                }
-                                else
-                                {
-                                    <th>
+                                    @e.DateTime.ToString("t")
+                                </td>
 
-                                    </th>
+                            }
 
-                                }
-                                    @*<td>
-                                            @Model.CalculateTime(e.DateTime, DateTime.Now).Result
-                                        </td>*@
-                                    <td>
-                                        <button type="button" class="btn-info" data-toggle="modal" data-target="#idModal">Identification</button>
+                            <td>
+                            Event: @e.EventName
+                            <br/>
+                            Speaker: @e.Speaker.Name
+                            @if (e.Room_ID != null)
+                            {
+                                <th>
+                                    @e.Room_ID
+                                </th>
+                            }
+                            else
+                            {
+                                <th>
 
-                                        <div id="idModal" class="modal fade" role="dialog">
-                                            <div class="modal-dialog modal-dialog-centered modal-sm">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">Door pass</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Show this at the door</p>
-                                                        <p>Pass for event no.: @e.EventName</p>
-                                                        @foreach (var b in Model.Bookings)
+                                </th>
+
+                            }
+
+                            <td>
+                                <button type="button" class="btn-info" data-toggle="modal" data-target="#@e.EventName">Identification</button>
+
+                                <div id="@e.EventName" class="modal fade" role="dialog">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Door pass</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Show this at the door</p>
+                                                <p>Pass for event no.: @e.EventName</p>
+                                                @foreach (var b in Model.Bookings)
+                                                {
+                                                    @if (b.Event_ID == e.Event_ID)
+                                                    {
+                                                        @if (b.Special_Seat)
                                                         {
-                                                            @if (b.Event_ID == e.Event_ID)
-                                                            {
-                                                                @if (b.Special_Seat)
-                                                                {
-                                                                    <p>This user has a special seat</p>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <p>This user has a standard seat</p>
-                                                                }
-                                                            }
-
+                                                            <p>This user has a special seat</p>
                                                         }
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn-default" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
+                                                        else
+                                                        {
+                                                            <p>This user has a standard seat</p>
+                                                        }
+                                                    }
+
+                                                }
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn-default" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        }
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    }
 
                 }
             </table>

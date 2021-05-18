@@ -56,25 +56,25 @@
             @foreach (var item in Model.Users)
             {
                 <tr>
-                    <th>
+                    <td>
                         @item.User_ID
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item.Name
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item.Username
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item.Password
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item.Phone
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @item.Email
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @if (item.Speaker)
                         {
                             <div style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
@@ -93,8 +93,8 @@
                                 </svg>
                             </div>
                         }
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @if (item.Specialaid)
                         {
                             <div style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
@@ -113,8 +113,8 @@
                                 </svg>
                             </div>
                         }
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @if (item.Admin)
                         {
                             <div style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
@@ -133,7 +133,7 @@
                                 </svg>
                             </div>
                         }
-                    </th>
+                    </td>
                     <td>
                         <p>
                             <a asp-page="/Users/Update" asp-route-id="@item.User_ID">Update</a>

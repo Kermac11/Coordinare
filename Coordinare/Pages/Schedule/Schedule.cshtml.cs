@@ -34,6 +34,7 @@ namespace Coordinare.Pages.Schedule
             User = await userCatalog.GetUserFromIdAsync((int)id);
             Bookings = await bookingCatalog.GetBookingsFromUser((int)id);
             BookedEvents = await GetBookedEvents();
+            BookedEvents.Sort((e1,e2) => e1.DateTime.CompareTo(e2.DateTime));
             NumOfDates = BookedEvents.Select(e => e.DateTime).Distinct().ToList();
 
             if (User == null)
@@ -66,23 +67,8 @@ namespace Coordinare.Pages.Schedule
                 dates.Add(d, value);
                 a++;
             }
-
+            
             return dates;
         }
-
-        //public async Task<List<int>> GetIntDates()
-        //{
-        //    List<int> ints = new List<int> {BookedEvents.Select(e => e.DateTime.Day).Distinct().Count()};
-        //    return ints;
-        //}
-
-        //public async Task<string> CalculateTime(DateTime from, DateTime now)
-        //{
-        //    string timestring = null;
-        //    TimeSpan cal = from - now;
-        //    timestring += cal.Days > 0 ? $"Days:{cal.Days} " : "";
-        //    timestring += $"Hours:{cal.Hours} " + $"Minutes:{cal.Minutes}";
-        //    return timestring;
-        //}
     }
 }
