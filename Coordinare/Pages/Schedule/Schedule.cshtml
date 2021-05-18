@@ -11,26 +11,26 @@
         background-color: #f1f1f1;
     }
 
-        /* Style the buttons that are used to open the tab content */
-        .tab button {
-            background-color: inherit;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-        }
+    /* Style the buttons that are used to open the tab content */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+    }
 
-            /* Change background color of buttons on hover */
-            .tab button:hover {
-                background-color: #ddd;
-            }
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
 
-            /* Create an active/current tablink class */
-            .tab button.active {
-                background-color: #ccc;
-            }
+    /* Create an active/current tablink class */
+    .tab button.active {
+        background-color: #ccc;
+    }
 
     /* Style the tab content */
     .tabcontent {
@@ -83,72 +83,69 @@
                     {
 
                         <tbody>
-                        <tr>
-                            @if (d.Key.TimeOfDay == e.DateTime.Date.TimeOfDay)
-                            {
+                            <tr>
+                                @if (d.Key.TimeOfDay == e.DateTime.Date.TimeOfDay)
+                                {
 
+                                    <td>
+                                        @e.DateTime.ToString("t")
+                                    </td>
+                                }
                                 <td>
-                                    @e.DateTime.ToString("t")
-                                </td>
+                                    Event: @e.EventName
+                                    <br />
+                                    Speaker: @e.Speaker.Name
+                                    @if (e.Room_ID != null)
+                                    {
+                                    <th>
+                                        @e.Room_ID
+                                    </th>
+                                }
+                                else
+                                {
+                                    <th>
 
-                            }
+                                    </th>
 
-                            <td>
-                            Event: @e.EventName
-                            <br/>
-                            Speaker: @e.Speaker.Name
-                            @if (e.Room_ID != null)
-                            {
-                                <th>
-                                    @e.Room_ID
-                                </th>
-                            }
-                            else
-                            {
-                                <th>
+                                }
+                                <td>
+                                    <button type="button" class="btn-info" data-toggle="modal" data-target="#@e.EventName">Identification</button>
 
-                                </th>
-
-                            }
-
-                            <td>
-                                <button type="button" class="btn-info" data-toggle="modal" data-target="#@e.EventName">Identification</button>
-
-                                <div id="@e.EventName" class="modal fade" role="dialog">
-                                    <div class="modal-dialog modal-dialog-centered modal-sm">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Door pass</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Show this at the door</p>
-                                                <p>Pass for event no.: @e.EventName</p>
-                                                @foreach (var b in Model.Bookings)
-                                                {
-                                                    @if (b.Event_ID == e.Event_ID)
-                                                    {
-                                                        @if (b.Special_Seat)
+                                    <div id="@e.EventName" class="modal fade" role="dialog">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Door pass</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Show this at the door</p>
+                                                        <p>Pass for event: @e.EventName</p>
+                                                        @foreach (var b in Model.Bookings)
                                                         {
-                                                            <p>This user has a special seat</p>
-                                                        }
-                                                        else
-                                                        {
-                                                            <p>This user has a standard seat</p>
-                                                        }
-                                                    }
+                                                            @if (b.Event_ID == e.Event_ID)
+                                                            {
+                                                                @if (b.Special_Seat)
+                                                                {
+                                                                    <p>This user has a special seat</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>This user has a standard seat</p>
+                                                                }
+                                                            }
 
-                                                }
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn-default" data-dismiss="modal">Close</button>
+                                                        }
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        }
 
                 }
             </table>
