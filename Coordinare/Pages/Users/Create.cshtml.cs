@@ -45,6 +45,8 @@ namespace Coordinare.Pages.Users
 
         public async Task<IActionResult> OnPostAsync(User user)
         {
+            // måske ville man samtidig sende mail med info omkring oprettelse af user til user
+            // (hvad ens password er, et link til programmet)
             if (!ModelState.IsValid)
             {
                 return Page();
