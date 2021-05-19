@@ -4,8 +4,61 @@
     ViewData["Title"] = "Home page";
 }
 
+<style>
+    .dot {
+        height: 15px;
+        width: 15px;
+        background-color: #ccc;
+        border-radius: 50%;
+        display: inline-block;
+    }
+</style>
+
 <div style="padding-left:42%">
     <a asp-page="/Index"><img src="/Images/sikon-logo-ny-udgave-2021.png" style="max-height: 175px" alt="KonfLogo" /></a>
 </div>
+<br/>
+@*Lige nu er billederne og teksten til dem puttet ind manuelt, 
+    men i fremtiden kan man overveje at lave det om til at den tager fra events.
+    I det tilfælde ville man tilføje et billede i modellen for Event.*@
+<div id="carouselIndex" class="carousel slide w-50 mx-auto" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="/Images/Christian-Stewart-Ferrer.png" alt="Christian Stewart-Ferrer">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Autism and the way to identity</h5>
+                <p>b/ Christian Stewart-Ferrer</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="/Images/Dorthe-Holck.png" alt="Dorthe Hölck">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Misunderstood by the surroundings</h5>
+                <p>b/ Dorthe Hölck</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="/Images/Mark-Wetherell.png" alt="Mark Wetherell">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Chronic stress in carers</h5>
+                <p>b/ Mark Wetherell</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="/Images/Marie-Louise-Stochholm.png" alt="Marie Louise Stochholm">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Cooperation with the young and adult with autism</h5>
+                <p>b/ Marie Louise Stochholm</p>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselIndex" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselIndex" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 
-<div class="carousel slide"></div>
