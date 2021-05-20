@@ -38,6 +38,7 @@ namespace Coordinare.Pages.Events
         {
             Events = _service.GetAllEvents().Result;
             Events = Events.FindAll(e => e.DateTime > DateTime.UtcNow);
+            Events.Sort((e1, e2) => e1.DateTime.CompareTo(e2.DateTime));
             DateSort ??= DateSort = "down";
             NameSort ??= NameSort = "down";
             SeatSort ??= SeatSort = "down";

@@ -24,6 +24,5 @@ namespace Coordinare.Services
             this.connectionString = connectionString;
         }
 
-
     }
 }

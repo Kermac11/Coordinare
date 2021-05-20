@@ -14,7 +14,7 @@ namespace Coordinare.Models
             
         }
 
-        public Event(int eventId, TimeSpan duration, User speaker, string roomId, string eventName, DateTime dateTime, string eventinfo, int ssAmount)
+        public Event(int eventId, TimeSpan duration, User speaker, string roomId, string eventName, DateTime dateTime, string eventinfo, int ssAmount, DateTime lastupdated)
         {
             Event_ID = eventId;
             Duration = duration;
@@ -24,6 +24,7 @@ namespace Coordinare.Models
             DateTime = dateTime;
             Eventinfo = eventinfo;
             SS_amount = ssAmount;
+            LastUpdated = lastupdated;
         }
 
         public int Event_ID { get; set; }
@@ -39,6 +40,8 @@ namespace Coordinare.Models
         public string Eventinfo { get; set; }
         [Required (ErrorMessage = "SS amount needed")]
         public int SS_amount { get; set; }
+
+        public DateTime LastUpdated { get; set; }
 
     }
 }

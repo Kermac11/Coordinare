@@ -35,6 +35,7 @@ namespace Coordinare.Pages.Events
         public async Task<IActionResult> OnPostAsync(int sid)
         {
             Event.Speaker = _uservice.GetUserFromIdAsync(sid).Result;
+            Event.LastUpdated = DateTime.Now;
             if (!ModelState.IsValid && Event.Speaker == null)
             {
                 return Page();

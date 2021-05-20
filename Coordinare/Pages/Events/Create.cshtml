@@ -36,6 +36,12 @@
             }
         </select>
     </div>
+    <div class="row">
+        @foreach (string item in @Model.Tags)
+        {
+            <p>@item:</p><input type="checkbox" value="@item" name="tag"/>
+        }
+    </div>
     <div class="form-group">
         <label asp-for="Event.Duration"></label>
         <input value="00:00" type="time" asp-for="Event.Duration" />

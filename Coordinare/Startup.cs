@@ -29,6 +29,7 @@ namespace Coordinare
 
             services.AddSingleton<LoginService>();
 
+            services.AddTransient<ITagSelection,TagSelection>();
             services.AddTransient<IEventCatalog, EventCatalog>();
             services.AddTransient<IUserCatalog, UserCatalog>();
             services.AddTransient<IRoomCatalog, RoomCatalog>();
