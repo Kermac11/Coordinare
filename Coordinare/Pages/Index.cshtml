@@ -107,11 +107,13 @@
                     <tr>
                         @for (int i = 0; i < 2; i++)
                         {
-                            <td>
-                                Event: @Model.BookedEvents[i].EventName
-                                <br />
-                                Room: @Model.BookedEvents[i].Room_ID
-                            </td>
+                        <td>
+                            Event: <a asp-page="/Events/Info" asp-route-id="@Model.BookedEvents[i].Event_ID">
+                                @Model.BookedEvents[i].EventName
+                            </a>
+                            <br />
+                            Room: @Model.BookedEvents[i].Room_ID
+                        </td>
                         }
                     </tr>
                 </tbody>
