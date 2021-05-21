@@ -15,10 +15,10 @@ namespace Coordinare.Services
     {
         private string GetAllSql = "SELECT * from Events";
         private string GetEventFromIDSql = "SELECT * from Events WHERE Event_ID = @ID";
-        private string CreateEventSql = "INSERT into Events values(@Dur, @SID, @RID,  @Name, @Time, @Info, @SS)";
+        private string CreateEventSql = "INSERT into Events values(@Dur, @SID, @RID,  @Name, @Time, @Info, @SS, @LU)";
         private string DeleteEventSql = "DELETE from events where Event_ID = @ID";
         private string UpdateEventSql =
-            "UPDATE Events set Duration = @Dur, Speaker = @SID,  Room_ID = @RID, EventName = @Name, DateTime = @Time, Eventinfo = @Info, SS_Amount = @SS WHERE Event_ID = @ID";
+            "UPDATE Events set Duration = @Dur, Speaker = @SID,  Room_ID = @RID, EventName = @Name, DateTime = @Time, Eventinfo = @Info, SS_Amount = @SS, LastUpdated = @LU WHERE Event_ID = @ID";
 
         private string GetBookingsSql = "SELECT * from Bookings WHERE Event_ID = @ID";
 
@@ -65,8 +65,9 @@ namespace Coordinare.Services
                                 info = reader.GetString(i: 6);
                             }
                             int ss = reader.GetInt32(i: 7);
+                            DateTime lastupdate = reader.GetDateTime(i: 8);
                             User speaker = await _userCatalog.GetUserFromIdAsync(speakerid);
-                            Event _event = new Event(eventId, duration, speaker, roomId, eventname, datetime, info, ss);
+                            Event _event = new Event(eventId, duration, speaker, roomId, eventname, datetime, info, ss, lastupdate);
                             el.Add(_event);
                         }
                     }
@@ -82,7 +83,6 @@ namespace Coordinare.Services
                     }
                 }
             }
-            el.Sort((e1,e2) => e1.DateTime.CompareTo(e2.DateTime));
             return el;
         }
 
@@ -117,8 +117,9 @@ namespace Coordinare.Services
                                 info = reader.GetString(i: 6);
                             }
                             int ss = reader.GetInt32(i: 7);
+                            DateTime lastupdated = reader.GetDateTime(i: 8);
                             User speaker = await _userCatalog.GetUserFromIdAsync(speakerid);
-                            _event = new Event(eventId, duration,speaker, roomId, eventname, datetime, info, ss);
+                            _event = new Event(eventId, duration, speaker, roomId, eventname, datetime, info, ss, lastupdated);
                         }
                     }
                     catch (SqlException sx)
@@ -151,6 +152,7 @@ namespace Coordinare.Services
                         command.Parameters.AddWithValue("@Name", _event.EventName);
                         command.Parameters.AddWithValue("@Time", _event.DateTime);
                         command.Parameters.AddWithValue("@SS", _event.SS_amount);
+                        command.Parameters.AddWithValue("@LU", _event.LastUpdated);
                         await command.Connection.OpenAsync();
                         await command.ExecuteNonQueryAsync();
                     }
@@ -195,7 +197,6 @@ namespace Coordinare.Services
         public async void UpdateEvent(Event _event, int id)
         {
             // "UPDATE Events set Duration = @Dur, Room_ID = @RID, EventName = @Name, DateTime = @Time, Eventinfo = @Info, SS_Amount = @SS";
-
             await using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 await using (SqlCommand command = new SqlCommand(UpdateEventSql, connection))
@@ -210,6 +211,7 @@ namespace Coordinare.Services
                         command.Parameters.AddWithValue("@Name", _event.EventName);
                         command.Parameters.AddWithValue("@Time", _event.DateTime);
                         command.Parameters.AddWithValue("@SS", _event.SS_amount);
+                        command.Parameters.AddWithValue("@LU", _event.LastUpdated);
                         await command.Connection.OpenAsync();
                         await command.ExecuteNonQueryAsync();
                         await command.Connection.OpenAsync();
@@ -267,7 +269,7 @@ namespace Coordinare.Services
         public async Task<List<Event>> SearchByFilter(string filter)
         {
             List<Event> el = GetAllEvents().Result;
-           return  el.FindAll(e => e.EventName.ToLower().Contains(filter));
+            return el.FindAll(e => e.EventName.ToLower().Contains(filter));
         }
     }
 }

@@ -14,9 +14,12 @@ namespace Coordinare.Pages.Rooms
     {
 
         private IRoomCatalog _service;
-        [BindProperty] public Room Room { get; set; }
+        [BindProperty] 
+        public Room Room { get; set; }
         public string TextBox { get; set; }
-        public List<Room> Rooms { get; set; }
+        [BindProperty] 
+        public string OldId { get; set; }
+        //public List<Room> Rooms { get; set; }
 
         public UpdateModel(IRoomCatalog service)
         {
@@ -25,9 +28,10 @@ namespace Coordinare.Pages.Rooms
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
+            OldId = id;
             TextBox = "Update a Room?";
             Room = await _service.GetRoomsFromIdAsync(id);
-            Rooms = await _service.GetAllRoomsAsync();
+            //Rooms = await _service.GetAllRoomsAsync();
             return Page();
         }
 
@@ -39,8 +43,7 @@ namespace Coordinare.Pages.Rooms
             }
             try
             {
-                await _service.UpdateRoomAsync(Room, Room.Room_ID);
-                Rooms = await _service.GetAllRoomsAsync();
+                await _service.UpdateRoomAsync(Room, OldId);
             }
             catch (ExistsException e)
             {
@@ -48,8 +51,6 @@ namespace Coordinare.Pages.Rooms
                 return Page();
             }
             return RedirectToPage("GetAllRooms");
-            //await _service.UpdateRoomAsync(Room.Room_ID);
-            //return RedirectToPage("GetAllRooms");
         }
     }
 }

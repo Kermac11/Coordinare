@@ -19,7 +19,7 @@ namespace Coordinare.Services
         private string queryStringFromID = "select * from Rooms where Room_ID =@ID";
         private string insertSql = "insert into Rooms Values(@ID, @Capacity)";
         private string deleteSql = "delete from Rooms where Room_ID = @ID";
-        private string updateSql = "update Rooms set Room_ID=@ID, Capacity=@Capacity";
+        private string updateSql = "update Rooms set Room_ID=@ID, Capacity=@Capacity where Room_ID = @RID";
 
         #endregion
 
@@ -201,7 +201,7 @@ namespace Coordinare.Services
 
         #region Update
 
-        public async Task<bool> UpdateRoomAsync(Room room, string id)
+        public async Task<bool> UpdateRoomAsync(Room Room, string id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -209,11 +209,11 @@ namespace Coordinare.Services
                 {
                     try
                     {
+                        command.Parameters.AddWithValue("@ID", Room.Room_ID);
+                        command.Parameters.AddWithValue("@Capacity", Room.Capacity);
+                        command.Parameters.AddWithValue("@RID", id);
 
-                        command.Parameters.AddWithValue("@ID", room.Room_ID);
-                        command.Parameters.AddWithValue("@Capacity", room.Capacity);
-
-                        if (IdExist(room.Room_ID))
+                        if (IdExist(Room.Room_ID))
                         {
                             throw new ExistsException("Room ID already exists, please choose another ID.");
                         }
@@ -223,22 +223,22 @@ namespace Coordinare.Services
                         int noOfRows = await command.ExecuteNonQueryAsync(); //bruges ved update, delete, insert
                         if (noOfRows == 1)
                         {
+                            
                             return true;
                         }
                     }
-                    catch (SqlException)
+                    catch (SqlException sqlexception)
                     {
                         Console.WriteLine("Database Fejl");
                         return false;
                     }
-                    catch (Exception)
+                    catch (Exception exception)
                     {
                         Console.WriteLine("Generel Fejl");
                         return false;
                     }
                 }
             }
-
             return false;
         }
 
