@@ -11,26 +11,58 @@ namespace Coordinare.Services
 {
     public class TagSelection : Connection, ITagSelection
     {
+        private string GetTagNamesSql = "SELECT * from TagNames";
+        private string CreateTagNameSql = "INSERT into Tags values(@EID,@TID)";
+        private string CreateTagNameSql = "INSERT into Tags values(@EID,@TID)";
         private string GetTagSql = "SELECT * from tags";
-        private string CreateTagSql = "INSERT into Tags values(@EID, @Name)";
-        private string DeleteTagSql = "DELETE from events where Event_ID = @EID AND TagName =@Name";
-        private List<string> tags = new List<string>();
+        private string CreateTagSql = "INSERT into Tags values(@EID, @TID)";
+        private string DeleteTagSql = "DELETE from events where Event_ID = @EID AND Tag_ID =@TID";
         private IEventCatalog _ecatalog;
 
         public TagSelection(IConfiguration configuration, IEventCatalog ecatolog) : base(configuration)
         {
-            _ecatalog = ecatolog;
-            tags.Add("Autisme");
-            tags.Add("Low Arousal");
-            tags.Add("Unge Autister");
         }
         public TagSelection(string connectionstring, IEventCatalog ecatolog) : base(connectionstring)
         {
         }
 
-        public async Task<List<string>> GetTags()
+        public async Task<List<string>> GetTagNames()
         {
-            return tags;
+            List<string> tnl = new List<string>();
+            await using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                await using (SqlCommand command = new SqlCommand(GetTagNamesSql, connection))
+                {
+                    try
+                    {
+                        await command.Connection.OpenAsync();
+                        SqlDataReader reader = await command.ExecuteReaderAsync();
+                        while (await reader.ReadAsync())
+                        {
+                            string tagname = reader.GetString(i: 1);
+
+                            tnl.Add(tagname);
+                        }
+                    }
+                    catch (SqlException sx)
+                    {
+                        Console.WriteLine("Database Fejl");
+                        return null;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Generel Fejl");
+                        return null;
+                    }
+                }
+            };
+            return tnl;
+        }
+
+        public Task<List<string>> GetTags()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<List<Tag>> GetAllTags()
@@ -47,12 +79,12 @@ namespace Coordinare.Services
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         while (await reader.ReadAsync())
                         {
-                            int Tagid = reader.GetInt32(i: 0);
-                            int eventid = reader.GetInt32(i: 1);
-                            string name = reader.GetString(i: 2);
+                            int taggedid = reader.GetInt32(i: 0);
+                            int Tagid = reader.GetInt32(i: 1);
+                            int eventid = reader.GetInt32(i: 2);
 
-                           Tag t = new Tag(Tagid,eventid,name);
-                           
+                            Tag t = new Tag(Tagid, eventid, name);
+
                             tl.Add(t);
                         }
                     }
@@ -67,7 +99,7 @@ namespace Coordinare.Services
                         return null;
                     }
                 }
-            } ;
+            };
             return tl;
         }
 
@@ -83,7 +115,31 @@ namespace Coordinare.Services
                 tags.Remove(tag);
             }
         }
+        public async void CreateNewTagName(string tag)
+        {
+            // INSERT into Tags values(@Name)";
 
+            await using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                await using (SqlCommand command = new SqlCommand(CreateTagSql, connection))
+                {
+                    try
+                    {
+                        command.Parameters.AddWithValue("@Name", tag);
+                        await command.Connection.OpenAsync();
+                        await command.ExecuteNonQueryAsync();
+                    }
+                    catch (SqlException sx)
+                    {
+                        Console.WriteLine("Database Fejl");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Generel Fejl");
+                    }
+                }
+            }
+        }
         public async void CreateNewTagToEvent(Event e, string tag)
         {
             //@EID AND TagName = @Name
@@ -95,7 +151,7 @@ namespace Coordinare.Services
                     try
                     {
                         command.Parameters.AddWithValue("@EID", e.Event_ID);
-                        command.Parameters.AddWithValue("@Name", tag);
+                        command.Parameters.AddWithValue("@TID", tag);
                         await command.Connection.OpenAsync();
                         await command.ExecuteNonQueryAsync();
                     }

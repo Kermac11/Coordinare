@@ -8,7 +8,6 @@ namespace Coordinare.Interfaces
 {
     public interface IRoomCatalog
     {
-        List<Room> Rooms { get; set; }
 
         Task<List<Room>> GetAllRoomsAsync();
 

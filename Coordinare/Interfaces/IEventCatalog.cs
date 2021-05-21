@@ -9,7 +9,6 @@ namespace Coordinare.Interfaces
 {
     public interface IEventCatalog
     {
-        List<Event> Events { get; set; }
         Task<List<Event>> GetAllEvents();
         Task<Event> GetEventFromId(int id);
         void CreateEvent(Event _event);
