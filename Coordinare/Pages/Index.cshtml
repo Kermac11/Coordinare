@@ -25,32 +25,40 @@
 <div id="carouselIndex" class="carousel slide w-50 mx-auto" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-block w-100" src="/Images/Christian-Stewart-Ferrer.png" alt="Christian Stewart-Ferrer">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Autism and the way to identity</h5>
-                <p>b/ Christian Stewart-Ferrer</p>
-            </div>
+            <a class="nav-link text-dark" asp-area="" asp-page="/Events/Index">
+                <img class="d-block w-100" src="/Images/Christian-Stewart-Ferrer.png" alt="Christian Stewart-Ferrer">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Autism and the way to identity</h5>
+                    <p>b/ Christian Stewart-Ferrer</p>
+                </div>
+            </a>
         </div>
         <div class="carousel-item">
-            <img class="d-block w-100" src="/Images/Dorthe-Holck.png" alt="Dorthe Hölck">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Misunderstood by the surroundings</h5>
-                <p>b/ Dorthe Hölck</p>
-            </div>
+            <a class="nav-link text-dark" asp-area="" asp-page="/Events/Index">
+                <img class="d-block w-100" src="/Images/Dorthe-Holck.png" alt="Dorthe Hölck">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Misunderstood by the surroundings</h5>
+                    <p>b/ Dorthe Hölck</p>
+                </div>
+            </a>
         </div>
         <div class="carousel-item">
-            <img class="d-block w-100" src="/Images/Mark-Wetherell.png" alt="Mark Wetherell">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Chronic stress in carers</h5>
-                <p>b/ Mark Wetherell</p>
-            </div>
+            <a class="nav-link text-dark" asp-area="" asp-page="/Events/Index">
+                <img class="d-block w-100" src="/Images/Mark-Wetherell.png" alt="Mark Wetherell">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Chronic stress in carers</h5>
+                    <p>b/ Mark Wetherell</p>
+                </div>
+            </a>
         </div>
         <div class="carousel-item">
-            <img class="d-block w-100" src="/Images/Marie-Louise-Stochholm.png" alt="Marie Louise Stochholm">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Cooperation with the young and adult with autism</h5>
-                <p>b/ Marie Louise Stochholm</p>
-            </div>
+            <a class="nav-link text-dark" asp-area="" asp-page="/Events/Index">
+                <img class="d-block w-100" src="/Images/Marie-Louise-Stochholm.png" alt="Marie Louise Stochholm">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Cooperation with the young and adult with autism</h5>
+                    <p>b/ Marie Louise Stochholm</p>
+                </div>
+            </a>
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselIndex" role="button" data-slide="prev">
@@ -65,37 +73,47 @@
 <br />
 @if (Model.logService.GetLoggedInUser() != null)
 {
-    if (Model.Bookings != null || Model.Bookings.Count != 0)
+    if (Model.BookedEvents != null || Model.BookedEvents.Count != 0)
     {
         <div>
             <h5>First events on your schedule</h5>
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    <th>
-                        @Model.DatesArrayList[0]
-                    </th>
-                    <th>
-                        @Model.DatesArrayList[1]
-                    </th>
-                    <th>
-                        @Model.DatesArrayList[2]
-                    </th>
+                    @if (Model.DatesArrayList != null)
+                    {
+                        <th>
+                            @Model.DatesArrayList[0]
+                        </th>
+                        if (Model.DatesArrayList.Count > 1)
+                        {
+                            <th>
+                                @Model.DatesArrayList[1]
+                            </th>
+                            if (@Model.DatesArrayList.Count > 2)
+                            {
+                                <th>
+                                    @Model.DatesArrayList[2]
+                                </th>
+                            }
+                            
+                        }
+                        
+                    }
+                    
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    @for (int i = 0; i < 3; i++)
-                    {
-                        @*@foreach (var e in Model.BookedEvents)
-                        {*@
+                    <tr>
+                        @for (int i = 0; i < 2; i++)
+                        {
                             <td>
-                                Event: 
-                                Room: 
+                                Event: @Model.BookedEvents[i].EventName
+                                <br />
+                                Room: @Model.BookedEvents[i].Room_ID
                             </td>
-                        @*}*@
-                    }
-                </tr>
+                        }
+                    </tr>
                 </tbody>
             </table>
         </div>

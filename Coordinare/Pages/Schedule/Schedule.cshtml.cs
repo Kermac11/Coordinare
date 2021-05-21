@@ -42,9 +42,9 @@ namespace Coordinare.Pages.Schedule
 
             return Page();
         }
-        
+
         // flyttet over i booking catalog
-        //
+        ////
         //public async Task<List<Event>> GetBookedEvents()
         //{
         //    Event ev = new Event();

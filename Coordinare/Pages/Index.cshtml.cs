@@ -24,7 +24,7 @@ namespace Coordinare.Pages
         public List<Booking> Bookings { get; set; }
         public List<Event> BookedEvents { get; set; }
         [BindProperty] public new User User { get; set; }
-        public new ArrayList DatesArrayList { get; set; }
+        public ArrayList DatesArrayList { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, LoginService logService, IEventCatalog eventCatalog, IBookingCatalog bookingCatalog, IUserCatalog userCatalog)
         {
@@ -37,17 +37,24 @@ namespace Coordinare.Pages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            if (logService.GetLoggedInUser() != null)
+            try
             {
-                User = await userCatalog.GetUserFromIdAsync(logService.GetLoggedInUser().User_ID);
-                Bookings = await bookingCatalog.GetBookingsFromUser(logService.GetLoggedInUser().User_ID);
-                BookedEvents = await bookingCatalog.GetBookedEvents(logService.GetLoggedInUser().User_ID);
-                BookedEvents.Sort((e1, e2) => e1.DateTime.CompareTo(e2.DateTime));
+                if (logService.GetLoggedInUser() != null)
+                {
+                    User = await userCatalog.GetUserFromIdAsync(logService.GetLoggedInUser().User_ID);
+                    Bookings = await bookingCatalog.GetBookingsFromUser(User.User_ID);
+                    BookedEvents = await bookingCatalog.GetBookedEvents(User.User_ID);
+                    BookedEvents.Sort((e1, e2) => e1.DateTime.CompareTo(e2.DateTime));
 
-                DatesArrayList = Dates().Result;
+                    DatesArrayList = Dates().Result;
 
-                if (User == null)
-                    return NotFound();
+                    if (User == null)
+                        return NotFound();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
 
             return Page();
@@ -63,5 +70,6 @@ namespace Coordinare.Pages
 
             return list;
         }
+
     }
 }
