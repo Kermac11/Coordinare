@@ -1,4 +1,5 @@
 ﻿@page
+@using Coordinare.Services
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -17,8 +18,8 @@
 <div style="padding-left:42%">
     <a asp-page="/Index"><img src="/Images/sikon-logo-ny-udgave-2021.png" style="max-height: 175px" alt="KonfLogo" /></a>
 </div>
-<br/>
-@*Lige nu er billederne og teksten til dem puttet ind manuelt, 
+<br />
+@*Lige nu er billederne og teksten til dem puttet ind manuelt,
     men i fremtiden kan man overveje at lave det om til at den tager fra events.
     I det tilfælde ville man tilføje et billede i modellen for Event.*@
 <div id="carouselIndex" class="carousel slide w-50 mx-auto" data-ride="carousel">
@@ -61,4 +62,42 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-
+<br />
+@if (Model.logService.GetLoggedInUser() != null)
+{
+    if (Model.Bookings != null || Model.Bookings.Count != 0)
+    {
+        <div>
+            <h5>First events on your schedule</h5>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th>
+                        @Model.DatesArrayList[0]
+                    </th>
+                    <th>
+                        @Model.DatesArrayList[1]
+                    </th>
+                    <th>
+                        @Model.DatesArrayList[2]
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        @*@foreach (var e in Model.BookedEvents)
+                        {*@
+                            <td>
+                                Event: 
+                                Room: 
+                            </td>
+                        @*}*@
+                    }
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+}
