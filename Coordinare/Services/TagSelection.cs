@@ -15,7 +15,7 @@ namespace Coordinare.Services
         private string GetTagsSql = "SELECT * from Tags";
         private string GetTagNameFromIdSql = "SELECT * from TagNames WHERE Tag_ID = @ID";
         private string CreateTagNameSql = "INSERT into TagNames values(@Name)";
-        private string CreateTagSql = "INSERT into Tags values(@EID, @TID)";
+        private string CreateTagSql = "INSERT into Tags(Tag_ID, Event_ID) values(@TID ,@EID)";
         private string DeleteTagNameSql = "DELETE from Tags WHERE Tag_ID = @TID";
         private string DeleteTagSql = "DELETE from Tags where Event_ID = @EID AND Tag_ID = @TID";
         private IEventCatalog _ecatalog;
@@ -209,8 +209,8 @@ namespace Coordinare.Services
                 {
                     try
                     {
-                        command.Parameters.AddWithValue("@EID", e.Event_ID);
                         command.Parameters.AddWithValue("@TID", tag.Tag_ID);
+                        command.Parameters.AddWithValue("@EID", e.Event_ID);
                         await command.Connection.OpenAsync();
                         await command.ExecuteNonQueryAsync();
                     }
