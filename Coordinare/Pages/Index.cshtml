@@ -73,14 +73,14 @@
 <br />
 @if (Model.logService.GetLoggedInUser() != null)
 {
-    if (Model.BookedEvents != null || Model.BookedEvents.Count != 0)
+    if (Model.BookedEvents != null && Model.BookedEvents.Count != 0)
     {
         <div>
             <h5>First events on your schedule</h5>
             <table class="table table-bordered">
                 <thead class="thead-light">
                 <tr>
-                    @if (Model.DatesArrayList != null)
+                    @if (Model.DatesArrayList != null && Model.DatesArrayList.Count != 0)
                     {
                         <th>
                             @Model.DatesArrayList[0]
