@@ -2,6 +2,7 @@
 using Coordinare.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Coordinare.Interfaces;
 using Coordinare.Models;
@@ -10,60 +11,38 @@ using Microsoft.Extensions.Configuration;
 namespace Coordinare.Services.Tests
 {
     [TestClass()]
-    public class EventCatalogTests : Connection
+    public class EventCatalogTests
     {
-        private IUserCatalog _userCatalog;
-        private IEventCatalog _eCatalog;
-        public EventCatalogTests(IConfiguration configuration, IUserCatalog _userCatalog, IEventCatalog eservice) : base(configuration)
-        {
-            this._userCatalog = _userCatalog;
-            _eCatalog = eservice;
-        }
-
-        public EventCatalogTests(string connectionString, IUserCatalog _userCatalog) : base(connectionString)
-        {
-        }
-        [TestMethod()]
-        public void GetAllEventsTest()
-        {
-            List<Event> e = _eCatalog.GetAllEvents().Result;
-            Assert.IsNotNull(e);
-        }
-
-        [TestMethod()]
-        public void GetEventFromIdTest()
-        {
             Assert.Fail();
         }
 
         [TestMethod()]
         public void CreateEventTest()
         {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void DeleteEventTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void UpdateEventTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void GetWaitingListTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void SearchByFilterTest()
-        {
-            Assert.Fail();
+            //arrange
+            UserCatalog UC = new UserCatalog(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CoordinareDB21;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            EventCatalog EC = new EventCatalog(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CoordinareDB21;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False", UC);
+            RoomCatalog RC = new RoomCatalog(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=CoordinareDB21;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            User newUser = new User("karl", "Karl54321", "54321", "22446688", "@karl.com", true, true, true);
+            UC.CreateUserAsync(newUser);
+            newUser = UC.GetAllUsersAsync().Result.Last();
+            Room newRoom = new Room("50", 200);
+            RC.CreateRoomAsync(newRoom);
+            Event newEvent = new Event(TimeSpan.FromHours(5), newUser, "50", "testevent", DateTime.Today, "info", 12, DateTime.Now );
+            bool result = false;
+            //act
+            EC.CreateEvent(newEvent);
+            EC.Events = EC.GetAllEvents().Result;
+            if (EC.Events.Last().EventName == newEvent.EventName)
+            {
+                result = true;
+                newEvent = EC.GetAllEvents().Result.Last();
+                EC.DeleteEvent(newEvent.Event_ID);
+                UC.DeleteUserAsync(newUser.User_ID); 
+                RC.DeleteRoomAsync("50");
+            }
+            //assert
+            Assert.AreEqual(true, result);
         }
 
     }

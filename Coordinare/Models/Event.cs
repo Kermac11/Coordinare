@@ -27,6 +27,18 @@ namespace Coordinare.Models
             LastUpdated = lastupdated;
         }
 
+        public Event(TimeSpan duration, User? speaker, string roomId, string eventName, DateTime dateTime, string eventinfo, int ssAmount, DateTime lastUpdated)
+        {
+            Duration = duration;
+            Speaker = speaker;
+            Room_ID = roomId;
+            EventName = eventName;
+            DateTime = dateTime;
+            Eventinfo = eventinfo;
+            SS_amount = ssAmount;
+            LastUpdated = lastUpdated;
+        }
+
         public int Event_ID { get; set; }
         [Required(ErrorMessage = "Duration is required")]
         public TimeSpan Duration  { get; set; }
