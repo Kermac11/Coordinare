@@ -30,6 +30,7 @@ namespace Coordinare.Services
 
         public EventCatalog(string connectionString, IUserCatalog _userCatalog) : base(connectionString)
         {
+            this._userCatalog = _userCatalog;
         }
 
         public List<Event> Events { get; set; }
