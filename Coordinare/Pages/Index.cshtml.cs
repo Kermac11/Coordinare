@@ -44,6 +44,7 @@ namespace Coordinare.Pages
                     User = await userCatalog.GetUserFromIdAsync(logService.GetLoggedInUser().User_ID);
                     Bookings = await bookingCatalog.GetBookingsFromUser(User.User_ID);
                     BookedEvents = await bookingCatalog.GetBookedEvents(User.User_ID);
+                    // det nedenstående fjerner events hvis de er gamle
                     BookedEvents = BookedEvents.FindAll(e => e.DateTime > DateTime.UtcNow);
                     BookedEvents.Sort((e1, e2) => e1.DateTime.CompareTo(e2.DateTime));
 
