@@ -16,14 +16,16 @@ namespace Coordinare.Pages.Bookings
         private IBookingCatalog _service;
         private IEventCatalog _eventService;
         private LoginService _LService;
+        private IRoomCatalog _Rservice;
         [BindProperty] public Booking CurrentBooking { get; set; }
         public Event Event { get; set; }
         [BindProperty] public User User { get; set; }
-        public CreateBookingModel(IBookingCatalog service, IEventCatalog eventService, LoginService lService)
+        public CreateBookingModel(IBookingCatalog service, IEventCatalog eventService, LoginService lService, IRoomCatalog Rservice)
         {
             _service = service;
             _eventService = eventService;
             _LService = lService;
+            _Rservice = Rservice;
         }
         public void OnGet(int EventID)
         {
@@ -33,7 +35,14 @@ namespace Coordinare.Pages.Bookings
             CurrentBooking.User_ID = User.User_ID;
             CurrentBooking.Event_ID = EventID;
             CurrentBooking.BookingDate = DateTime.Now;
-            CurrentBooking.InWaitingList = false;
+            if (_Rservice.GetRoomsFromIdAsync(Event.Room_ID).Result.Capacity - _service.GetBookingsFromEvent(EventID).Result.Count <= 0) 
+            {
+                CurrentBooking.InWaitingList = false;
+            }
+            else
+            {
+                CurrentBooking.InWaitingList = true;
+            }
 
         }
 
@@ -53,7 +62,7 @@ namespace Coordinare.Pages.Bookings
 
         public async Task<IActionResult>OnPostReturn()
         {
-            return  RedirectToPage("/Events/Index");
+            return  RedirectToPage("Index");
         }
     }
 }

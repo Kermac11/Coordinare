@@ -1,0 +1,1 @@
+﻿INSERT into Tags values(6, 3)

@@ -34,6 +34,7 @@ namespace Coordinare.Pages.Events
             _service = service;
             _usercatalog = uservice;
         }
+
         public void OnGet()
         {
             Events = _service.GetAllEvents().Result;

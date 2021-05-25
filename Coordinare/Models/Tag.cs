@@ -10,11 +10,11 @@ namespace Coordinare.Models
         public Tag(int tagId, int eVentId, string tagName)
         {
             Tag_ID = tagId;
-            EVent_ID = eVentId;
+            Event_ID = eVentId;
             TagName = tagName;
         }
         public int Tag_ID { get; set; }
-        public int EVent_ID { get; set; }
+        public int Event_ID { get; set; }
         public string TagName { get; set; }
     }
 }
