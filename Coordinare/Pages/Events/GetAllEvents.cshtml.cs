@@ -17,7 +17,7 @@ namespace Coordinare.Pages.Events
         {
             _service = service;
         }
-        public async void OnGetAsync()
+        public async void OnGet()
         {
             Events = _service.GetAllEvents().Result;
         }

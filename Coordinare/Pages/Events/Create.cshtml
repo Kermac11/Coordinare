@@ -37,9 +37,9 @@
         </select>
     </div>
     <div class="row">
-        @foreach (string item in @Model.Tags)
+        @foreach (TagName item in @Model.Tags)
         {
-            <p>@item:</p><input type="checkbox" value="@item" name="tag"/>
+            <p>@item.Name:</p><input type="checkbox" value="@item.Tag_ID" name="tag"/>
         }
     </div>
     <div class="form-group">
