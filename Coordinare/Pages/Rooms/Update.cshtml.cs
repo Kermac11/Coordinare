@@ -31,7 +31,6 @@ namespace Coordinare.Pages.Rooms
             OldId = id;
             TextBox = "Update a Room?";
             Room = await _service.GetRoomsFromIdAsync(id);
-            //Rooms = await _service.GetAllRoomsAsync();
             return Page();
         }
 

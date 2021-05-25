@@ -65,7 +65,7 @@ namespace Coordinare.Pages.Events
             {
                 _tservice.CreateNewTagToEvent(place, _tservice.GetTagNameFromId(item).Result);
             }
-            return RedirectToPage("Index");
+            return RedirectToPage("GetAllEvents");
 
         }
 

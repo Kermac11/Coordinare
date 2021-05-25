@@ -33,7 +33,7 @@ namespace Coordinare.Pages.Schedule
 
             User = await userCatalog.GetUserFromIdAsync((int)id);
             Bookings = await bookingCatalog.GetBookingsFromUser((int)id);
-            BookedEvents = await GetBookedEvents();
+            BookedEvents = await bookingCatalog.GetBookedEvents((int)id);
             BookedEvents.Sort((e1,e2) => e1.DateTime.CompareTo(e2.DateTime));
             NumOfDates = BookedEvents.Select(e => e.DateTime).Distinct().ToList();
 
@@ -42,19 +42,20 @@ namespace Coordinare.Pages.Schedule
 
             return Page();
         }
-        
 
-        public async Task<List<Event>> GetBookedEvents()
-        {
-            Event ev = new Event();
-            List<Event> events = new List<Event>();
-            foreach (Booking b in Bookings)
-            {
-                ev = await eventCatalog.GetEventFromId(b.Event_ID);
-                events.Add(ev);
-            }
-            return events;
-        }
+        // flyttet over i booking catalog
+        ////
+        //public async Task<List<Event>> GetBookedEvents()
+        //{
+        //    Event ev = new Event();
+        //    List<Event> events = new List<Event>();
+        //    foreach (Booking b in Bookings)
+        //    {
+        //        ev = await eventCatalog.GetEventFromId(b.Event_ID);
+        //        events.Add(ev);
+        //    }
+        //    return events;
+        //}
 
         public Dictionary<DateTime, string> GetDateDict()
         {

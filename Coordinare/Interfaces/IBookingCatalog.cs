@@ -20,5 +20,7 @@ namespace Coordinare.Interfaces
         Task<bool> UpdateBooking(Booking booking, int bookingid, int eventid, int userid);
 
         Task<List<Booking>> GetBookingsFromEvent(int eventID);
+
+        Task<List<Event>> GetBookedEvents(int id);
     }
 }

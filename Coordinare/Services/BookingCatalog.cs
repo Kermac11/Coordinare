@@ -27,9 +27,11 @@ namespace Coordinare.Services
         #endregion SQLStrings
 
         #region constructors
+        private IEventCatalog eventCatalog;
 
-        public BookingCatalog(IConfiguration configuration) : base(configuration)
+        public BookingCatalog(IConfiguration configuration, IEventCatalog eventCatalog) : base(configuration)
         {
+            this.eventCatalog = eventCatalog;
         }
 
         public BookingCatalog(string connectionString) : base(connectionString)
@@ -299,6 +301,18 @@ namespace Coordinare.Services
                 }
             }
             return bookings;
+        }
+
+        public async Task<List<Event>> GetBookedEvents(int id)
+        {
+            Event ev = new Event();
+            List<Event> events = new List<Event>();
+            foreach (Booking b in GetBookingsFromUser(id).Result)
+            {
+                ev = await eventCatalog.GetEventFromId(b.Event_ID);
+                events.Add(ev);
+            }
+            return events;
         }
 
         #endregion methods
