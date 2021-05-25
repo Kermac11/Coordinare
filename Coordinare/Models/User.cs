@@ -49,5 +49,18 @@ namespace Coordinare.Models
             Admin = admin;
         }
 
+        public User(string name, string username, string password, string phone, string email, bool speaker, bool specialaid, bool admin)
+        {
+
+            Name = name;
+            Username = username;
+            Password = password;
+            Phone = phone;
+            Email = email;
+            Speaker = speaker;
+            Specialaid = specialaid;
+            Admin = admin;
+        }
+
     }
 }

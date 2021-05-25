@@ -17,6 +17,14 @@ namespace Coordinare.Models
             BookingDate = bookingDate;
         }
 
+        public Booking(int eventId, int userId, bool specialSeat, bool inWaitingList, DateTime bookingDate)
+        {
+            Event_ID = eventId;
+            User_ID = userId;
+            Special_Seat = specialSeat;
+            InWaitingList = inWaitingList;
+            BookingDate = bookingDate;
+        }
         public Booking()
         {
             
