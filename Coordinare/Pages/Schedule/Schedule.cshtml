@@ -112,9 +112,9 @@
                                 }
                                     <td>
 
-                                        <button type="button" class="btn-info" data-toggle="modal" data-target="#@e.EventName">Identification</button>
+                                        <button type="button" class="btn-info" data-toggle="modal" data-target="#@e.EventName.Replace(" ", "")">Identification</button>
 
-                                        <div id="@e.EventName" class="modal fade" role="dialog">
+                                        <div id="@e.EventName.Replace(" ", "")" class="modal fade" role="dialog">
                                             <div class="modal-dialog modal-dialog-centered modal-sm">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -156,7 +156,7 @@
     }
 
 }
-else if (Model.Bookings.Count == 0)
+else if (Model.BookedEvents.Count == 0 || Model.BookedEvents == null)
 {
     //det her virker ikke
     <div>

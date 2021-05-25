@@ -75,8 +75,8 @@ namespace Coordinare.Pages.Schedule
         {
             string timestring = null;
             TimeSpan cal = from - now;
-            timestring += cal.Days > 0 ? $"Days:{cal.Days} " : "";
-            timestring += $"Hours:{cal.Hours} " + $"Minutes:{cal.Minutes}";
+            timestring += cal.Days > 0 ? $"Days: {cal.Days} " : "";
+            timestring += $"Hours: {cal.Hours} " + $"Minutes: {cal.Minutes}";
             return timestring;
         }
         
