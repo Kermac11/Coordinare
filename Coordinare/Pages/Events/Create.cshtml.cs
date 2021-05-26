@@ -41,6 +41,7 @@ namespace Coordinare.Pages.Events
         public void OnGet()
         {
             Tags = _tservice.GetTagNames().Result;
+            Tags ??= new List<TagName>();
             Time = DateTime.Now.ToString("yyyy-MM-ddT00:00");
         }
 
