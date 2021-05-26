@@ -5,6 +5,9 @@
 @{ int openseats = Model.Room.Capacity - Model.Bookings.Count;}
 @{
 }
+<div class="row">
+    <a asp-page="Index">Back</a>
+</div>
 <label>Tags:</label>
 <div class="row">
     @foreach (Tag item in Model.Tags)
