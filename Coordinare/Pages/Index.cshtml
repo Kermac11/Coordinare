@@ -1,5 +1,6 @@
 ﻿@page
 @using Coordinare.Services
+@using Coordinare.Models
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -105,9 +106,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        @for (int i = 0; i < 3; i++)
+                        @for (int i = 0; i < (Model.BookedEvents.Count > 3 ? 3: Model.BookedEvents.Count); i++)
                         {
-                        <td>
+                            <td>
                             Event: <a asp-page="/Events/Info" asp-route-id="@Model.BookedEvents[i].Event_ID">
                                 @Model.BookedEvents[i].EventName
                             </a>
