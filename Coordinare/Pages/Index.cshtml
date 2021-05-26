@@ -71,7 +71,7 @@
     </a>
 </div>
 <br />
-@*@if (Model.logService.GetLoggedInUser() != null)
+@if (Model.logService.GetLoggedInUser() != null)
 {
     if (Model.BookedEvents != null && Model.BookedEvents.Count != 0)
     {
@@ -105,7 +105,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        @for (int i = 0; i < 2; i++)
+                        @for (int i = 0; i < 3; i++)
                         {
                         <td>
                             Event: <a asp-page="/Events/Info" asp-route-id="@Model.BookedEvents[i].Event_ID">
@@ -120,4 +120,9 @@
             </table>
         </div>
     }
-}*@
+    else
+    {
+        <br/>
+        <p>Book a spot in an event to have events from your schedule appear!</p>
+    }
+}
