@@ -34,9 +34,12 @@ namespace Coordinare.Pages.Schedule
             User = await userCatalog.GetUserFromIdAsync((int)id);
             Bookings = await bookingCatalog.GetBookingsFromUser((int)id);
             BookedEvents = await bookingCatalog.GetBookedEvents((int)id);
-            BookedEvents.Sort((e1,e2) => e1.DateTime.CompareTo(e2.DateTime));
-            NumOfDates = BookedEvents.Select(e => e.DateTime).Distinct().ToList();
-
+            if (BookedEvents.Count != 0)
+            {
+                BookedEvents.Sort((e1, e2) => e1.DateTime.CompareTo(e2.DateTime));
+                NumOfDates = BookedEvents.Select(e => e.DateTime).Distinct().ToList();
+            }
+            
             if (User == null)
                 return NotFound();
 

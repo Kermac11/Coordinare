@@ -41,7 +41,7 @@
     }
 </style>
 
-@if (Model.BookedEvents != null || Model.BookedEvents.Count != 0)
+@if (Model.BookedEvents != null && Model.BookedEvents.Count != 0)
 {
     <div class="tab">
         @foreach (var d in Model.GetDateDict())
@@ -156,9 +156,9 @@
     }
 
 }
-else if (Model.BookedEvents.Count == 0 || Model.BookedEvents == null)
+else
 {
-    //det her virker ikke
+    <br/>
     <div>
         <p>Book a spot in an event to have your schedule appear!</p>
     </div>
