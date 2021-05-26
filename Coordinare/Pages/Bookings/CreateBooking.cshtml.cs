@@ -62,7 +62,7 @@ namespace Coordinare.Pages.Bookings
 
         public async Task<IActionResult>OnPostReturn()
         {
-            return  RedirectToPage("Index");
+            return  RedirectToPage("/Events/Index");
         }
     }
 }
