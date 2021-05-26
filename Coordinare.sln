@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coordinare", "Coordinare\Coordinare.csproj", "{ADE7A3DF-A456-4CBF-8D8F-F809F5ED1AC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoordinareTests", "CoordinareTests\CoordinareTests.csproj", "{8C815C1C-4AF5-4CA4-BE02-863120F66A4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoordinareTests", "CoordinareTests\CoordinareTests.csproj", "{8C815C1C-4AF5-4CA4-BE02-863120F66A4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

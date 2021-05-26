@@ -5,8 +5,8 @@
 <a asp-page="/Events/Create">
     <button class="alert-info">Create New Event</button>
 </a>
-<table class="table">
-    <thead  cæssd>
+<table class="table table-bordered">
+    <thead  class="thead-light">
         <tr>
             <th>
                 Event ID
@@ -27,7 +27,19 @@
                 Event info
             </th>
             <th>
-                Speaciel seats
+                Special seats
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
             </th>
         </tr>
     </thead>
@@ -61,7 +73,7 @@
                 <td><p><a asp-page="/Events/Update" asp-route-id="@item.Event_ID">Update</a></p></td>
                 <td>
                     <p>
-                        <a asp-page="/Bookings/EventBookings" asp-route-Event_ID="@item.Event_ID">bookings</a>
+                        <a asp-page="/Bookings/EventBookings" asp-route-Event_ID="@item.Event_ID">Bookings</a>
                     </p>
                 </td>
             </tr>
