@@ -5,10 +5,7 @@
 }
 <form method="post" asp-page-handler="search">
     <input asp-for="DateSort" type="hidden"/>
-    <select name="option">
-        <option value="">Select a search option...</option>
-        <option value="name">Name</option>
-    </select>
+    <input name="option"/>
     <input type="text" name="filter" value="" placeholder="Search here..."/>
     <input type="submit" value="Search"/>
 </form>
