@@ -25,6 +25,7 @@ namespace Coordinare.Pages.Rooms
         public string idSort { get; set; }
         public string csort { get; set; }
         public string CurrentSort { get; set; }
+        public string esort { get; set; }
       
 
         public GetAllRoomsModel(IRoomCatalog service, IEventCatalog catalog)
