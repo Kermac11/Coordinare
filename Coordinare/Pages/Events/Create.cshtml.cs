@@ -22,7 +22,7 @@ namespace Coordinare.Pages.Events
         private Object _lock = new object();
         [BindProperty] public Event Event { get; set; }
         public string Time { get; set; }
-        public List<string> Tags { get; set; }
+        public List<TagName> Tags { get; set; }
         public List<Room> Rooms { get; set; }
         public List<User> Speakers { get; set; }
 
@@ -40,11 +40,11 @@ namespace Coordinare.Pages.Events
 
         public void OnGet()
         {
-            Tags = _tservice.GetTags().Result;
+            Tags = _tservice.GetTagNames().Result;
             Time = DateTime.Now.ToString("yyyy-MM-ddT00:00");
         }
 
-        public async Task<IActionResult> OnPostAsync(int sid, List<string> tag)
+        public async Task<IActionResult> OnPostAsync(int sid, List<int> tag)
         {
 
             Event place = new Event();
@@ -61,9 +61,9 @@ namespace Coordinare.Pages.Events
                 List<Event> el = _eservice.GetAllEvents().Result;
                 place = el.Last();
             }
-            foreach (string item in tag)
+            foreach (int item in tag)
             {
-                _tservice.CreateNewTagToEvent(place, item);
+                _tservice.CreateNewTagToEvent(place, _tservice.GetTagNameFromId(item).Result);
             }
             return RedirectToPage("GetAllEvents");
 

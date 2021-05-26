@@ -1,26 +1,41 @@
 ﻿@page
 @using Coordinare.Services
+@using Coordinare.Models
 @model Coordinare.Pages.Events.InfoModel
+@{ int openseats = Model.Room.Capacity - Model.Bookings.Count;}
 @{
 }
-<p><a asp-page="/Events/Update" asp-route-id="@Model.Event.Event_ID">Update</a></p>
-<h1>@Model.Event.EventName</h1>
-<p>@Model.Event.Eventinfo</p>
-<form method="post">
-    @if (Model._Lservice.GetLoggedInUser() != null)
-    {
-        <input type="hidden" asp-for="@Model.EventID" />
-        @if (Model.UserBookings.Exists(x => x.User_ID == Model.CurrentUser.User_ID) && Model.UserBookings.Exists(y => y.Event_ID == Model.EventID))
-        {
-
-        }
-        else
-        {
-            <input type="submit" value="Book event" class="btn btn-primary" />
-        }
+<label>Tags:</label>
+<div class="row">
+    @foreach (Tag item in Model.Tags)
+    {<div class="text-center" style="padding: 10px">
+            <p>@item.TagName </p>
+        </div>
     }
-    else
-    {
+</div>
+<div class="text-center">
+    <p><a asp-page="/Events/Update" asp-route-id="@Model.Event.Event_ID">Update</a></p>
+    <h1>@Model.Event.EventName</h1>
+    <p>@Model.Event.Eventinfo</p>
+    <div class="row">
+        <p>Attendees: @Model.Bookings.FindAll(b => b.InWaitingList == false).Count. OpenSeats: @openseats. People on Waiting list: @Model.Bookings.FindAll(b => b.InWaitingList == true).Count.</p>
+        <form method="post">
+            @if (Model._Lservice.GetLoggedInUser() != null)
+            {
+                <input type="hidden" asp-for="@Model.EventID" />
+                @if (Model.UserBookings.Exists(x => x.User_ID == Model.CurrentUser.User_ID) && Model.UserBookings.Exists(y => y.Event_ID == Model.EventID))
+                {
 
-    }
-</form>
+                }
+                else
+                {
+                    <input type="submit" value="Book event" class="btn btn-primary" />
+                }
+            }
+            else
+            {
+
+            }
+        </form>
+    </div>
+</div>

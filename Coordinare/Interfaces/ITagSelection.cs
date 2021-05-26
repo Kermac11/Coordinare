@@ -8,11 +8,12 @@ namespace Coordinare.Interfaces
 {
     public interface ITagSelection
     {
-        public Task<List<string>> GetTags();
+        public Task<List<TagName>> GetTagNames();
         public Task<List<Tag>> GetAllTags();
-        public void AddNewTag(string tag);
-        public void RemoveTag(string tag);
-        public void CreateNewTagToEvent(Event e, string tag);
+        public Task<TagName> GetTagNameFromId(int id);
+        public void CreateNewTagName(string tag);
+        public void CreateNewTagToEvent(Event e, TagName tag);
+        public void DeleteTagName(int id);
         public void DeleteTag(Event e, string tag);
     }
 }

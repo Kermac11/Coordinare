@@ -5,16 +5,14 @@ using System.Threading.Tasks;
 
 namespace Coordinare.Models
 {
-    public class Tag
+    public class TagName
     {
-        public Tag(int tagId, int eVentId, string tagName)
+        public TagName(int tagId, string tagName)
         {
             Tag_ID = tagId;
-            Event_ID = eVentId;
-            TagName = tagName;
+            Name = tagName;
         }
         public int Tag_ID { get; set; }
-        public int Event_ID { get; set; }
-        public string TagName { get; set; }
+        public string Name { get; set; }
     }
 }

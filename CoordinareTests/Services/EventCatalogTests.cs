@@ -6,12 +6,16 @@ using System.Linq;
 using System.Text;
 using Coordinare.Interfaces;
 using Coordinare.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Coordinare.Services.Tests
 {
     [TestClass()]
     public class EventCatalogTests
     {
+            Assert.Fail();
+        }
+
         [TestMethod()]
         public void CreateEventTest()
         {
@@ -40,5 +44,6 @@ namespace Coordinare.Services.Tests
             //assert
             Assert.AreEqual(true, result);
         }
+
     }
 }
