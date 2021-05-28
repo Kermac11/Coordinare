@@ -17,7 +17,6 @@ namespace Coordinare.Pages
         private readonly ILogger<IndexModel> _logger;
 
         public LoginService logService;
-        private IEventCatalog eventCatalog;
         private IBookingCatalog bookingCatalog;
         private IUserCatalog userCatalog;
 
@@ -26,11 +25,10 @@ namespace Coordinare.Pages
         [BindProperty] public new User User { get; set; }
         public ArrayList DatesArrayList { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, LoginService logService, IEventCatalog eventCatalog, IBookingCatalog bookingCatalog, IUserCatalog userCatalog)
+        public IndexModel(ILogger<IndexModel> logger, LoginService logService, IBookingCatalog bookingCatalog, IUserCatalog userCatalog)
         {
             _logger = logger;
             this.logService = logService;
-            this.eventCatalog = eventCatalog;
             this.bookingCatalog = bookingCatalog;
             this.userCatalog = userCatalog;
         }

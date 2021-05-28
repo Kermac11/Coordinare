@@ -161,6 +161,7 @@ namespace Coordinare.Services
 
         private bool UsernameExist(string name)
         {
+            // GetAllUsersAsync().Result.Exist
             foreach (User u in GetAllUsersAsync().Result)
             {
                 if (u.Username == name)
