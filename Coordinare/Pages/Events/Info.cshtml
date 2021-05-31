@@ -24,14 +24,14 @@
         <form method="post">
             @if (Model._Lservice.GetLoggedInUser() != null)
             {
-                <input type="hidden" asp-for="@Model.EventID" />
-                @if (Model.UserBookings.Exists(x => x.User_ID == Model.CurrentUser.User_ID) && Model.UserBookings.Exists(y => y.Event_ID == Model.EventID))
+                <input type="hidden" asp-for="@Model.EventID"/>
+                @if (Model.UserBookings.Exists(x => x.User_ID == Model.CurrentUser.User_ID && Model.UserBookings.Exists(y => y.Event_ID == Model.EventID)))
                 {
 
                 }
                 else
                 {
-                    <input type="submit" value="Book event" class="btn btn-primary" />
+                    <input type="submit" value="Book event" class="btn btn-primary"/>
                 }
             }
             else
