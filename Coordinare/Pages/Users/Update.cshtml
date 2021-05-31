@@ -24,7 +24,6 @@
                 <input asp-for="@Model.User.Username" class="form-control" />
                 <span asp-validation-for="User.Username" class="text-danger"></span>
             </div>
-            @*Måske lave password om til autogenereret*@
             <div class="form-group">
                 <label asp-for="@Model.User.Password" class="control-label"></label>
                 <input asp-for="@Model.User.Password" class="form-control" />
@@ -112,9 +111,10 @@
             }
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-dark" />&nbsp; | &nbsp;
+                <input type="submit" value="Save" class="btn btn-dark" />
                 @if (Model.User.Admin)
                 {
+                    <p>&nbsp; | &nbsp;</p>
                     <a asp-page="./GetAllUsers">Back to the overview</a>
                 }
             </div>

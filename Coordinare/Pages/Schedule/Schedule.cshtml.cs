@@ -11,7 +11,6 @@ namespace Coordinare.Pages.Schedule
 {
     public class ScheduleModel : PageModel
     {
-        private IEventCatalog eventCatalog;
         private IBookingCatalog bookingCatalog;
         private IUserCatalog userCatalog;
         public List<Booking> Bookings { get; set; }
@@ -19,9 +18,8 @@ namespace Coordinare.Pages.Schedule
         public List<DateTime> NumOfDates { get; set; }
         [BindProperty] public new User User { get; set; }
 
-        public ScheduleModel(IEventCatalog eventCatalog, IBookingCatalog bookingCatalog, IUserCatalog userCatalog)
+        public ScheduleModel(IBookingCatalog bookingCatalog, IUserCatalog userCatalog)
         {
-            this.eventCatalog = eventCatalog;
             this.bookingCatalog = bookingCatalog;
             this.userCatalog = userCatalog;
         }
@@ -37,7 +35,7 @@ namespace Coordinare.Pages.Schedule
             if (BookedEvents.Count != 0)
             {
                 BookedEvents.Sort((e1, e2) => e1.DateTime.CompareTo(e2.DateTime));
-                NumOfDates = BookedEvents.Select(e => e.DateTime).Distinct().ToList();
+                //NumOfDates = BookedEvents.Select(e => e.DateTime).Distinct().ToList();
             }
             
             if (User == null)
