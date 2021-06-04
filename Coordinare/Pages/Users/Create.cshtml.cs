@@ -33,7 +33,8 @@ namespace Coordinare.Pages.Users
         }
         public string CreatePassword(int length)
         {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            // har fjernet lille l og store i, da de ligner hinanden meget
+            const string valid = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ1234567890";
             StringBuilder bld = new StringBuilder();
             Random rnd = new Random();
             while (0 < length--)
@@ -59,11 +60,13 @@ namespace Coordinare.Pages.Users
             catch (ExistsException e)
             {
                 InfoText = $"Something went wrong! {e.Message}";
+                RndPass = CreatePassword(5);
                 return Page();
             }
             catch (Exception e)
             {
                 InfoText = $"Something went wrong! {e.Message}";
+                RndPass = CreatePassword(5);
                 return Page();
             }
             return RedirectToPage("GetAllUsers");
