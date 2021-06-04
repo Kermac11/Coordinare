@@ -13,9 +13,6 @@ namespace Coordinare.Services.Tests
     [TestClass()]
     public class EventCatalogTests
     {
-            Assert.Fail();
-        }
-
         [TestMethod()]
         public void CreateEventTest()
         {
