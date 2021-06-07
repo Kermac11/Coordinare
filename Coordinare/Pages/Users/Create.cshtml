@@ -27,7 +27,7 @@
             @*Autogenereret password!!*@
             <div class="form-group">
                 <label asp-for="@Model.User.Password" class="control-label"></label>
-                <input readonly="readonly" asp-for="@Model.User.Password" class="form-control" value="@Model.RndPass.ToString()" />
+                <input readonly="readonly" asp-for="@Model.User.Password" class="form-control" value="@Model.RndPass" />
                 @*<span asp-validation-for="User.Password" class="text-danger"></span>*@
             </div>
 

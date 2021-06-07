@@ -9,7 +9,7 @@
     [SS_Amount] INT          NOT NULL,
     [LastUpdated] DATETIME     NOT NULL,
     CONSTRAINT [PK_Events] PRIMARY KEY CLUSTERED ([Event_ID] ASC),
-    CONSTRAINT [FK_Events_Rooms] FOREIGN KEY ([Room_ID]) REFERENCES [dbo].[Rooms] ([Room_ID]),
+    CONSTRAINT [FK_Events_Rooms] FOREIGN KEY ([Room_ID]) REFERENCES [dbo].[Rooms] ([Room_ID])on update cascade,
     CONSTRAINT [FK_Events_Speaker] FOREIGN KEY ([Speaker]) REFERENCES [dbo].[Users] ([User_ID])
 );
 

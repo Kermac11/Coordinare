@@ -1,19 +1,10 @@
 ﻿@page
 @using Coordinare.Services
+@using Coordinare.Models
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
-
-<style>
-    .dot {
-        height: 15px;
-        width: 15px;
-        background-color: #ccc;
-        border-radius: 50%;
-        display: inline-block;
-    }
-</style>
 
 <div style="padding-left:42%">
     <a asp-page="/Index"><img src="/Images/sikon-logo-ny-udgave-2021.png" style="max-height: 175px" alt="KonfLogo" /></a>
@@ -105,9 +96,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        @for (int i = 0; i < 3; i++)
+                        @for (int i = 0; i < (Model.BookedEvents.Count > 3 ? 3: Model.BookedEvents.Count); i++)
                         {
-                        <td>
+                            <td>
                             Event: <a asp-page="/Events/Info" asp-route-id="@Model.BookedEvents[i].Event_ID">
                                 @Model.BookedEvents[i].EventName
                             </a>

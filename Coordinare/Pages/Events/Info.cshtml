@@ -5,6 +5,9 @@
 @{ int openseats = Model.Room.Capacity - Model.Bookings.Count;}
 @{
 }
+<div class="row">
+    <a asp-page="Index">Back</a>
+</div>
 <label>Tags:</label>
 <div class="row">
     @foreach (Tag item in Model.Tags)
@@ -14,7 +17,6 @@
     }
 </div>
 <div class="text-center">
-    <p><a asp-page="/Events/Update" asp-route-id="@Model.Event.Event_ID">Update</a></p>
     <h1>@Model.Event.EventName</h1>
     <p>@Model.Event.Eventinfo</p>
     <div class="row">
@@ -22,14 +24,14 @@
         <form method="post">
             @if (Model._Lservice.GetLoggedInUser() != null)
             {
-                <input type="hidden" asp-for="@Model.EventID" />
-                @if (Model.UserBookings.Exists(x => x.User_ID == Model.CurrentUser.User_ID) && Model.UserBookings.Exists(y => y.Event_ID == Model.EventID))
+                <input type="hidden" asp-for="@Model.EventID"/>
+                @if (Model.UserBookings.Exists(x => x.User_ID == Model.CurrentUser.User_ID && Model.UserBookings.Exists(y => y.Event_ID == Model.EventID)))
                 {
 
                 }
                 else
                 {
-                    <input type="submit" value="Book event" class="btn btn-primary" />
+                    <input type="submit" value="Book event" class="btn btn-primary"/>
                 }
             }
             else

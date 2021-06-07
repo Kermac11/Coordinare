@@ -48,7 +48,14 @@ namespace Coordinare.Pages.Events
           Seats = _Bservice.GetBookingsFromEvent(id).Result.Count;
           Room = _Rservice.GetRoomsFromIdAsync(Event.Room_ID).Result;
           Bookings = _Bservice.GetBookingsFromEvent(id).Result;
-          Room ??= new Room();
+          Tags ??= new List<Tag>();
+            //Tags ??= new List<Tag>() er det samme som if statement nedenunder.
+            //if (Tags == null)
+            //{
+            //    Tags = new List<Tag>();
+            //}
+            Room ??= new Room();
+
         }
 
         public async Task<IActionResult> OnPost()

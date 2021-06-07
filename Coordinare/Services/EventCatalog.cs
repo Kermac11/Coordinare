@@ -230,47 +230,12 @@ namespace Coordinare.Services
             }
         }
 
-        public async Task<List<object>> GetWaitingList<T>()
-        {
-            List<object> bl = new List<object>();
-            await using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    SqlCommand command = new SqlCommand(GetBookingsSql, connection);
-                    await command.Connection.OpenAsync();
-                    SqlDataReader reader = await command.ExecuteReaderAsync();
-                    while (await reader.ReadAsync())
-                    {
-                        int bookingid = reader.GetInt32(i: 0);
-                        int eventid = reader.GetInt32(i: 1);
-                        int userid = reader.GetInt32(i: 2);
-                        bool Sseat = reader.GetBoolean(3);
-                        bool inWaiting = reader.GetBoolean(i: 4);
-                        DateTime date = reader.GetDateTime(i: 5);
-                        var booking = new { };
-                        bl.Add(booking);
-                    }
-                }
-                catch (SqlException)
-                {
-                    Console.WriteLine("Database Fejl");
-                    return null;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Generel Fejl");
-                    return null;
-                }
-            }
-            return bl;
-        }
 
 
         public async Task<List<Event>> SearchByFilter(string filter)
         {
             List<Event> el = GetAllEvents().Result;
-            return el.FindAll(e => e.EventName.ToLower().Contains(filter));
+            return el.FindAll(e => e.EventName.ToLower().Contains(filter.ToLower()));
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Coordinare.Services
                             bool special = reader.GetBoolean(7);
                             bool admin = reader.GetBoolean(8);
 
-                            User user = new User(userID, name, username, password, 
+                            User user = new User(userID, name, username, password,
                                 phone, email, speaker, special, admin);
                             users.Add(user);
                         }
@@ -102,7 +102,7 @@ namespace Coordinare.Services
                             bool special = reader.GetBoolean(7);
                             bool admin = reader.GetBoolean(8);
 
-                            user = new User(userID, name, username, password, 
+                            user = new User(userID, name, username, password,
                                 phone, email, /*ByteToBool(speaker)*/ speaker, /*ByteToBool(special)*/ special, /*ByteToBool(admin)*/ admin);
                         }
                         else
@@ -126,33 +126,26 @@ namespace Coordinare.Services
             {
                 await using SqlCommand command = new SqlCommand(insertSql, connection);
                 {
-                    try
+                    //command.Parameters.AddWithValue("@ID", user.User_ID);
+                    command.Parameters.AddWithValue("@Name", user.Name);
+                    command.Parameters.AddWithValue("@Username", user.Username);
+                    command.Parameters.AddWithValue("@Password", user.Password);
+                    command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(user.Phone) ? (object)DBNull.Value : user.Phone);
+                    command.Parameters.AddWithValue("@Email", user.Email);
+                    command.Parameters.AddWithValue("@Speaker", user.Speaker);
+                    command.Parameters.AddWithValue("@Specialaid", user.Specialaid);
+                    command.Parameters.AddWithValue("@Admin", user.Admin);
+                    if (UsernameExist(user.Username))
                     {
-                        //command.Parameters.AddWithValue("@ID", user.User_ID);
-                        command.Parameters.AddWithValue("@Name", user.Name);
-                        command.Parameters.AddWithValue("@Username", user.Username);
-                        command.Parameters.AddWithValue("@Password", user.Password);
-                        command.Parameters.AddWithValue("@Phone", string.IsNullOrEmpty(user.Phone) ? (object)DBNull.Value : user.Phone);
-                        command.Parameters.AddWithValue("@Email", user.Email);
-                        command.Parameters.AddWithValue("@Speaker", user.Speaker);
-                        command.Parameters.AddWithValue("@Specialaid", user.Specialaid);
-                        command.Parameters.AddWithValue("@Admin", user.Admin);
-                        if (UsernameExist(user.Username))
-                        {
-                            throw new ExistsException("Username already exists");
-                        }
-                        await command.Connection.OpenAsync();
-                        int noOfRows = await command.ExecuteNonQueryAsync();
-                        if (noOfRows == 1)
-                        {
-                            return true;
-                        }
+                        throw new ExistsException("Username already exists");
                     }
-                    catch (Exception e)
+                    await command.Connection.OpenAsync();
+                    int noOfRows = await command.ExecuteNonQueryAsync();
+                    if (noOfRows == 1)
                     {
-                        return false;
+                        return true;
                     }
-                    
+
                 }
 
                 return false;
@@ -161,6 +154,7 @@ namespace Coordinare.Services
 
         private bool UsernameExist(string name)
         {
+            // GetAllUsersAsync().Result.Exist
             foreach (User u in GetAllUsersAsync().Result)
             {
                 if (u.Username == name)

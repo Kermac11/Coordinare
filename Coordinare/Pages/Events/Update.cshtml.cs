@@ -30,7 +30,7 @@ namespace Coordinare.Pages.Events
         public async void OnGet(int id)
         {
           Event = await _service.GetEventFromId(id);
-          Time = DateTime.UtcNow.ToString("yyyy-MM-ddT00:00");
+          Time = DateTime.Now.ToString("yyyy-MM-ddT00:00");
         }
         public async Task<IActionResult> OnPostAsync(int sid)
         {
