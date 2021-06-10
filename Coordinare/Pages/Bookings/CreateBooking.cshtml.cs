@@ -35,7 +35,8 @@ namespace Coordinare.Pages.Bookings
             CurrentBooking.User_ID = User.User_ID;
             CurrentBooking.Event_ID = EventID;
             CurrentBooking.BookingDate = DateTime.Now;
-            if (_Rservice.GetRoomsFromIdAsync(Event.Room_ID).Result.Capacity - _service.GetBookingsFromEvent(EventID).Result.Count >= 0) 
+            Event.Room_ID ??= null;
+            if (!string.IsNullOrEmpty(Event.Room_ID) && _Rservice.GetRoomsFromIdAsync(Event.Room_ID).Result.Capacity - _service.GetBookingsFromEvent(EventID).Result.Count >= 0) 
             {
                 CurrentBooking.InWaitingList = false;
             }

@@ -56,15 +56,18 @@ namespace Coordinare.Pages.Events
                 return Page();
             }
 
-            lock (_lock)
+            if (_eservice.GetAllEvents().Result.Exists(e => !(e.Room_ID == Event.Room_ID && ((Event.DateTime.Add(Event.Duration) < e.DateTime) || (Event.DateTime > e.DateTime.Add(e.Duration))))))
             {
-                _eservice.CreateEvent(Event);
-                List<Event> el = _eservice.GetAllEvents().Result;
-                place = el.Last();
-            }
-            foreach (int item in tag)
-            {
-                _tservice.CreateNewTagToEvent(place, _tservice.GetTagNameFromId(item).Result);
+                lock (_lock)
+                {
+                    _eservice.CreateEvent(Event);
+                    List<Event> el = _eservice.GetAllEvents().Result;
+                    place = el.Last();
+                }
+                foreach (int item in tag)
+                {
+                    _tservice.CreateNewTagToEvent(place, _tservice.GetTagNameFromId(item).Result);
+                }
             }
             return RedirectToPage("GetAllEvents");
 
