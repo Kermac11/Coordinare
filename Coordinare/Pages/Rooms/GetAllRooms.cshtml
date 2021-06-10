@@ -9,11 +9,22 @@
 
 <h3>All Rooms</h3>
 
-<form method="post">
+@*<form method="post">
     <div class="form-group">
         <p>
             ID: <input type="text" asp-for="SearchString"/>
             <input type="submit" value="Filter"/>
+        </p>
+    </div>
+</form>*@
+
+<form method="post">
+    <div class="form-actions no-color">
+        <p>
+            Find by name:
+            <input type="text" name="SearchString" value="@Model.Currentfilter" />
+            <input type="submit" value="Search" button class="alert-info"/> |
+            <a asp-page="./GetAllRooms">Back to full List</a>
         </p>
     </div>
 </form>
@@ -35,7 +46,9 @@
                 </a>
             </th>
             <th>
-                Event
+                <a asp-page="./GetAllRooms" asp-route-sortOrder="@Model.PlanEvent">
+                    Event
+                </a>
             </th>
             <th>
                 Delete

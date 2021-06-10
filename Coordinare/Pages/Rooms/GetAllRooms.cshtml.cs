@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -21,12 +22,12 @@ namespace Coordinare.Pages.Rooms
         
         public Func<string, List<Event>> PlanEvent { get; set; }
         public List<Room> Room { get; set; }
-        public string SearchString { get; set; }
+        [BindProperty] public string Currentfilter { get; set; }
         public string idSort { get; set; }
         public string csort { get; set; }
         public string CurrentSort { get; set; }
         public string esort { get; set; }
-      
+        
 
         public GetAllRoomsModel(IRoomCatalog service, IEventCatalog catalog)
         {
@@ -39,12 +40,13 @@ namespace Coordinare.Pages.Rooms
         {
             Rooms = _service.GetAllRoomsAsync().Result;
 
-            PlanEvent = i =>
-                _catalog.GetAllEvents().Result.FindAll(r => r.Room_ID == i);
+                PlanEvent = i =>
+                    _catalog.GetAllEvents().Result.FindAll(r => r.Room_ID == i);
+                
 
             idSort = string.IsNullOrEmpty(sortOrder) ? "id_desc" : "";
             csort = sortOrder == "Capacity" ? "capacity_desc" : "Capacity";
-
+            
             switch (sortOrder)
             {
                 case "id_desc":
@@ -56,17 +58,23 @@ namespace Coordinare.Pages.Rooms
                 case "capacity_desc":
                     Rooms.Sort((c1, c2) => c1.Capacity.CompareTo(c2.Capacity));
                     break;
+
                 default:
                     Rooms.Sort((e1, e2) => this.PlanEvent(e1.Room_ID).Count.CompareTo(this.PlanEvent(e2.Room_ID).Count()));
                     break;
             }
-
+           
         }
         
 
-
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string SearchString)
         {
+
+            Currentfilter = SearchString;
+
+            if (!ModelState.IsValid)
+            {
+            }
             if (!String.IsNullOrEmpty(SearchString))
             {
                 Rooms = _service.GetAllRoomsAsync().Result.FindAll(r => r.Room_ID.ToLower().Contains(SearchString.ToLower()));
@@ -74,6 +82,7 @@ namespace Coordinare.Pages.Rooms
             }
             Rooms = _service.GetAllRoomsAsync().Result;
             return Page();
+            
 
         }
     }
